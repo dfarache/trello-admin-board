@@ -1,0 +1,33 @@
+{
+    "request": {
+        "name": "request",
+        "parseUA": false,
+        "format": ":remote-address :method :url :status-code :response-time ms",
+        "excludes": [
+            "user-agent",
+            "short-body",
+            "http-version",
+            "response-hrtime",
+            "req-headers",
+            "res-headers",
+            "req",
+            "res",
+            "referer",
+            "incoming"
+        ]
+    },
+    "error": {
+        "name": "error",
+        "parseUA": true,
+        "format": ":remote-address :method :url :err[message]",
+        "excludes": [
+            "incoming",
+            "short-body",
+            "response-hrtime",
+            "response-time"
+        ]
+    },
+    "app": {
+        "name": "Trello admin sync"
+    }
+}
