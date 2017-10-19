@@ -1,0 +1,16 @@
+build
+.DS_Store
+.nbrun
+.vagrant
+.vscode
+node_modules/
+/*.sqlite
+/coverage
+.c9
+/config/p_*
+*.pdf
+*.log
+*.txt
+npm-debug.log*
+.sass-cache
+public/dist/
