@@ -80,9 +80,9 @@ export default class TrelloAPI{
     }
 
     createList(opt) {
-        required(opt, ['boardId', 'listName']);
+        required(opt, ['boardId', 'listName', 'pos']);
 
-        var qs = querystring.stringify({ name: opt.listName });
+        var qs = querystring.stringify({ name: opt.listName, pos: opt.pos });
         var opt = {
             method: 'POST',
             uri: this.createTrelloUri(`boards/${opt.boardId}/lists`, qs),
@@ -92,12 +92,13 @@ export default class TrelloAPI{
     }
 
     createCardFromExisting(opt){
-        required(opt, ['listId', 'originCardId']);
+        required(opt, ['listId', 'originCardId', 'pos']);
 
         var qs = querystring.stringify({
             idList: opt.listId,
             idCardSource: opt.originCardId,
-            keepFromSource: 'all'
+            keepFromSource: 'all',
+            pos: opt.pos
         });
         var opt = {
             method: 'POST',

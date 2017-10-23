@@ -38,9 +38,13 @@ export default class WebhookService {
             adminBoardCards = result.cards;
             var matchingList = this.getMatchingListInAdminBoard(result.lists, modifiedCard);
 
-            return _.isNil(matchingList) ?
-                this.api.createList({ boardId: adminBoard.id, listName: modifiedCard.cardList.name }) :
-                Promise.resolve(matchingList);
+            return _.isNil(matchingList)
+                ? this.api.createList({
+                    boardId: adminBoard.id,
+                    listName: modifiedCard.cardList.name,
+                    pos: modifiedCard.cardList.pos
+                })
+                : Promise.resolve(matchingList);
         }).then(list => {
             targetList = list;
             matchingCard = this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);
@@ -57,7 +61,8 @@ export default class WebhookService {
                 })
                 : this.api.createCardFromExisting({
                     listId: targetList.id,
-                    originCardId: modifiedCard.card.id
+                    originCardId: modifiedCard.card.id,
+                    pos: modifiedCard.card.pos
                 })
         })
     }
@@ -66,7 +71,6 @@ export default class WebhookService {
         required(opt, ['cardId']);
 
         return this.api.listWebhooks().then(webhooks => {
-          console.log(webhooks, opt.cardId)
             let index = _.findIndex(webhooks, ['idModel', opt.cardId]);
             let webhookToDelete = webhooks[index];
 
