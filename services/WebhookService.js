@@ -38,9 +38,13 @@ export default class WebhookService {
             adminBoardCards = result.cards;
             var matchingList = this.getMatchingListInAdminBoard(result.lists, modifiedCard);
 
-            return _.isNil(matchingList) ?
-                this.api.createList({ boardId: adminBoard.id, listName: modifiedCard.cardList.name }) :
-                Promise.resolve(matchingList);
+            return _.isNil(matchingList)
+                ? this.api.createList({
+                    boardId: adminBoard.id,
+                    listName: modifiedCard.cardList.name,
+                    pos: modifiedCard.cardList.pos
+                })
+                : Promise.resolve(matchingList);
         }).then(list => {
             targetList = list;
             matchingCard = this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);
