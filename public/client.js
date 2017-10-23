@@ -35,8 +35,9 @@ function onCardButtonClick(t, options) {
         return (adminBoard == null)
             ? undefined
             : setNewCardWebhookAndSync(currentCard, t);
+    }).then(function() {
+        return displaySuccessPopup(t);
     }).catch(function(err){
-      console.log(err, err.status)
         if(err.status != null) {
            handleHttpError(err, t, currentCard);
         }
@@ -114,6 +115,15 @@ function buildTrelloLikeBody(member, card) {
             }
         }
     }
+}
+
+function displaySuccessPopup(t) {
+    return t.popup({
+        title: 'The operation was successful!',
+        url: './successful-sync.html',
+        height: 200,
+        args: {}
+    })
 }
 
 function handleHttpError(error, t, currentCard) {
