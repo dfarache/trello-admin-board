@@ -22,41 +22,54 @@ TrelloPowerUp.initialize({
 function onCardButtonClick(t, options) {
     var secret = t.secret;
     var currentCard;
-  
+
     return Promise.props({
         currentCard: t.card('all'),
         board: t.board('idOrganization')
     })
-    .then(function(result) {     
+    .then(function(result) {
         currentCard = result.currentCard;
-      
+
         return getAdminBoard(result, t);
     }).then(function(adminBoard) {
-        return (adminBoard == null) 
+        return (adminBoard == null)
             ? undefined
-            : setNewCardWebhook(currentCard);              
+            : setNewCardWebhookAndSync(currentCard, t);
+    }).then(function() {
+        return displaySuccessPopup(t);
     }).catch(function(err){
-      console.log(err, err.status)
         if(err.status != null) {
            handleHttpError(err, t, currentCard);
-        }        
+        }
     });
 }
 
 function getAdminBoard(result,t) {
     var urlParam = "organizations/" + result.board.idOrganization + "/boards";
     var currentCard = result.currentCard;
-                 
+
     return new Promise(function(resolve, reject) {
-        window._TrelloController.callTrelloApi(urlParam, false, 0, 'GET', function(response){                    
+        window._TrelloController.callTrelloApi(urlParam, false, 0, 'GET', function(response){
             var adminBoard = response.obj.filter(function(o) { return o.name.toLowerCase() === "admin board" });
             var existsAdminBoard = (adminBoard.length > 0);
-                       
+
             return (existsAdminBoard) ?
                 resolve(adminBoard) :
-                resolve(t.popup({ title: 'Information missing', url: './no-admin.html', height: 200, args: {} }));                           
+                resolve(t.popup({ title: 'Information missing', url: './no-admin.html', height: 200, args: {} }));
         });
     })
+}
+
+function setNewCardWebhookAndSync(currentCard, t) {
+
+    // first, we create the webhook
+    return setNewCardWebhook(currentCard).then(function() {
+
+        // then, send a request to the server to sync the card.
+        // it needs to be done lie this the first time the card is created
+        return syncCard(currentCard, t);
+
+    });
 }
 
 function setNewCardWebhook(currentCard){
@@ -69,16 +82,54 @@ function setNewCardWebhook(currentCard){
                "callbackURL": "https://outstanding-existence.glitch.me/api/trello",
                "idModel": currentCard.id
            },
-           success: function() { resolve() }, 
+           success: function() { resolve() },
            error: function(err){ reject(err); }
       });
   });
 }
 
-function handleHttpError(error, t, currentCard) {  
+function syncCard(currentCard, t) {
+    return t.member('all').then(function(member) {
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/trello',
+                data: buildTrelloLikeBody(member, currentCard),
+                success: function() { resolve() },
+                error: function(err){ reject(err); }
+            });
+        });
+    });
+}
+
+function buildTrelloLikeBody(member, card) {
+    return {
+        action: {
+            idMemberCreator: member.id,
+            type: 'createCard',
+            data: {
+                card: card
+            },
+            display: {
+                translationKey: 'action_created_card'
+            }
+        }
+    }
+}
+
+function displaySuccessPopup(t) {
+    return t.popup({
+        title: 'The operation was successful!',
+        url: './successful-sync.html',
+        height: 200,
+        args: {}
+    })
+}
+
+function handleHttpError(error, t, currentCard) {
     switch(error.status) {
         case 400:
-            t.popup({ title: 'Card already synced', url: './synced-webhook.html', height: 200, args: {} });            
+            t.popup({ title: 'Card already synced', url: './synced-webhook.html', height: 200, args: {} });
         break;
     }
 }
