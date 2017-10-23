@@ -92,12 +92,13 @@ export default class TrelloAPI{
     }
 
     createCardFromExisting(opt){
-        required(opt, ['listId', 'originCardId']);
+        required(opt, ['listId', 'originCardId', 'pos']);
 
         var qs = querystring.stringify({
             idList: opt.listId,
             idCardSource: opt.originCardId,
-            keepFromSource: 'all'
+            keepFromSource: 'all',
+            pos: opt.pos
         });
         var opt = {
             method: 'POST',
