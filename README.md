@@ -14,7 +14,7 @@ At some point, it became annoying as a user to have to navigate through the boar
     * New lists are created in the Admin Board if needed when the original card is moved.
     * The synced card disappears once the original is deleted.
 
-![trello-admin-board](assets/img/details_example.JPG)
+![trello-admin-board](assets/img/trello_firstsync.gif)
 
 ## Getting Started
 First, install the Trello Admin Board by cloning this repository and installing the dependencies.
