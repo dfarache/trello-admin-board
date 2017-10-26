@@ -48,7 +48,7 @@ The last step consists of telling Trello where to find the *power-up* and of ins
 * The team administrator needs to go the [Power-Ups Administration](https://trello.com/power-ups/admin/) and select the team where the power-up will be installed.
 * Once in the Team page, click on *Create New Power-Up*.
 * Fill in the required fields, which are Power-Up Name and the URL to the manifest.json. The latter is served by the web server in which the extension is running.
-![trello-admin-board](assets/img/trello_powerup.png)
+![trello-admin-board](assets/img/trello_powerup.PNG)
 
 ## Contributing
 
