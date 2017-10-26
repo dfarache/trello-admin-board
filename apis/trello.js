@@ -4,8 +4,8 @@ import { sensibleRequest, required } from '../utils';
 
 export default class TrelloAPI{
     constructor(){
-        this.TRELLO_KEY = "26487ccf8a525b00ece2df7e92531b24";
-        this.TRELLO_TOKEN = "49308210aaafe86a1fdfb180779921406fcfdf443d0e27f60eb6d12f77e962cb";
+        this.TRELLO_KEY = "";
+        this.TRELLO_TOKEN = "";
         this.trelloUri = 'https://api.trello.com/1/';
     }
 

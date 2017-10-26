@@ -1,5 +1,5 @@
-var TRELLO_KEY = "26487ccf8a525b00ece2df7e92531b24";
-var TRELLO_TOKEN = "49308210aaafe86a1fdfb180779921406fcfdf443d0e27f60eb6d12f77e962cb";
+var TRELLO_KEY = "";
+var TRELLO_TOKEN = "";
 var STATUS_OK = "OK";
 var g_cPageNavigations = 0;
 var g_bLocalNotifications = false;
@@ -7,7 +7,7 @@ var g_mapLastActivityInfo = null;
 var g_user = null;
 
 var TrelloController = function() {
-    
+
 }
 
 function errFromXhr(xhr) {
@@ -40,7 +40,7 @@ TrelloController.prototype = {
         var url = "https://api.trello.com/1/" + urlParam + "?key=" + TRELLO_KEY + "&token=" + TRELLO_TOKEN;
         var xhr = new XMLHttpRequest();
         var bOkCallback = false;
-        xhr.onreadystatechange = function(e) {          
+        xhr.onreadystatechange = function(e) {
             if (xhr.readyState == 4) {
                 handleFinishRequest();
 
@@ -72,9 +72,9 @@ TrelloController.prototype = {
                                 now: Date.now()
                             };
                             if (objTransformed) {
-                                cacheItem.bTransformed = true;                                
+                                cacheItem.bTransformed = true;
                             } else {
-                                cacheItem.bTransformed = false;                              
+                                cacheItem.bTransformed = false;
                             }
                             localStorage[keyCached] = JSON.stringify(cacheItem);
                         } catch (ex) {

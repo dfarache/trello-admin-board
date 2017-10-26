@@ -3,8 +3,8 @@
 var Promise = TrelloPowerUp.Promise;
 
 var BLACK_ROCKET_ICON = 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421';
-var TRELLO_KEY = "26487ccf8a525b00ece2df7e92531b24";
-var TRELLO_TOKEN = "49308210aaafe86a1fdfb180779921406fcfdf443d0e27f60eb6d12f77e962cb";
+var TRELLO_KEY = "";
+var TRELLO_TOKEN = "";
 
 var trelloApiUrl = "https://api.trello.com/1/";
 
