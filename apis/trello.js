@@ -6,7 +6,7 @@ export default class TrelloAPI{
     constructor(config){
         this.TRELLO_KEY = config.trello.key;
         this.TRELLO_TOKEN = config.trello.token;        
-        this.trelloUri = 'https://api.trello.com/1/';
+        this.trelloUri = 'https://api.trello.com/1/';      
     }
 
     createTrelloUri(uri, qs = ''){
@@ -23,7 +23,18 @@ export default class TrelloAPI{
         }
         return sensibleRequest(opt);
     }
+  
+    getAllOrganiationBoards(opt) {
+          required(opt, ['organizationId']);
 
+          var opt = {
+              method: 'GET',
+              uri: this.createTrelloUri(`organizations/${opt.organizationId}/boards`),
+              json: true
+          }
+          return sensibleRequest(opt);
+    }
+  
     getBoardCards(opt) {
         required(opt, ['boardId']);
 
@@ -135,6 +146,30 @@ export default class TrelloAPI{
             method: 'DELETE',
             uri: this.createTrelloUri(`webhooks/${opt.webhookId}`),
             json: true
+        }
+        return sensibleRequest(opt);
+    }
+  
+    createWebhook(opt) {
+        required(opt, ['memberId', 'callbackUrl']);
+      console.log(opt)
+        var qs = querystring.stringify({
+            description: `card ${opt.meberId}`,
+            callbackUrl: opt.callbackUrl,
+            idModel: opt.memberId
+        });
+      console.log(this.createTrelloUri(`webhooks`))
+        var opt = {
+            method: 'POST',
+            uri: this.createTrelloUri(`webhooks`),
+            json: {
+                description: `card ${opt.memberId}`,
+                callbackURL: opt.callbackUrl,
+                idModel: opt.memberId
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }
         return sensibleRequest(opt);
     }

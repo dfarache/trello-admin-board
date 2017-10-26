@@ -28,7 +28,7 @@ app.use(function(err, req, res, next) {
 
     if(!res.headersSent){
         res
-          .status(err.status || 500)
+          .status(err.statusCode || 500)
           .send(err.message)
           .end();
     }

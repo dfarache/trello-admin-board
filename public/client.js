@@ -1,12 +1,7 @@
 /* global TrelloPowerUp */
 
 var Promise = TrelloPowerUp.Promise;
-
 var BLACK_ROCKET_ICON = 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421';
-var TRELLO_KEY = "";
-var TRELLO_TOKEN = "";
-
-var trelloApiUrl = "https://api.trello.com/1/";
 
 TrelloPowerUp.initialize({
   // Start adding handlers for your capabilities here!
@@ -30,7 +25,7 @@ function onCardButtonClick(t, options) {
     .then(function(result) {
         currentCard = result.currentCard;
 
-        return getAdminBoard(result, t);
+        return getAdminBoard(t, result.board);
     }).then(function(adminBoard) {
         return (adminBoard == null)
             ? undefined
@@ -44,20 +39,22 @@ function onCardButtonClick(t, options) {
     });
 }
 
-function getAdminBoard(result,t) {
-    var urlParam = "organizations/" + result.board.idOrganization + "/boards";
-    var currentCard = result.currentCard;
-
+function getAdminBoard(t, board) {
     return new Promise(function(resolve, reject) {
-        window._TrelloController.callTrelloApi(urlParam, false, 0, 'GET', function(response){
-            var adminBoard = response.obj.filter(function(o) { return o.name.toLowerCase() === "admin board" });
-            var existsAdminBoard = (adminBoard.length > 0);
+        $.ajax({
+            type: 'GET',
+            url: '/api/trello/organizations/' + board.idOrganization + '/boards',            
+            error: function(err){ reject(err); },
+            success: function(data) {
+                var adminBoard = data.filter(function(o) { return o.name.toLowerCase() === "admin board" });
+                var existsAdminBoard = (adminBoard.length > 0);
 
-            return (existsAdminBoard) ?
-                resolve(adminBoard) :
-                resolve(t.popup({ title: 'Information missing', url: './no-admin.html', height: 200, args: {} }));
+                return (existsAdminBoard) ?
+                    resolve(adminBoard) :
+                    resolve(t.popup({ title: 'Information missing', url: './no-admin.html', height: 200, args: {} }));
+            }
         });
-    })
+    });
 }
 
 function setNewCardWebhookAndSync(currentCard, t) {
@@ -75,17 +72,15 @@ function setNewCardWebhookAndSync(currentCard, t) {
 function setNewCardWebhook(currentCard){
     return new Promise(function(resolve, reject) {
         $.ajax({
-           type: "POST",
-           url: trelloApiUrl + "webhooks?key=" + TRELLO_KEY + "&token=" + TRELLO_TOKEN,
-           data: {
-               "description": "card " + currentCard.id,
-               "callbackURL": "https://outstanding-existence.glitch.me/api/trello",
-               "idModel": currentCard.id
-           },
-           success: function() { resolve() },
-           error: function(err){ reject(err); }
-      });
-  });
+            type: 'POST',
+            url: '/api/trello/webhook',
+            data: {
+                memberId: currentCard.id
+            },
+            error: function(err){ reject(err); },
+            success: function(data) { resolve(); }
+        });
+    });
 }
 
 function syncCard(currentCard, t) {
