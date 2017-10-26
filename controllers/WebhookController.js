@@ -1,10 +1,10 @@
 import WebhookService from '../services/WebhookService';
 
 export default class WebhookController{
-    constructor(){
-        this.service = new WebhookService();
+    constructor(config){
+        this.service = new WebhookService(config);
     }
-    
+
     setupRouter(router){
         router.get('/', this.test.bind(this));
         router.get('/webhooks/all', this.getAllWebhooks.bind(this));

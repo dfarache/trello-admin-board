@@ -4,8 +4,9 @@ import TrelloApi from '../apis/trello';
 import { required ,throwHttpError } from '../utils';
 
 export default class WebhookService {
-    constructor(){
-        this.api = new TrelloApi();
+    constructor(config){
+        this.config = config;
+        this.api = new TrelloApi(config);
     }
 
     processTrelloCardChange(opt) {

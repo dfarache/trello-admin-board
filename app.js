@@ -2,6 +2,7 @@ const express = require('express'),
     cors = require('cors'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
+    config = require('konfig')().app,
     Logger = require('./logger');
 
 const app = express();
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 const PublicAPIController = require('./controllers')();
-app.use('/api', new PublicAPIController().setupRouter(express.Router()));
+app.use('/api', new PublicAPIController(config).setupRouter(express.Router()));
 
 app.use(express.static('public'));
 

@@ -3,10 +3,10 @@ import WebhookController from './WebhookController';
 
 module.exports = function(){
     return class PublicAPIController{
-        constructor(){
-            this.WebhookController = new WebhookController();
+        constructor(config){
+            this.WebhookController = new WebhookController(config);
         }
-        
+
         setupRouter(router){
             router.use('/trello', this.WebhookController.setupRouter(express.Router()));
             return router;

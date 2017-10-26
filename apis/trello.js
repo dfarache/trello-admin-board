@@ -3,9 +3,9 @@ import querystring from 'querystring';
 import { sensibleRequest, required } from '../utils';
 
 export default class TrelloAPI{
-    constructor(){
-        this.TRELLO_KEY = "";
-        this.TRELLO_TOKEN = "";
+    constructor(config){
+        this.TRELLO_KEY = config.trello.key;
+        this.TRELLO_TOKEN = config.trello.token;        
         this.trelloUri = 'https://api.trello.com/1/';
     }
 
