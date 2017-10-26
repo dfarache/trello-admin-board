@@ -36,4 +36,8 @@ However, if you have a web server ready, you may use it to install the extension
 3. You should see a message in your console saying that the server is up and running.
 
 ### Adding your Trello credentials
-In order to authenticate against the Trello API, the server needs the Trello credentials of the project administrator.
+In order to authenticate against the Trello API, the server needs the Trello credentials of the project administrator; both can be found and generated [here](https://trello.com/app-key).
+
+These values need to be stored as environment variables with **TRELLO_KEY** and **TRELLO_TOKEN** as their respective keys.
+
+![trello-admin-board](assets/img/trello_keys.png)
