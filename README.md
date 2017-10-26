@@ -20,6 +20,7 @@ The installation consists of 2 parts:
 1. Setting up a web server that listens to the Webhooks sent by Trello and acts as middleware between the power-up and the Trello API.
 2. Adding your Trello credentials as environment values.
 3. Installing the Trello power-up in the boards you want to sync.
+4. Creating the Admin Board.
 
 ### Running the web server
 The first requisite to run the extension is to run it in a machine accessible through port 443 (HTTPS). **We recommend importing this repository into a [Glitch](https://www.google.com) project**, as it will take care of installing the dependencies and setting up the proxy to redirect the requests to the *node.js* server.
@@ -38,6 +39,24 @@ However, if you have a web server ready, you may use it to install the extension
 ### Adding your Trello credentials
 In order to authenticate against the Trello API, the server needs the Trello credentials of the project administrator; both can be found and generated [here](https://trello.com/app-key).
 
-These values need to be stored as environment variables with **TRELLO_KEY** and **TRELLO_TOKEN** as their respective keys.
+These values need to be stored as environment variables with **TRELLO_KEY** and **TRELLO_TOKEN** as their respective keys in the machine where the server is running.
 
 ![trello-admin-board](assets/img/trello_keys.png)
+
+### Installing the Trello power-up
+The last step consists of telling Trello where to find the *power-up* and of installing it in the boards in which the extension is wanted:
+* The team administrator needs to go the [Power-Ups Administration](https://trello.com/power-ups/admin/) and select the team where the power-up will be installed.
+* Once in the Team page, click on *Create New Power-Up*.
+* Fill in the required fields, which are Power-Up Name and the URL to the manifest.json. The latter is served by the web server in which the extension is running.
+![trello-admin-board](assets/img/trello_powerup.png)
+
+## Contributing
+
+1. Fork it!
+2. Create your feature branch: `git checkout -b my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin my-new-feature`
+5. Submit a pull request :D
+
+## License
+Released under the MIT license.
