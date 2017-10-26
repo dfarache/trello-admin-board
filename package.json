@@ -29,7 +29,7 @@
     "node": "8.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/welcome-project"
+    "url": "https://github.com/dfarache/trello-admin-board"
   },
   "license": "MIT",
   "keywords": [
