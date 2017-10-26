@@ -23,7 +23,7 @@ export default class TrelloAPI{
         }
         return sensibleRequest(opt);
     }
-  
+
     getAllOrganiationBoards(opt) {
           required(opt, ['organizationId']);
 
@@ -34,7 +34,7 @@ export default class TrelloAPI{
           }
           return sensibleRequest(opt);
     }
-  
+
     getBoardCards(opt) {
         required(opt, ['boardId']);
 
@@ -149,16 +149,15 @@ export default class TrelloAPI{
         }
         return sensibleRequest(opt);
     }
-  
+
     createWebhook(opt) {
         required(opt, ['memberId', 'callbackUrl']);
-      console.log(opt)
+
         var qs = querystring.stringify({
             description: `card ${opt.meberId}`,
             callbackUrl: opt.callbackUrl,
             idModel: opt.memberId
-        });
-      console.log(this.createTrelloUri(`webhooks`))
+        });      
         var opt = {
             method: 'POST',
             uri: this.createTrelloUri(`webhooks`),

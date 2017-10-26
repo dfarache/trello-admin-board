@@ -80,10 +80,10 @@ export default class TrelloService {
             });
         });
     }
-  
+
     createCardWebhook(opt) {
         required(opt, ['memberId', 'callbackUrl']);
-        console.log(opt)
+  
         return this.api.createWebhook(opt);
     }
 
@@ -98,10 +98,10 @@ export default class TrelloService {
     getAllWebhooks() {
         return this.api.listWebhooks();
     }
-  
+
     getAllOrganiationBoards(opt) {
         required(opt, ['organizationId']);
-      
+
         return this.api.getAllOrganiationBoards({
             organizationId: opt.organizationId
         });
