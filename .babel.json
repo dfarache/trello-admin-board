@@ -1613,5 +1613,2215 @@
       ]
     },
     "mtime": 1508418873311
+  },
+  "{\"filename\":\"/app/app.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [],
+      "marked": [],
+      "modules": {
+        "imports": [],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/app.js",
+      "filenameRelative": "/app/app.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "app.js",
+      "sourceFileName": "app.js",
+      "sourceRoot": "/app",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "app"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nvar express = require('express'),\n    cors = require('cors'),\n    bodyParser = require('body-parser'),\n    methodOverride = require('method-override'),\n    config = require('konfig')().app,\n    Logger = require('./logger');\n\nvar app = express();\nvar log = new Logger(app);\n\napp.use(cors({ origin: '*' }));\napp.use(bodyParser.json());\napp.use(bodyParser.urlencoded({ extended: true }));\napp.use(methodOverride('X-HTTP-Method-Override'));\n\nvar PublicAPIController = require('./controllers')();\napp.use('/api', new PublicAPIController(config).setupRouter(express.Router()));\n\napp.use(express.static('public'));\n\napp.get(\"*\", function (request, response) {\n    response.sendFile(__dirname + '/public/index.html');\n});\n\n//handle HTTP errors\napp.use(function (err, req, res, next) {\n    console.log(err);\n\n    if (!res.headersSent) {\n        res.status(err.statusCode || 500).send(err.message).end();\n    }\n});\n\n// listen for requests :)\nvar listener = app.listen(process.env.PORT, function () {\n    console.log('Your app is listening on port ' + listener.address().port);\n});\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5qcyJdLCJuYW1lcyI6WyJleHByZXNzIiwicmVxdWlyZSIsImNvcnMiLCJib2R5UGFyc2VyIiwibWV0aG9kT3ZlcnJpZGUiLCJjb25maWciLCJhcHAiLCJMb2dnZXIiLCJsb2ciLCJ1c2UiLCJvcmlnaW4iLCJqc29uIiwidXJsZW5jb2RlZCIsImV4dGVuZGVkIiwiUHVibGljQVBJQ29udHJvbGxlciIsInNldHVwUm91dGVyIiwiUm91dGVyIiwic3RhdGljIiwiZ2V0IiwicmVxdWVzdCIsInJlc3BvbnNlIiwic2VuZEZpbGUiLCJfX2Rpcm5hbWUiLCJlcnIiLCJyZXEiLCJyZXMiLCJuZXh0IiwiY29uc29sZSIsImhlYWRlcnNTZW50Iiwic3RhdHVzIiwic3RhdHVzQ29kZSIsInNlbmQiLCJtZXNzYWdlIiwiZW5kIiwibGlzdGVuZXIiLCJsaXN0ZW4iLCJwcm9jZXNzIiwiZW52IiwiUE9SVCIsImFkZHJlc3MiLCJwb3J0Il0sIm1hcHBpbmdzIjoiOztBQUFBLElBQU1BLFVBQVVDLFFBQVEsU0FBUixDQUFoQjtBQUFBLElBQ0lDLE9BQU9ELFFBQVEsTUFBUixDQURYO0FBQUEsSUFFSUUsYUFBYUYsUUFBUSxhQUFSLENBRmpCO0FBQUEsSUFHSUcsaUJBQWlCSCxRQUFRLGlCQUFSLENBSHJCO0FBQUEsSUFJSUksU0FBU0osUUFBUSxRQUFSLElBQW9CSyxHQUpqQztBQUFBLElBS0lDLFNBQVNOLFFBQVEsVUFBUixDQUxiOztBQU9BLElBQU1LLE1BQU1OLFNBQVo7QUFDQSxJQUFNUSxNQUFNLElBQUlELE1BQUosQ0FBV0QsR0FBWCxDQUFaOztBQUVBQSxJQUFJRyxHQUFKLENBQVFQLEtBQUssRUFBRVEsUUFBUSxHQUFWLEVBQUwsQ0FBUjtBQUNBSixJQUFJRyxHQUFKLENBQVFOLFdBQVdRLElBQVgsRUFBUjtBQUNBTCxJQUFJRyxHQUFKLENBQVFOLFdBQVdTLFVBQVgsQ0FBc0IsRUFBRUMsVUFBVSxJQUFaLEVBQXRCLENBQVI7QUFDQVAsSUFBSUcsR0FBSixDQUFRTCxlQUFlLHdCQUFmLENBQVI7O0FBRUEsSUFBTVUsc0JBQXNCYixRQUFRLGVBQVIsR0FBNUI7QUFDQUssSUFBSUcsR0FBSixDQUFRLE1BQVIsRUFBZ0IsSUFBSUssbUJBQUosQ0FBd0JULE1BQXhCLEVBQWdDVSxXQUFoQyxDQUE0Q2YsUUFBUWdCLE1BQVIsRUFBNUMsQ0FBaEI7O0FBRUFWLElBQUlHLEdBQUosQ0FBUVQsUUFBUWlCLE1BQVIsQ0FBZSxRQUFmLENBQVI7O0FBRUFYLElBQUlZLEdBQUosQ0FBUSxHQUFSLEVBQWEsVUFBVUMsT0FBVixFQUFtQkMsUUFBbkIsRUFBNkI7QUFDeENBLGFBQVNDLFFBQVQsQ0FBa0JDLFlBQVksb0JBQTlCO0FBQ0QsQ0FGRDs7QUFJQTtBQUNBaEIsSUFBSUcsR0FBSixDQUFRLFVBQVNjLEdBQVQsRUFBY0MsR0FBZCxFQUFtQkMsR0FBbkIsRUFBd0JDLElBQXhCLEVBQThCO0FBQ2xDQyxZQUFRbkIsR0FBUixDQUFZZSxHQUFaOztBQUVBLFFBQUcsQ0FBQ0UsSUFBSUcsV0FBUixFQUFvQjtBQUNoQkgsWUFDR0ksTUFESCxDQUNVTixJQUFJTyxVQUFKLElBQWtCLEdBRDVCLEVBRUdDLElBRkgsQ0FFUVIsSUFBSVMsT0FGWixFQUdHQyxHQUhIO0FBSUg7QUFDSixDQVREOztBQVdBO0FBQ0EsSUFBSUMsV0FBVzVCLElBQUk2QixNQUFKLENBQVdDLFFBQVFDLEdBQVIsQ0FBWUMsSUFBdkIsRUFBNkIsWUFBWTtBQUN0RFgsWUFBUW5CLEdBQVIsQ0FBWSxtQ0FBbUMwQixTQUFTSyxPQUFULEdBQW1CQyxJQUFsRTtBQUNELENBRmMsQ0FBZiIsImZpbGUiOiJhcHAuanMiLCJzb3VyY2VSb290IjoiL2FwcCIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IGV4cHJlc3MgPSByZXF1aXJlKCdleHByZXNzJyksXG4gICAgY29ycyA9IHJlcXVpcmUoJ2NvcnMnKSxcbiAgICBib2R5UGFyc2VyID0gcmVxdWlyZSgnYm9keS1wYXJzZXInKSxcbiAgICBtZXRob2RPdmVycmlkZSA9IHJlcXVpcmUoJ21ldGhvZC1vdmVycmlkZScpLFxuICAgIGNvbmZpZyA9IHJlcXVpcmUoJ2tvbmZpZycpKCkuYXBwLFxuICAgIExvZ2dlciA9IHJlcXVpcmUoJy4vbG9nZ2VyJyk7XG5cbmNvbnN0IGFwcCA9IGV4cHJlc3MoKTtcbmNvbnN0IGxvZyA9IG5ldyBMb2dnZXIoYXBwKTtcblxuYXBwLnVzZShjb3JzKHsgb3JpZ2luOiAnKicgfSkpO1xuYXBwLnVzZShib2R5UGFyc2VyLmpzb24oKSk7XG5hcHAudXNlKGJvZHlQYXJzZXIudXJsZW5jb2RlZCh7IGV4dGVuZGVkOiB0cnVlIH0pKTtcbmFwcC51c2UobWV0aG9kT3ZlcnJpZGUoJ1gtSFRUUC1NZXRob2QtT3ZlcnJpZGUnKSk7XG5cbmNvbnN0IFB1YmxpY0FQSUNvbnRyb2xsZXIgPSByZXF1aXJlKCcuL2NvbnRyb2xsZXJzJykoKTtcbmFwcC51c2UoJy9hcGknLCBuZXcgUHVibGljQVBJQ29udHJvbGxlcihjb25maWcpLnNldHVwUm91dGVyKGV4cHJlc3MuUm91dGVyKCkpKTtcblxuYXBwLnVzZShleHByZXNzLnN0YXRpYygncHVibGljJykpO1xuXG5hcHAuZ2V0KFwiKlwiLCBmdW5jdGlvbiAocmVxdWVzdCwgcmVzcG9uc2UpIHtcbiAgcmVzcG9uc2Uuc2VuZEZpbGUoX19kaXJuYW1lICsgJy9wdWJsaWMvaW5kZXguaHRtbCcpO1xufSk7XG5cbi8vaGFuZGxlIEhUVFAgZXJyb3JzXG5hcHAudXNlKGZ1bmN0aW9uKGVyciwgcmVxLCByZXMsIG5leHQpIHtcbiAgICBjb25zb2xlLmxvZyhlcnIpO1xuXG4gICAgaWYoIXJlcy5oZWFkZXJzU2VudCl7XG4gICAgICAgIHJlc1xuICAgICAgICAgIC5zdGF0dXMoZXJyLnN0YXR1c0NvZGUgfHwgNTAwKVxuICAgICAgICAgIC5zZW5kKGVyci5tZXNzYWdlKVxuICAgICAgICAgIC5lbmQoKTtcbiAgICB9XG59KTtcblxuLy8gbGlzdGVuIGZvciByZXF1ZXN0cyA6KVxudmFyIGxpc3RlbmVyID0gYXBwLmxpc3Rlbihwcm9jZXNzLmVudi5QT1JULCBmdW5jdGlvbiAoKSB7XG4gIGNvbnNvbGUubG9nKCdZb3VyIGFwcCBpcyBsaXN0ZW5pbmcgb24gcG9ydCAnICsgbGlzdGVuZXIuYWRkcmVzcygpLnBvcnQpO1xufSk7XG4iXX0=",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "app.js"
+      ],
+      "names": [
+        "express",
+        "require",
+        "cors",
+        "bodyParser",
+        "methodOverride",
+        "config",
+        "app",
+        "Logger",
+        "log",
+        "use",
+        "origin",
+        "json",
+        "urlencoded",
+        "extended",
+        "PublicAPIController",
+        "setupRouter",
+        "Router",
+        "static",
+        "get",
+        "request",
+        "response",
+        "sendFile",
+        "__dirname",
+        "err",
+        "req",
+        "res",
+        "next",
+        "console",
+        "headersSent",
+        "status",
+        "statusCode",
+        "send",
+        "message",
+        "end",
+        "listener",
+        "listen",
+        "process",
+        "env",
+        "PORT",
+        "address",
+        "port"
+      ],
+      "mappings": ";;AAAA,IAAMA,UAAUC,QAAQ,SAAR,CAAhB;AAAA,IACIC,OAAOD,QAAQ,MAAR,CADX;AAAA,IAEIE,aAAaF,QAAQ,aAAR,CAFjB;AAAA,IAGIG,iBAAiBH,QAAQ,iBAAR,CAHrB;AAAA,IAIII,SAASJ,QAAQ,QAAR,IAAoBK,GAJjC;AAAA,IAKIC,SAASN,QAAQ,UAAR,CALb;;AAOA,IAAMK,MAAMN,SAAZ;AACA,IAAMQ,MAAM,IAAID,MAAJ,CAAWD,GAAX,CAAZ;;AAEAA,IAAIG,GAAJ,CAAQP,KAAK,EAAEQ,QAAQ,GAAV,EAAL,CAAR;AACAJ,IAAIG,GAAJ,CAAQN,WAAWQ,IAAX,EAAR;AACAL,IAAIG,GAAJ,CAAQN,WAAWS,UAAX,CAAsB,EAAEC,UAAU,IAAZ,EAAtB,CAAR;AACAP,IAAIG,GAAJ,CAAQL,eAAe,wBAAf,CAAR;;AAEA,IAAMU,sBAAsBb,QAAQ,eAAR,GAA5B;AACAK,IAAIG,GAAJ,CAAQ,MAAR,EAAgB,IAAIK,mBAAJ,CAAwBT,MAAxB,EAAgCU,WAAhC,CAA4Cf,QAAQgB,MAAR,EAA5C,CAAhB;;AAEAV,IAAIG,GAAJ,CAAQT,QAAQiB,MAAR,CAAe,QAAf,CAAR;;AAEAX,IAAIY,GAAJ,CAAQ,GAAR,EAAa,UAAUC,OAAV,EAAmBC,QAAnB,EAA6B;AACxCA,aAASC,QAAT,CAAkBC,YAAY,oBAA9B;AACD,CAFD;;AAIA;AACAhB,IAAIG,GAAJ,CAAQ,UAASc,GAAT,EAAcC,GAAd,EAAmBC,GAAnB,EAAwBC,IAAxB,EAA8B;AAClCC,YAAQnB,GAAR,CAAYe,GAAZ;;AAEA,QAAG,CAACE,IAAIG,WAAR,EAAoB;AAChBH,YACGI,MADH,CACUN,IAAIO,UAAJ,IAAkB,GAD5B,EAEGC,IAFH,CAEQR,IAAIS,OAFZ,EAGGC,GAHH;AAIH;AACJ,CATD;;AAWA;AACA,IAAIC,WAAW5B,IAAI6B,MAAJ,CAAWC,QAAQC,GAAR,CAAYC,IAAvB,EAA6B,YAAY;AACtDX,YAAQnB,GAAR,CAAY,mCAAmC0B,SAASK,OAAT,GAAmBC,IAAlE;AACD,CAFc,CAAf",
+      "file": "app.js",
+      "sourceRoot": "/app",
+      "sourcesContent": [
+        "const express = require('express'),\n    cors = require('cors'),\n    bodyParser = require('body-parser'),\n    methodOverride = require('method-override'),\n    config = require('konfig')().app,\n    Logger = require('./logger');\n\nconst app = express();\nconst log = new Logger(app);\n\napp.use(cors({ origin: '*' }));\napp.use(bodyParser.json());\napp.use(bodyParser.urlencoded({ extended: true }));\napp.use(methodOverride('X-HTTP-Method-Override'));\n\nconst PublicAPIController = require('./controllers')();\napp.use('/api', new PublicAPIController(config).setupRouter(express.Router()));\n\napp.use(express.static('public'));\n\napp.get(\"*\", function (request, response) {\n  response.sendFile(__dirname + '/public/index.html');\n});\n\n//handle HTTP errors\napp.use(function(err, req, res, next) {\n    console.log(err);\n\n    if(!res.headersSent){\n        res\n          .status(err.statusCode || 500)\n          .send(err.message)\n          .end();\n    }\n});\n\n// listen for requests :)\nvar listener = app.listen(process.env.PORT, function () {\n  console.log('Your app is listening on port ' + listener.address().port);\n});\n"
+      ]
+    },
+    "mtime": 1509012443213
+  },
+  "{\"filename\":\"/app/logger/index.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/logger\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "classCallCheck"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/logger/index.js",
+      "filenameRelative": "/app/logger/index.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "index.js",
+      "sourceFileName": "index.js",
+      "sourceRoot": "/app/logger",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/logger",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "index"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar config = require('./config'),\n    bunyanLogger = require('express-bunyan-logger');\n\nmodule.exports = function Logger(app) {\n    _classCallCheck(this, Logger);\n\n    app.use(bunyanLogger(config.request));\n    app.use(bunyanLogger.errorLogger(config.error));\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbImNvbmZpZyIsInJlcXVpcmUiLCJidW55YW5Mb2dnZXIiLCJtb2R1bGUiLCJleHBvcnRzIiwiYXBwIiwidXNlIiwicmVxdWVzdCIsImVycm9yTG9nZ2VyIiwiZXJyb3IiXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxJQUFNQSxTQUFTQyxRQUFRLFVBQVIsQ0FBZjtBQUFBLElBQ0lDLGVBQWVELFFBQVEsdUJBQVIsQ0FEbkI7O0FBR0FFLE9BQU9DLE9BQVAsR0FFSSxnQkFBWUMsR0FBWixFQUFnQjtBQUFBOztBQUNaQSxRQUFJQyxHQUFKLENBQVFKLGFBQWFGLE9BQU9PLE9BQXBCLENBQVI7QUFDQUYsUUFBSUMsR0FBSixDQUFRSixhQUFhTSxXQUFiLENBQXlCUixPQUFPUyxLQUFoQyxDQUFSO0FBQ0gsQ0FMTCIsImZpbGUiOiJpbmRleC5qcyIsInNvdXJjZVJvb3QiOiIvYXBwL2xvZ2dlciIsInNvdXJjZXNDb250ZW50IjpbImNvbnN0IGNvbmZpZyA9IHJlcXVpcmUoJy4vY29uZmlnJyksXG4gICAgYnVueWFuTG9nZ2VyID0gcmVxdWlyZSgnZXhwcmVzcy1idW55YW4tbG9nZ2VyJyk7XG5cbm1vZHVsZS5leHBvcnRzID0gY2xhc3MgTG9nZ2VyIHtcblxuICAgIGNvbnN0cnVjdG9yKGFwcCl7XG4gICAgICAgIGFwcC51c2UoYnVueWFuTG9nZ2VyKGNvbmZpZy5yZXF1ZXN0KSk7XG4gICAgICAgIGFwcC51c2UoYnVueWFuTG9nZ2VyLmVycm9yTG9nZ2VyKGNvbmZpZy5lcnJvcikpO1xuICAgIH1cblxufVxuIl19",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "index.js"
+      ],
+      "names": [
+        "config",
+        "require",
+        "bunyanLogger",
+        "module",
+        "exports",
+        "app",
+        "use",
+        "request",
+        "errorLogger",
+        "error"
+      ],
+      "mappings": ";;;;AAAA,IAAMA,SAASC,QAAQ,UAAR,CAAf;AAAA,IACIC,eAAeD,QAAQ,uBAAR,CADnB;;AAGAE,OAAOC,OAAP,GAEI,gBAAYC,GAAZ,EAAgB;AAAA;;AACZA,QAAIC,GAAJ,CAAQJ,aAAaF,OAAOO,OAApB,CAAR;AACAF,QAAIC,GAAJ,CAAQJ,aAAaM,WAAb,CAAyBR,OAAOS,KAAhC,CAAR;AACH,CALL",
+      "file": "index.js",
+      "sourceRoot": "/app/logger",
+      "sourcesContent": [
+        "const config = require('./config'),\n    bunyanLogger = require('express-bunyan-logger');\n\nmodule.exports = class Logger {\n\n    constructor(app){\n        app.use(bunyanLogger(config.request));\n        app.use(bunyanLogger.errorLogger(config.error));\n    }\n\n}\n"
+      ]
+    },
+    "mtime": 1509008830597
+  },
+  "{\"filename\":\"/app/controllers/index.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/controllers\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck",
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "express",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "express"
+              }
+            ]
+          },
+          {
+            "source": "./TrelloController",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "TrelloController"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/controllers/index.js",
+      "filenameRelative": "/app/controllers/index.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "index.js",
+      "sourceFileName": "index.js",
+      "sourceRoot": "/app/controllers",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/controllers",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "index"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _express = require('express');\n\nvar _express2 = _interopRequireDefault(_express);\n\nvar _TrelloController = require('./TrelloController');\n\nvar _TrelloController2 = _interopRequireDefault(_TrelloController);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nmodule.exports = function () {\n    return function () {\n        function PublicAPIController(config) {\n            _classCallCheck(this, PublicAPIController);\n\n            this.TrelloController = new _TrelloController2.default(config);\n        }\n\n        _createClass(PublicAPIController, [{\n            key: 'setupRouter',\n            value: function setupRouter(router) {\n                router.use('/trello', this.TrelloController.setupRouter(_express2.default.Router()));\n                return router;\n            }\n        }]);\n\n        return PublicAPIController;\n    }();\n};\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbIm1vZHVsZSIsImV4cG9ydHMiLCJjb25maWciLCJUcmVsbG9Db250cm9sbGVyIiwicm91dGVyIiwidXNlIiwic2V0dXBSb3V0ZXIiLCJSb3V0ZXIiXSwibWFwcGluZ3MiOiI7Ozs7QUFBQTs7OztBQUNBOzs7Ozs7OztBQUVBQSxPQUFPQyxPQUFQLEdBQWlCLFlBQVU7QUFDdkI7QUFDSSxxQ0FBWUMsTUFBWixFQUFtQjtBQUFBOztBQUNmLGlCQUFLQyxnQkFBTCxHQUF3QiwrQkFBcUJELE1BQXJCLENBQXhCO0FBQ0g7O0FBSEw7QUFBQTtBQUFBLHdDQUtnQkUsTUFMaEIsRUFLdUI7QUFDZkEsdUJBQU9DLEdBQVAsQ0FBVyxTQUFYLEVBQXNCLEtBQUtGLGdCQUFMLENBQXNCRyxXQUF0QixDQUFrQyxrQkFBUUMsTUFBUixFQUFsQyxDQUF0QjtBQUNBLHVCQUFPSCxNQUFQO0FBQ0g7QUFSTDs7QUFBQTtBQUFBO0FBVUgsQ0FYRCIsImZpbGUiOiJpbmRleC5qcyIsInNvdXJjZVJvb3QiOiIvYXBwL2NvbnRyb2xsZXJzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGV4cHJlc3MgZnJvbSAnZXhwcmVzcyc7XG5pbXBvcnQgVHJlbGxvQ29udHJvbGxlciBmcm9tICcuL1RyZWxsb0NvbnRyb2xsZXInO1xuXG5tb2R1bGUuZXhwb3J0cyA9IGZ1bmN0aW9uKCl7XG4gICAgcmV0dXJuIGNsYXNzIFB1YmxpY0FQSUNvbnRyb2xsZXJ7XG4gICAgICAgIGNvbnN0cnVjdG9yKGNvbmZpZyl7XG4gICAgICAgICAgICB0aGlzLlRyZWxsb0NvbnRyb2xsZXIgPSBuZXcgVHJlbGxvQ29udHJvbGxlcihjb25maWcpO1xuICAgICAgICB9XG5cbiAgICAgICAgc2V0dXBSb3V0ZXIocm91dGVyKXtcbiAgICAgICAgICAgIHJvdXRlci51c2UoJy90cmVsbG8nLCB0aGlzLlRyZWxsb0NvbnRyb2xsZXIuc2V0dXBSb3V0ZXIoZXhwcmVzcy5Sb3V0ZXIoKSkpO1xuICAgICAgICAgICAgcmV0dXJuIHJvdXRlcjtcbiAgICAgICAgfVxuICAgIH1cbn1cbiJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "index.js"
+      ],
+      "names": [
+        "module",
+        "exports",
+        "config",
+        "TrelloController",
+        "router",
+        "use",
+        "setupRouter",
+        "Router"
+      ],
+      "mappings": ";;;;AAAA;;;;AACA;;;;;;;;AAEAA,OAAOC,OAAP,GAAiB,YAAU;AACvB;AACI,qCAAYC,MAAZ,EAAmB;AAAA;;AACf,iBAAKC,gBAAL,GAAwB,+BAAqBD,MAArB,CAAxB;AACH;;AAHL;AAAA;AAAA,wCAKgBE,MALhB,EAKuB;AACfA,uBAAOC,GAAP,CAAW,SAAX,EAAsB,KAAKF,gBAAL,CAAsBG,WAAtB,CAAkC,kBAAQC,MAAR,EAAlC,CAAtB;AACA,uBAAOH,MAAP;AACH;AARL;;AAAA;AAAA;AAUH,CAXD",
+      "file": "index.js",
+      "sourceRoot": "/app/controllers",
+      "sourcesContent": [
+        "import express from 'express';\nimport TrelloController from './TrelloController';\n\nmodule.exports = function(){\n    return class PublicAPIController{\n        constructor(config){\n            this.TrelloController = new TrelloController(config);\n        }\n\n        setupRouter(router){\n            router.use('/trello', this.TrelloController.setupRouter(express.Router()));\n            return router;\n        }\n    }\n}\n"
+      ]
+    },
+    "mtime": 1509009921758
+  },
+  "{\"filename\":\"/app/controllers/WebhookController.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/controllers\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck",
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "../services/WebhookService",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "WebhookService"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [
+            "WebhookController"
+          ],
+          "specifiers": [
+            {
+              "kind": "local",
+              "local": "WebhookController",
+              "exported": "default"
+            }
+          ]
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/controllers/WebhookController.js",
+      "filenameRelative": "/app/controllers/WebhookController.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "WebhookController.js",
+      "sourceFileName": "WebhookController.js",
+      "sourceRoot": "/app/controllers",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/controllers",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "WebhookController"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _WebhookService = require('../services/WebhookService');\n\nvar _WebhookService2 = _interopRequireDefault(_WebhookService);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar WebhookController = function () {\n    function WebhookController(config) {\n        _classCallCheck(this, WebhookController);\n\n        this.service = new _WebhookService2.default(config);\n    }\n\n    _createClass(WebhookController, [{\n        key: 'setupRouter',\n        value: function setupRouter(router) {\n            router.get('/', this.test.bind(this));\n            router.get('/webhooks/all', this.getAllWebhooks.bind(this));\n            router.post('/', this.processTrelloCardChange.bind(this));\n            router.delete('/all', this.deleteAllWebhooks.bind(this));\n            router.delete('/:cardId', this.deleteCardWebhook.bind(this));\n            return router;\n        }\n    }, {\n        key: 'test',\n        value: function test(req, res, next) {\n            res.send('0k').status(200).end();\n        }\n    }, {\n        key: 'getAllWebhooks',\n        value: function getAllWebhooks(req, res, next) {\n            return this.service.getAllWebhooks().then(function (webhooks) {\n                return res.json(webhooks).status(200).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'processTrelloCardChange',\n        value: function processTrelloCardChange(req, res, next) {\n            return this.service.processTrelloCardChange(req.body).then(function () {\n                return res.status(200).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'deleteCardWebhook',\n        value: function deleteCardWebhook(req, res, next) {\n            return this.service.deleteCardWebhook({\n                cardId: req.params.cardId\n            }).then(function () {\n                return res.status(204).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'deleteAllWebhooks',\n        value: function deleteAllWebhooks(req, res, next) {\n            return this.service.deleteAllWebhooks().then(function () {\n                return res.status(204).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }]);\n\n    return WebhookController;\n}();\n\nexports.default = WebhookController;\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIldlYmhvb2tDb250cm9sbGVyLmpzIl0sIm5hbWVzIjpbIldlYmhvb2tDb250cm9sbGVyIiwiY29uZmlnIiwic2VydmljZSIsInJvdXRlciIsImdldCIsInRlc3QiLCJiaW5kIiwiZ2V0QWxsV2ViaG9va3MiLCJwb3N0IiwicHJvY2Vzc1RyZWxsb0NhcmRDaGFuZ2UiLCJkZWxldGUiLCJkZWxldGVBbGxXZWJob29rcyIsImRlbGV0ZUNhcmRXZWJob29rIiwicmVxIiwicmVzIiwibmV4dCIsInNlbmQiLCJzdGF0dXMiLCJlbmQiLCJ0aGVuIiwianNvbiIsIndlYmhvb2tzIiwiY2F0Y2giLCJlcnIiLCJib2R5IiwiY2FyZElkIiwicGFyYW1zIl0sIm1hcHBpbmdzIjoiOzs7Ozs7OztBQUFBOzs7Ozs7OztJQUVxQkEsaUI7QUFDakIsK0JBQVlDLE1BQVosRUFBbUI7QUFBQTs7QUFDZixhQUFLQyxPQUFMLEdBQWUsNkJBQW1CRCxNQUFuQixDQUFmO0FBQ0g7Ozs7b0NBRVdFLE0sRUFBTztBQUNmQSxtQkFBT0MsR0FBUCxDQUFXLEdBQVgsRUFBZ0IsS0FBS0MsSUFBTCxDQUFVQyxJQUFWLENBQWUsSUFBZixDQUFoQjtBQUNBSCxtQkFBT0MsR0FBUCxDQUFXLGVBQVgsRUFBNEIsS0FBS0csY0FBTCxDQUFvQkQsSUFBcEIsQ0FBeUIsSUFBekIsQ0FBNUI7QUFDQUgsbUJBQU9LLElBQVAsQ0FBWSxHQUFaLEVBQWlCLEtBQUtDLHVCQUFMLENBQTZCSCxJQUE3QixDQUFrQyxJQUFsQyxDQUFqQjtBQUNBSCxtQkFBT08sTUFBUCxDQUFjLE1BQWQsRUFBc0IsS0FBS0MsaUJBQUwsQ0FBdUJMLElBQXZCLENBQTRCLElBQTVCLENBQXRCO0FBQ0FILG1CQUFPTyxNQUFQLENBQWMsVUFBZCxFQUEwQixLQUFLRSxpQkFBTCxDQUF1Qk4sSUFBdkIsQ0FBNEIsSUFBNUIsQ0FBMUI7QUFDQSxtQkFBT0gsTUFBUDtBQUNIOzs7NkJBRUlVLEcsRUFBS0MsRyxFQUFLQyxJLEVBQU07QUFDakJELGdCQUFJRSxJQUFKLENBQVMsSUFBVCxFQUFlQyxNQUFmLENBQXNCLEdBQXRCLEVBQTJCQyxHQUEzQjtBQUNIOzs7dUNBRWNMLEcsRUFBS0MsRyxFQUFLQyxJLEVBQU07QUFDM0IsbUJBQU8sS0FBS2IsT0FBTCxDQUFhSyxjQUFiLEdBQ0ZZLElBREUsQ0FDRztBQUFBLHVCQUFZTCxJQUFJTSxJQUFKLENBQVNDLFFBQVQsRUFBbUJKLE1BQW5CLENBQTBCLEdBQTFCLEVBQStCQyxHQUEvQixFQUFaO0FBQUEsYUFESCxFQUVGSSxLQUZFLENBRUk7QUFBQSx1QkFBT1AsS0FBS1EsR0FBTCxDQUFQO0FBQUEsYUFGSixDQUFQO0FBR0g7OztnREFFdUJWLEcsRUFBS0MsRyxFQUFLQyxJLEVBQU07QUFDcEMsbUJBQU8sS0FBS2IsT0FBTCxDQUFhTyx1QkFBYixDQUFxQ0ksSUFBSVcsSUFBekMsRUFDRkwsSUFERSxDQUNHO0FBQUEsdUJBQU1MLElBQUlHLE1BQUosQ0FBVyxHQUFYLEVBQWdCQyxHQUFoQixFQUFOO0FBQUEsYUFESCxFQUVGSSxLQUZFLENBRUk7QUFBQSx1QkFBT1AsS0FBS1EsR0FBTCxDQUFQO0FBQUEsYUFGSixDQUFQO0FBR0g7OzswQ0FFaUJWLEcsRUFBS0MsRyxFQUFLQyxJLEVBQU07QUFDOUIsbUJBQU8sS0FBS2IsT0FBTCxDQUFhVSxpQkFBYixDQUErQjtBQUNsQ2Esd0JBQVFaLElBQUlhLE1BQUosQ0FBV0Q7QUFEZSxhQUEvQixFQUdOTixJQUhNLENBR0Q7QUFBQSx1QkFBTUwsSUFBSUcsTUFBSixDQUFXLEdBQVgsRUFBZ0JDLEdBQWhCLEVBQU47QUFBQSxhQUhDLEVBSU5JLEtBSk0sQ0FJQTtBQUFBLHVCQUFPUCxLQUFLUSxHQUFMLENBQVA7QUFBQSxhQUpBLENBQVA7QUFLSDs7OzBDQUVpQlYsRyxFQUFLQyxHLEVBQUtDLEksRUFBTTtBQUM5QixtQkFBTyxLQUFLYixPQUFMLENBQWFTLGlCQUFiLEdBQ0ZRLElBREUsQ0FDRztBQUFBLHVCQUFNTCxJQUFJRyxNQUFKLENBQVcsR0FBWCxFQUFnQkMsR0FBaEIsRUFBTjtBQUFBLGFBREgsRUFFRkksS0FGRSxDQUVJO0FBQUEsdUJBQU9QLEtBQUtRLEdBQUwsQ0FBUDtBQUFBLGFBRkosQ0FBUDtBQUdIOzs7Ozs7a0JBMUNnQnZCLGlCIiwiZmlsZSI6IldlYmhvb2tDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6Ii9hcHAvY29udHJvbGxlcnMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgV2ViaG9va1NlcnZpY2UgZnJvbSAnLi4vc2VydmljZXMvV2ViaG9va1NlcnZpY2UnO1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBXZWJob29rQ29udHJvbGxlcntcbiAgICBjb25zdHJ1Y3Rvcihjb25maWcpe1xuICAgICAgICB0aGlzLnNlcnZpY2UgPSBuZXcgV2ViaG9va1NlcnZpY2UoY29uZmlnKTtcbiAgICB9XG5cbiAgICBzZXR1cFJvdXRlcihyb3V0ZXIpe1xuICAgICAgICByb3V0ZXIuZ2V0KCcvJywgdGhpcy50ZXN0LmJpbmQodGhpcykpO1xuICAgICAgICByb3V0ZXIuZ2V0KCcvd2ViaG9va3MvYWxsJywgdGhpcy5nZXRBbGxXZWJob29rcy5iaW5kKHRoaXMpKTtcbiAgICAgICAgcm91dGVyLnBvc3QoJy8nLCB0aGlzLnByb2Nlc3NUcmVsbG9DYXJkQ2hhbmdlLmJpbmQodGhpcykpO1xuICAgICAgICByb3V0ZXIuZGVsZXRlKCcvYWxsJywgdGhpcy5kZWxldGVBbGxXZWJob29rcy5iaW5kKHRoaXMpKTtcbiAgICAgICAgcm91dGVyLmRlbGV0ZSgnLzpjYXJkSWQnLCB0aGlzLmRlbGV0ZUNhcmRXZWJob29rLmJpbmQodGhpcykpO1xuICAgICAgICByZXR1cm4gcm91dGVyO1xuICAgIH1cbiAgXG4gICAgdGVzdChyZXEsIHJlcywgbmV4dCkge1xuICAgICAgICByZXMuc2VuZCgnMGsnKS5zdGF0dXMoMjAwKS5lbmQoKTtcbiAgICB9XG4gIFxuICAgIGdldEFsbFdlYmhvb2tzKHJlcSwgcmVzLCBuZXh0KSB7XG4gICAgICAgIHJldHVybiB0aGlzLnNlcnZpY2UuZ2V0QWxsV2ViaG9va3MoKVxuICAgICAgICAgICAgLnRoZW4od2ViaG9va3MgPT4gcmVzLmpzb24od2ViaG9va3MpLnN0YXR1cygyMDApLmVuZCgpKVxuICAgICAgICAgICAgLmNhdGNoKGVyciA9PiBuZXh0KGVycikpXG4gICAgfVxuICBcbiAgICBwcm9jZXNzVHJlbGxvQ2FyZENoYW5nZShyZXEsIHJlcywgbmV4dCkgeyAgICAgICAgICAgICAgICBcbiAgICAgICAgcmV0dXJuIHRoaXMuc2VydmljZS5wcm9jZXNzVHJlbGxvQ2FyZENoYW5nZShyZXEuYm9keSlcbiAgICAgICAgICAgIC50aGVuKCgpID0+IHJlcy5zdGF0dXMoMjAwKS5lbmQoKSlcbiAgICAgICAgICAgIC5jYXRjaChlcnIgPT4gbmV4dChlcnIpKVxuICAgIH1cbiAgICBcbiAgICBkZWxldGVDYXJkV2ViaG9vayhyZXEsIHJlcywgbmV4dCkge1xuICAgICAgICByZXR1cm4gdGhpcy5zZXJ2aWNlLmRlbGV0ZUNhcmRXZWJob29rKHtcbiAgICAgICAgICAgIGNhcmRJZDogcmVxLnBhcmFtcy5jYXJkSWRcbiAgICAgICAgfSlcbiAgICAgICAgLnRoZW4oKCkgPT4gcmVzLnN0YXR1cygyMDQpLmVuZCgpKVxuICAgICAgICAuY2F0Y2goZXJyID0+IG5leHQoZXJyKSlcbiAgICB9XG4gIFxuICAgIGRlbGV0ZUFsbFdlYmhvb2tzKHJlcSwgcmVzLCBuZXh0KSB7XG4gICAgICAgIHJldHVybiB0aGlzLnNlcnZpY2UuZGVsZXRlQWxsV2ViaG9va3MoKVxuICAgICAgICAgICAgLnRoZW4oKCkgPT4gcmVzLnN0YXR1cygyMDQpLmVuZCgpKVxuICAgICAgICAgICAgLmNhdGNoKGVyciA9PiBuZXh0KGVycikpXG4gICAgfVxufSJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "WebhookController.js"
+      ],
+      "names": [
+        "WebhookController",
+        "config",
+        "service",
+        "router",
+        "get",
+        "test",
+        "bind",
+        "getAllWebhooks",
+        "post",
+        "processTrelloCardChange",
+        "delete",
+        "deleteAllWebhooks",
+        "deleteCardWebhook",
+        "req",
+        "res",
+        "next",
+        "send",
+        "status",
+        "end",
+        "then",
+        "json",
+        "webhooks",
+        "catch",
+        "err",
+        "body",
+        "cardId",
+        "params"
+      ],
+      "mappings": ";;;;;;;;AAAA;;;;;;;;IAEqBA,iB;AACjB,+BAAYC,MAAZ,EAAmB;AAAA;;AACf,aAAKC,OAAL,GAAe,6BAAmBD,MAAnB,CAAf;AACH;;;;oCAEWE,M,EAAO;AACfA,mBAAOC,GAAP,CAAW,GAAX,EAAgB,KAAKC,IAAL,CAAUC,IAAV,CAAe,IAAf,CAAhB;AACAH,mBAAOC,GAAP,CAAW,eAAX,EAA4B,KAAKG,cAAL,CAAoBD,IAApB,CAAyB,IAAzB,CAA5B;AACAH,mBAAOK,IAAP,CAAY,GAAZ,EAAiB,KAAKC,uBAAL,CAA6BH,IAA7B,CAAkC,IAAlC,CAAjB;AACAH,mBAAOO,MAAP,CAAc,MAAd,EAAsB,KAAKC,iBAAL,CAAuBL,IAAvB,CAA4B,IAA5B,CAAtB;AACAH,mBAAOO,MAAP,CAAc,UAAd,EAA0B,KAAKE,iBAAL,CAAuBN,IAAvB,CAA4B,IAA5B,CAA1B;AACA,mBAAOH,MAAP;AACH;;;6BAEIU,G,EAAKC,G,EAAKC,I,EAAM;AACjBD,gBAAIE,IAAJ,CAAS,IAAT,EAAeC,MAAf,CAAsB,GAAtB,EAA2BC,GAA3B;AACH;;;uCAEcL,G,EAAKC,G,EAAKC,I,EAAM;AAC3B,mBAAO,KAAKb,OAAL,CAAaK,cAAb,GACFY,IADE,CACG;AAAA,uBAAYL,IAAIM,IAAJ,CAASC,QAAT,EAAmBJ,MAAnB,CAA0B,GAA1B,EAA+BC,GAA/B,EAAZ;AAAA,aADH,EAEFI,KAFE,CAEI;AAAA,uBAAOP,KAAKQ,GAAL,CAAP;AAAA,aAFJ,CAAP;AAGH;;;gDAEuBV,G,EAAKC,G,EAAKC,I,EAAM;AACpC,mBAAO,KAAKb,OAAL,CAAaO,uBAAb,CAAqCI,IAAIW,IAAzC,EACFL,IADE,CACG;AAAA,uBAAML,IAAIG,MAAJ,CAAW,GAAX,EAAgBC,GAAhB,EAAN;AAAA,aADH,EAEFI,KAFE,CAEI;AAAA,uBAAOP,KAAKQ,GAAL,CAAP;AAAA,aAFJ,CAAP;AAGH;;;0CAEiBV,G,EAAKC,G,EAAKC,I,EAAM;AAC9B,mBAAO,KAAKb,OAAL,CAAaU,iBAAb,CAA+B;AAClCa,wBAAQZ,IAAIa,MAAJ,CAAWD;AADe,aAA/B,EAGNN,IAHM,CAGD;AAAA,uBAAML,IAAIG,MAAJ,CAAW,GAAX,EAAgBC,GAAhB,EAAN;AAAA,aAHC,EAINI,KAJM,CAIA;AAAA,uBAAOP,KAAKQ,GAAL,CAAP;AAAA,aAJA,CAAP;AAKH;;;0CAEiBV,G,EAAKC,G,EAAKC,I,EAAM;AAC9B,mBAAO,KAAKb,OAAL,CAAaS,iBAAb,GACFQ,IADE,CACG;AAAA,uBAAML,IAAIG,MAAJ,CAAW,GAAX,EAAgBC,GAAhB,EAAN;AAAA,aADH,EAEFI,KAFE,CAEI;AAAA,uBAAOP,KAAKQ,GAAL,CAAP;AAAA,aAFJ,CAAP;AAGH;;;;;;kBA1CgBvB,iB",
+      "file": "WebhookController.js",
+      "sourceRoot": "/app/controllers",
+      "sourcesContent": [
+        "import WebhookService from '../services/WebhookService';\n\nexport default class WebhookController{\n    constructor(config){\n        this.service = new WebhookService(config);\n    }\n\n    setupRouter(router){\n        router.get('/', this.test.bind(this));\n        router.get('/webhooks/all', this.getAllWebhooks.bind(this));\n        router.post('/', this.processTrelloCardChange.bind(this));\n        router.delete('/all', this.deleteAllWebhooks.bind(this));\n        router.delete('/:cardId', this.deleteCardWebhook.bind(this));\n        return router;\n    }\n  \n    test(req, res, next) {\n        res.send('0k').status(200).end();\n    }\n  \n    getAllWebhooks(req, res, next) {\n        return this.service.getAllWebhooks()\n            .then(webhooks => res.json(webhooks).status(200).end())\n            .catch(err => next(err))\n    }\n  \n    processTrelloCardChange(req, res, next) {                \n        return this.service.processTrelloCardChange(req.body)\n            .then(() => res.status(200).end())\n            .catch(err => next(err))\n    }\n    \n    deleteCardWebhook(req, res, next) {\n        return this.service.deleteCardWebhook({\n            cardId: req.params.cardId\n        })\n        .then(() => res.status(204).end())\n        .catch(err => next(err))\n    }\n  \n    deleteAllWebhooks(req, res, next) {\n        return this.service.deleteAllWebhooks()\n            .then(() => res.status(204).end())\n            .catch(err => next(err))\n    }\n}"
+      ]
+    },
+    "mtime": 1509008830577
+  },
+  "{\"filename\":\"/app/services/WebhookService.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/services\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck",
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "lodash",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "_"
+              }
+            ]
+          },
+          {
+            "source": "bluebird",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "Promise"
+              }
+            ]
+          },
+          {
+            "source": "../apis/trello",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "TrelloApi"
+              }
+            ]
+          },
+          {
+            "source": "../utils",
+            "imported": [
+              "required",
+              "throwHttpError"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "required",
+                "local": "required"
+              },
+              {
+                "kind": "named",
+                "imported": "throwHttpError",
+                "local": "throwHttpError"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [
+            "WebhookService"
+          ],
+          "specifiers": [
+            {
+              "kind": "local",
+              "local": "WebhookService",
+              "exported": "default"
+            }
+          ]
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/services/WebhookService.js",
+      "filenameRelative": "/app/services/WebhookService.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "WebhookService.js",
+      "sourceFileName": "WebhookService.js",
+      "sourceRoot": "/app/services",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/services",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "WebhookService"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _lodash = require('lodash');\n\nvar _lodash2 = _interopRequireDefault(_lodash);\n\nvar _bluebird = require('bluebird');\n\nvar _bluebird2 = _interopRequireDefault(_bluebird);\n\nvar _trello = require('../apis/trello');\n\nvar _trello2 = _interopRequireDefault(_trello);\n\nvar _utils = require('../utils');\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar WebhookService = function () {\n    function WebhookService(config) {\n        _classCallCheck(this, WebhookService);\n\n        this.config = config;\n        this.api = new _trello2.default(config);\n    }\n\n    _createClass(WebhookService, [{\n        key: 'processTrelloCardChange',\n        value: function processTrelloCardChange(opt) {\n            var _this = this;\n\n            var memberId = opt.action.idMemberCreator;\n            var modifiedCardId = opt.action.data.card.id;\n\n            var adminBoard, modifiedCard, adminBoardCards, targetList, matchingCard;\n\n            return _bluebird2.default.props({\n                boards: this.api.getMemberBoards({\n                    memberId: memberId\n                }),\n                modifiedCard: this.aggregateCardData(modifiedCardId)\n            }).then(function (results) {\n                adminBoard = getAdminBoards(results.boards);\n                modifiedCard = results.modifiedCard;\n\n                return _bluebird2.default.props({\n                    cards: _this.api.getBoardCards({\n                        boardId: adminBoard.id\n                    }),\n                    lists: _this.api.getBoardLists({\n                        boardId: adminBoard.id\n                    })\n                });\n            }).then(function (result) {\n                return _bluebird2.default.props({\n                    cards: _bluebird2.default.map(result.cards, function (card) {\n                        return _this.aggregateCardData(card.id);\n                    }),\n                    lists: _bluebird2.default.resolve(result.lists)\n                });\n            }).then(function (result) {\n                adminBoardCards = result.cards;\n                var matchingList = _this.getMatchingListInAdminBoard(result.lists, modifiedCard);\n\n                return _lodash2.default.isNil(matchingList) ? _this.api.createList({\n                    boardId: adminBoard.id,\n                    listName: modifiedCard.cardList.name,\n                    pos: modifiedCard.cardList.pos\n                }) : _bluebird2.default.resolve(matchingList);\n            }).then(function (list) {\n                targetList = list;\n                matchingCard = _this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);\n\n                // delete the card if it exists.\n                return _lodash2.default.isNil(matchingCard) ? _bluebird2.default.resolve() : _this.api.deleteExistingCard({ cardId: matchingCard.card.id });\n            }).then(function () {\n                return _this.isOriginCardDeleted(opt) ? _this.deleteCardWebhook({\n                    cardId: modifiedCard.card.id\n                }) : _this.api.createCardFromExisting({\n                    listId: targetList.id,\n                    originCardId: modifiedCard.card.id,\n                    pos: modifiedCard.card.pos\n                });\n            });\n        }\n    }, {\n        key: 'deleteCardWebhook',\n        value: function deleteCardWebhook(opt) {\n            var _this2 = this;\n\n            (0, _utils.required)(opt, ['cardId']);\n\n            return this.api.listWebhooks().then(function (webhooks) {\n                var index = _lodash2.default.findIndex(webhooks, ['idModel', opt.cardId]);\n                var webhookToDelete = webhooks[index];\n\n                return _this2.api.deleteWebhook({\n                    webhookId: webhookToDelete.id\n                });\n            });\n        }\n    }, {\n        key: 'deleteAllWebhooks',\n        value: function deleteAllWebhooks() {\n            var _this3 = this;\n\n            return this.api.listWebhooks().then(function (webhooks) {\n                return _bluebird2.default.map(webhooks, function (webhook) {\n                    return _this3.api.deleteWebhook({\n                        webhookId: webhook.id\n                    });\n                });\n            });\n        }\n    }, {\n        key: 'getAllWebhooks',\n        value: function getAllWebhooks() {\n            return this.api.listWebhooks();\n        }\n    }, {\n        key: 'aggregateCardData',\n        value: function aggregateCardData(cardId) {\n            var opt = { cardId: cardId };\n\n            return _bluebird2.default.props({\n                card: this.api.getCard(opt),\n                cardActions: this.api.getCardActions(opt),\n                cardList: this.api.getCardList(opt)\n            });\n        }\n    }, {\n        key: 'getMatchingListInAdminBoard',\n        value: function getMatchingListInAdminBoard(adminLists, modifiedCard) {\n            var list;\n\n            for (var i = 0; i < adminLists.length; i++) {\n                if (adminLists[i].name === modifiedCard.cardList.name) {\n                    list = adminLists[i];\n                    break;\n                }\n            }\n            return list;\n        }\n    }, {\n        key: 'getMatchingCardInAdminBoard',\n        value: function getMatchingCardInAdminBoard(adminCards, modifiedCard) {\n            var card;\n\n            for (var i = 0; i < adminCards.length; i++) {\n                if (adminCards[i].card.name === modifiedCard.card.name) {\n                    card = adminCards[i];\n                    break;\n                }\n            }\n            return card;\n        }\n    }, {\n        key: 'isOriginCardDeleted',\n        value: function isOriginCardDeleted(opt) {\n            return opt.action.type === 'updateCard' && opt.action.display.translationKey === 'action_archived_card';\n        }\n    }]);\n\n    return WebhookService;\n}();\n\n/* PRIVATE FUNCTIONS */\n\n\nexports.default = WebhookService;\nfunction getAdminBoards(boards) {\n    var adminBoards = _lodash2.default.filter(boards, function (board) {\n        return board.name.toLowerCase() === 'admin board';\n    });\n\n    return adminBoards.length === 0 ? (0, _utils.throwHttpError)(404, 'There is no admin board') : adminBoards[0];\n}\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIldlYmhvb2tTZXJ2aWNlLmpzIl0sIm5hbWVzIjpbIldlYmhvb2tTZXJ2aWNlIiwiY29uZmlnIiwiYXBpIiwib3B0IiwibWVtYmVySWQiLCJhY3Rpb24iLCJpZE1lbWJlckNyZWF0b3IiLCJtb2RpZmllZENhcmRJZCIsImRhdGEiLCJjYXJkIiwiaWQiLCJhZG1pbkJvYXJkIiwibW9kaWZpZWRDYXJkIiwiYWRtaW5Cb2FyZENhcmRzIiwidGFyZ2V0TGlzdCIsIm1hdGNoaW5nQ2FyZCIsInByb3BzIiwiYm9hcmRzIiwiZ2V0TWVtYmVyQm9hcmRzIiwiYWdncmVnYXRlQ2FyZERhdGEiLCJ0aGVuIiwiZ2V0QWRtaW5Cb2FyZHMiLCJyZXN1bHRzIiwiY2FyZHMiLCJnZXRCb2FyZENhcmRzIiwiYm9hcmRJZCIsImxpc3RzIiwiZ2V0Qm9hcmRMaXN0cyIsIm1hcCIsInJlc3VsdCIsInJlc29sdmUiLCJtYXRjaGluZ0xpc3QiLCJnZXRNYXRjaGluZ0xpc3RJbkFkbWluQm9hcmQiLCJpc05pbCIsImNyZWF0ZUxpc3QiLCJsaXN0TmFtZSIsImNhcmRMaXN0IiwibmFtZSIsInBvcyIsImxpc3QiLCJnZXRNYXRjaGluZ0NhcmRJbkFkbWluQm9hcmQiLCJkZWxldGVFeGlzdGluZ0NhcmQiLCJjYXJkSWQiLCJpc09yaWdpbkNhcmREZWxldGVkIiwiZGVsZXRlQ2FyZFdlYmhvb2siLCJjcmVhdGVDYXJkRnJvbUV4aXN0aW5nIiwibGlzdElkIiwib3JpZ2luQ2FyZElkIiwibGlzdFdlYmhvb2tzIiwiaW5kZXgiLCJmaW5kSW5kZXgiLCJ3ZWJob29rcyIsIndlYmhvb2tUb0RlbGV0ZSIsImRlbGV0ZVdlYmhvb2siLCJ3ZWJob29rSWQiLCJ3ZWJob29rIiwiZ2V0Q2FyZCIsImNhcmRBY3Rpb25zIiwiZ2V0Q2FyZEFjdGlvbnMiLCJnZXRDYXJkTGlzdCIsImFkbWluTGlzdHMiLCJpIiwibGVuZ3RoIiwiYWRtaW5DYXJkcyIsInR5cGUiLCJkaXNwbGF5IiwidHJhbnNsYXRpb25LZXki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OztrQkFqSXFCbEUsYztBQWtJckIsU0FBU3FCLGNBQVQsQ0FBd0JKLE1BQXhCLEVBQWdDO0FBQzVCLFFBQUlrRCxjQUFjLGlCQUFFQyxNQUFGLENBQVNuRCxNQUFULEVBQWlCLGlCQUFTO0FBQ3hDLGVBQU9vRCxNQUFNaEMsSUFBTixDQUFXaUMsV0FBWCxPQUE2QixhQUFwQztBQUNILEtBRmlCLENBQWxCOztBQUlBLFdBQVFILFlBQVlMLE1BQVosS0FBdUIsQ0FBeEIsR0FDSCwyQkFBZSxHQUFmLEVBQW9CLHlCQUFwQixDQURHLEdBRURLLFlBQVksQ0FBWixDQUZOO0FBR0giLCJmaWxlIjoiV2ViaG9va1NlcnZpY2UuanMiLCJzb3VyY2VSb290IjoiL2FwcC9zZXJ2aWNlcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBfIGZyb20gJ2xvZGFzaCc7XG5pbXBvcnQgUHJvbWlzZSBmcm9tICdibHVlYmlyZCc7XG5pbXBvcnQgVHJlbGxvQXBpIGZyb20gJy4uL2FwaXMvdHJlbGxvJztcbmltcG9ydCB7IHJlcXVpcmVkICx0aHJvd0h0dHBFcnJvciB9IGZyb20gJy4uL3V0aWxzJztcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgV2ViaG9va1NlcnZpY2Uge1xuICAgIGNvbnN0cnVjdG9yKGNvbmZpZyl7XG4gICAgICAgIHRoaXMuY29uZmlnID0gY29uZmlnO1xuICAgICAgICB0aGlzLmFwaSA9IG5ldyBUcmVsbG9BcGkoY29uZmlnKTtcbiAgICB9XG5cbiAgICBwcm9jZXNzVHJlbGxvQ2FyZENoYW5nZShvcHQpIHtcbiAgICAgICAgY29uc3QgbWVtYmVySWQgPSBvcHQuYWN0aW9uLmlkTWVtYmVyQ3JlYXRvcjtcbiAgICAgICAgY29uc3QgbW9kaWZpZWRDYXJkSWQgPSBvcHQuYWN0aW9uLmRhdGEuY2FyZC5pZDtcblxuICAgICAgICB2YXIgYWRtaW5Cb2FyZCwgbW9kaWZpZWRDYXJkLCBhZG1pbkJvYXJkQ2FyZHMsIHRhcmdldExpc3QsIG1hdGNoaW5nQ2FyZDtcblxuICAgICAgICByZXR1cm4gUHJvbWlzZS5wcm9wcyh7XG4gICAgICAgICAgICBib2FyZHM6IHRoaXMuYXBpLmdldE1lbWJlckJvYXJkcyh7XG4gICAgICAgICAgICAgICAgbWVtYmVySWQ6IG1lbWJlcklkXG4gICAgICAgICAgICB9KSxcbiAgICAgICAgICAgIG1vZGlmaWVkQ2FyZDogdGhpcy5hZ2dyZWdhdGVDYXJkRGF0YShtb2RpZmllZENhcmRJZClcbiAgICAgICAgfSkudGhlbihyZXN1bHRzID0+IHtcbiAgICAgICAgICAgICAgYWRtaW5Cb2FyZCA9IGdldEFkbWluQm9hcmRzKHJlc3VsdHMuYm9hcmRzKTtcbiAgICAgICAgICAgICAgbW9kaWZpZWRDYXJkID0gcmVzdWx0cy5tb2RpZmllZENhcmQ7XG5cbiAgICAgICAgICAgICAgcmV0dXJuIFByb21pc2UucHJvcHMoe1xuICAgICAgICAgICAgICAgICAgY2FyZHM6IHRoaXMuYXBpLmdldEJvYXJkQ2FyZHMoe1xuICAgICAgICAgICAgICAgICAgICAgIGJvYXJkSWQ6IGFkbWluQm9hcmQuaWRcbiAgICAgICAgICAgICAgICAgIH0pLFxuICAgICAgICAgICAgICAgICAgbGlzdHM6IHRoaXMuYXBpLmdldEJvYXJkTGlzdHMoe1xuICAgICAgICAgICAgICAgICAgICAgIGJvYXJkSWQ6IGFkbWluQm9hcmQuaWRcbiAgICAgICAgICAgICAgICAgIH0pXG4gICAgICAgICAgICAgIH0pO1xuICAgICAgICB9KS50aGVuKHJlc3VsdCA9PiBQcm9taXNlLnByb3BzKHtcbiAgICAgICAgICAgIGNhcmRzOiBQcm9taXNlLm1hcChyZXN1bHQuY2FyZHMsIGNhcmQgPT4gdGhpcy5hZ2dyZWdhdGVDYXJkRGF0YShjYXJkLmlkKSksXG4gICAgICAgICAgICBsaXN0czogUHJvbWlzZS5yZXNvbHZlKHJlc3VsdC5saXN0cylcbiAgICAgICAgfSkpLnRoZW4ocmVzdWx0ID0+IHtcbiAgICAgICAgICAgIGFkbWluQm9hcmRDYXJkcyA9IHJlc3VsdC5jYXJkcztcbiAgICAgICAgICAgIHZhciBtYXRjaGluZ0xpc3QgPSB0aGlzLmdldE1hdGNoaW5nTGlzdEluQWRtaW5Cb2FyZChyZXN1bHQubGlzdHMsIG1vZGlmaWVkQ2FyZCk7XG5cbiAgICAgICAgICAgIHJldHVybiBfLmlzTmlsKG1hdGNoaW5nTGlzdClcbiAgICAgICAgICAgICAgICA/IHRoaXMuYXBpLmNyZWF0ZUxpc3Qoe1xuICAgICAgICAgICAgICAgICAgICBib2FyZElkOiBhZG1pbkJvYXJkLmlkLFxuICAgICAgICAgICAgICAgICAgICBsaXN0TmFtZTogbW9kaWZpZWRDYXJkLmNhcmRMaXN0Lm5hbWUsXG4gICAgICAgICAgICAgICAgICAgIHBvczogbW9kaWZpZWRDYXJkLmNhcmRMaXN0LnBvc1xuICAgICAgICAgICAgICAgIH0pXG4gICAgICAgICAgICAgICAgOiBQcm9taXNlLnJlc29sdmUobWF0Y2hpbmdMaXN0KTtcbiAgICAgICAgfSkudGhlbihsaXN0ID0+IHtcbiAgICAgICAgICAgIHRhcmdldExpc3QgPSBsaXN0O1xuICAgICAgICAgICAgbWF0Y2hpbmdDYXJkID0gdGhpcy5nZXRNYXRjaGluZ0NhcmRJbkFkbWluQm9hcmQoYWRtaW5Cb2FyZENhcmRzLCBtb2RpZmllZENhcmQpO1xuXG4gICAgICAgICAgICAvLyBkZWxldGUgdGhlIGNhcmQgaWYgaXQgZXhpc3RzLlxuICAgICAgICAgICAgcmV0dXJuIF8uaXNOaWwobWF0Y2hpbmdDYXJkKSA/XG4gICAgICAgICAgICAgICAgUHJvbWlzZS5yZXNvbHZlKCkgOlxuICAgICAgICAgICAgICAgIHRoaXMuYXBpLmRlbGV0ZUV4aXN0aW5nQ2FyZCh7IGNhcmRJZDogbWF0Y2hpbmdDYXJkLmNhcmQuaWQgfSlcblxuICAgICAgICB9KS50aGVuKCgpID0+IHtcbiAgICAgICAgICAgIHJldHVybiB0aGlzLmlzT3JpZ2luQ2FyZERlbGV0ZWQob3B0KVxuICAgICAgICAgICAgICAgID8gdGhpcy5kZWxldGVDYXJkV2ViaG9vayh7XG4gICAgICAgICAgICAgICAgICAgIGNhcmRJZDogbW9kaWZpZWRDYXJkLmNhcmQuaWRcbiAgICAgICAgICAgICAgICB9KVxuICAgICAgICAgICAgICAgIDogdGhpcy5hcGkuY3JlYXRlQ2FyZEZyb21FeGlzdGluZyh7XG4gICAgICAgICAgICAgICAgICAgIGxpc3RJZDogdGFyZ2V0TGlzdC5pZCxcbiAgICAgICAgICAgICAgICAgICAgb3JpZ2luQ2FyZElkOiBtb2RpZmllZENhcmQuY2FyZC5pZCxcbiAgICAgICAgICAgICAgICAgICAgcG9zOiBtb2RpZmllZENhcmQuY2FyZC5wb3NcbiAgICAgICAgICAgICAgICB9KVxuICAgICAgICB9KVxuICAgIH1cblxuICAgIGRlbGV0ZUNhcmRXZWJob29rKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnY2FyZElkJ10pO1xuXG4gICAgICAgIHJldHVybiB0aGlzLmFwaS5saXN0V2ViaG9va3MoKS50aGVuKHdlYmhvb2tzID0+IHtcbiAgICAgICAgICAgIGxldCBpbmRleCA9IF8uZmluZEluZGV4KHdlYmhvb2tzLCBbJ2lkTW9kZWwnLCBvcHQuY2FyZElkXSk7XG4gICAgICAgICAgICBsZXQgd2ViaG9va1RvRGVsZXRlID0gd2ViaG9va3NbaW5kZXhdO1xuXG4gICAgICAgICAgICByZXR1cm4gdGhpcy5hcGkuZGVsZXRlV2ViaG9vayh7XG4gICAgICAgICAgICAgICAgd2ViaG9va0lkOiB3ZWJob29rVG9EZWxldGUuaWRcbiAgICAgICAgICAgIH0pO1xuICAgICAgICB9KTtcbiAgICB9XG5cbiAgICBkZWxldGVBbGxXZWJob29rcygpIHtcbiAgICAgICAgcmV0dXJuIHRoaXMuYXBpLmxpc3RXZWJob29rcygpLnRoZW4od2ViaG9va3MgPT5cbiAgICAgICAgICAgIFByb21pc2UubWFwKHdlYmhvb2tzLCB3ZWJob29rID0+IHRoaXMuYXBpLmRlbGV0ZVdlYmhvb2soe1xuICAgICAgICAgICAgICAgIHdlYmhvb2tJZDogd2ViaG9vay5pZFxuICAgICAgICAgICAgfSkpXG4gICAgICAgIClcbiAgICB9XG5cbiAgICBnZXRBbGxXZWJob29rcygpIHtcbiAgICAgICAgcmV0dXJuIHRoaXMuYXBpLmxpc3RXZWJob29rcygpO1xuICAgIH1cblxuICAgIGFnZ3JlZ2F0ZUNhcmREYXRhKGNhcmRJZCkge1xuICAgICAgICB2YXIgb3B0ID0geyBjYXJkSWQ6IGNhcmRJZCB9O1xuXG4gICAgICAgIHJldHVybiBQcm9taXNlLnByb3BzKHtcbiAgICAgICAgICAgIGNhcmQ6IHRoaXMuYXBpLmdldENhcmQob3B0KSxcbiAgICAgICAgICAgIGNhcmRBY3Rpb25zOiB0aGlzLmFwaS5nZXRDYXJkQWN0aW9ucyhvcHQpLFxuICAgICAgICAgICAgY2FyZExpc3Q6IHRoaXMuYXBpLmdldENhcmRMaXN0KG9wdClcbiAgICAgICAgfSlcbiAgICB9XG5cbiAgICBnZXRNYXRjaGluZ0xpc3RJbkFkbWluQm9hcmQoYWRtaW5MaXN0cywgbW9kaWZpZWRDYXJkKSB7XG4gICAgICAgIHZhciBsaXN0O1xuXG4gICAgICAgIGZvcih2YXIgaT0wOyBpPGFkbWluTGlzdHMubGVuZ3RoOyBpKyspIHtcbiAgICAgICAgICAgIGlmKGFkbWluTGlzdHNbaV0ubmFtZSA9PT0gbW9kaWZpZWRDYXJkLmNhcmRMaXN0Lm5hbWUpIHtcbiAgICAgICAgICAgICAgICBsaXN0ID0gYWRtaW5MaXN0c1tpXTtcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gbGlzdDtcbiAgICB9XG5cbiAgICBnZXRNYXRjaGluZ0NhcmRJbkFkbWluQm9hcmQoYWRtaW5DYXJkcywgbW9kaWZpZWRDYXJkKSB7XG4gICAgICAgIHZhciBjYXJkO1xuXG4gICAgICAgIGZvcih2YXIgaT0wOyBpPGFkbWluQ2FyZHMubGVuZ3RoOyBpKyspIHtcbiAgICAgICAgICAgIGlmKGFkbWluQ2FyZHNbaV0uY2FyZC5uYW1lID09PSBtb2RpZmllZENhcmQuY2FyZC5uYW1lKSB7XG4gICAgICAgICAgICAgICAgY2FyZCA9IGFkbWluQ2FyZHNbaV07XG4gICAgICAgICAgICAgICAgYnJlYWs7XG4gICAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgICAgcmV0dXJuIGNhcmQ7XG4gICAgfVxuXG4gICAgaXNPcmlnaW5DYXJkRGVsZXRlZChvcHQpIHtcbiAgICAgICAgcmV0dXJuIG9wdC5hY3Rpb24udHlwZSA9PT0gJ3VwZGF0ZUNhcmQnICYmIG9wdC5hY3Rpb24uZGlzcGxheS50cmFuc2xhdGlvbktleSA9PT0gJ2FjdGlvbl9hcmNoaXZlZF9jYXJkJztcbiAgICB9XG59XG5cbi8qIFBSSVZBVEUgRlVOQ1RJT05TICovXG5mdW5jdGlvbiBnZXRBZG1pbkJvYXJkcyhib2FyZHMpIHtcbiAgICBsZXQgYWRtaW5Cb2FyZHMgPSBfLmZpbHRlcihib2FyZHMsIGJvYXJkID0+IHtcbiAgICAgICAgcmV0dXJuIGJvYXJkLm5hbWUudG9Mb3dlckNhc2UoKSA9PT0gJ2FkbWluIGJvYXJkJ1xuICAgIH0pO1xuXG4gICAgcmV0dXJuIChhZG1pbkJvYXJkcy5sZW5ndGggPT09IDApID9cbiAgICAgICAgdGhyb3dIdHRwRXJyb3IoNDA0LCAnVGhlcmUgaXMgbm8gYWRtaW4gYm9hcmQnKVxuICAgICAgICA6IGFkbWluQm9hcmRzWzBdO1xufVxuIl19",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "WebhookService.js"
+      ],
+      "names": [
+        "WebhookService",
+        "config",
+        "api",
+        "opt",
+        "memberId",
+        "action",
+        "idMemberCreator",
+        "modifiedCardId",
+        "data",
+        "card",
+        "id",
+        "adminBoard",
+        "modifiedCard",
+        "adminBoardCards",
+        "targetList",
+        "matchingCard",
+        "props",
+        "boards",
+        "getMemberBoards",
+        "aggregateCardData",
+        "then",
+        "getAdminBoards",
+        "results",
+        "cards",
+        "getBoardCards",
+        "boardId",
+        "lists",
+        "getBoardLists",
+        "map",
+        "result",
+        "resolve",
+        "matchingList",
+        "getMatchingListInAdminBoard",
+        "isNil",
+        "createList",
+        "listName",
+        "cardList",
+        "name",
+        "pos",
+        "list",
+        "getMatchingCardInAdminBoard",
+        "deleteExistingCard",
+        "cardId",
+        "isOriginCardDeleted",
+        "deleteCardWebhook",
+        "createCardFromExisting",
+        "listId",
+        "originCardId",
+        "listWebhooks",
+        "index",
+        "findIndex",
+        "webhooks",
+        "webhookToDelete",
+        "deleteWebhook",
+        "webhookId",
+        "webhook",
+        "getCard",
+        "cardActions",
+        "getCardActions",
+        "getCardList",
+        "adminLists",
+        "i",
+        "length",
+        "adminCards",
+        "type",
+        "display",
+        "translationKey",
+        "adminBoards",
+        "filter",
+        "board",
+        "toLowerCase"
+      ],
+      "mappings": "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",
+      "file": "WebhookService.js",
+      "sourceRoot": "/app/services",
+      "sourcesContent": [
+        "import _ from 'lodash';\nimport Promise from 'bluebird';\nimport TrelloApi from '../apis/trello';\nimport { required ,throwHttpError } from '../utils';\n\nexport default class WebhookService {\n    constructor(config){\n        this.config = config;\n        this.api = new TrelloApi(config);\n    }\n\n    processTrelloCardChange(opt) {\n        const memberId = opt.action.idMemberCreator;\n        const modifiedCardId = opt.action.data.card.id;\n\n        var adminBoard, modifiedCard, adminBoardCards, targetList, matchingCard;\n\n        return Promise.props({\n            boards: this.api.getMemberBoards({\n                memberId: memberId\n            }),\n            modifiedCard: this.aggregateCardData(modifiedCardId)\n        }).then(results => {\n              adminBoard = getAdminBoards(results.boards);\n              modifiedCard = results.modifiedCard;\n\n              return Promise.props({\n                  cards: this.api.getBoardCards({\n                      boardId: adminBoard.id\n                  }),\n                  lists: this.api.getBoardLists({\n                      boardId: adminBoard.id\n                  })\n              });\n        }).then(result => Promise.props({\n            cards: Promise.map(result.cards, card => this.aggregateCardData(card.id)),\n            lists: Promise.resolve(result.lists)\n        })).then(result => {\n            adminBoardCards = result.cards;\n            var matchingList = this.getMatchingListInAdminBoard(result.lists, modifiedCard);\n\n            return _.isNil(matchingList)\n                ? this.api.createList({\n                    boardId: adminBoard.id,\n                    listName: modifiedCard.cardList.name,\n                    pos: modifiedCard.cardList.pos\n                })\n                : Promise.resolve(matchingList);\n        }).then(list => {\n            targetList = list;\n            matchingCard = this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);\n\n            // delete the card if it exists.\n            return _.isNil(matchingCard) ?\n                Promise.resolve() :\n                this.api.deleteExistingCard({ cardId: matchingCard.card.id })\n\n        }).then(() => {\n            return this.isOriginCardDeleted(opt)\n                ? this.deleteCardWebhook({\n                    cardId: modifiedCard.card.id\n                })\n                : this.api.createCardFromExisting({\n                    listId: targetList.id,\n                    originCardId: modifiedCard.card.id,\n                    pos: modifiedCard.card.pos\n                })\n        })\n    }\n\n    deleteCardWebhook(opt) {\n        required(opt, ['cardId']);\n\n        return this.api.listWebhooks().then(webhooks => {\n            let index = _.findIndex(webhooks, ['idModel', opt.cardId]);\n            let webhookToDelete = webhooks[index];\n\n            return this.api.deleteWebhook({\n                webhookId: webhookToDelete.id\n            });\n        });\n    }\n\n    deleteAllWebhooks() {\n        return this.api.listWebhooks().then(webhooks =>\n            Promise.map(webhooks, webhook => this.api.deleteWebhook({\n                webhookId: webhook.id\n            }))\n        )\n    }\n\n    getAllWebhooks() {\n        return this.api.listWebhooks();\n    }\n\n    aggregateCardData(cardId) {\n        var opt = { cardId: cardId };\n\n        return Promise.props({\n            card: this.api.getCard(opt),\n            cardActions: this.api.getCardActions(opt),\n            cardList: this.api.getCardList(opt)\n        })\n    }\n\n    getMatchingListInAdminBoard(adminLists, modifiedCard) {\n        var list;\n\n        for(var i=0; i<adminLists.length; i++) {\n            if(adminLists[i].name === modifiedCard.cardList.name) {\n                list = adminLists[i];\n                break;\n            }\n        }\n        return list;\n    }\n\n    getMatchingCardInAdminBoard(adminCards, modifiedCard) {\n        var card;\n\n        for(var i=0; i<adminCards.length; i++) {\n            if(adminCards[i].card.name === modifiedCard.card.name) {\n                card = adminCards[i];\n                break;\n            }\n        }\n        return card;\n    }\n\n    isOriginCardDeleted(opt) {\n        return opt.action.type === 'updateCard' && opt.action.display.translationKey === 'action_archived_card';\n    }\n}\n\n/* PRIVATE FUNCTIONS */\nfunction getAdminBoards(boards) {\n    let adminBoards = _.filter(boards, board => {\n        return board.name.toLowerCase() === 'admin board'\n    });\n\n    return (adminBoards.length === 0) ?\n        throwHttpError(404, 'There is no admin board')\n        : adminBoards[0];\n}\n"
+      ]
+    },
+    "mtime": 1509008830677
+  },
+  "{\"filename\":\"/app/apis/trello.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/apis\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck",
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "lodash",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "_"
+              }
+            ]
+          },
+          {
+            "source": "querystring",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "querystring"
+              }
+            ]
+          },
+          {
+            "source": "../utils",
+            "imported": [
+              "sensibleRequest",
+              "required"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "sensibleRequest",
+                "local": "sensibleRequest"
+              },
+              {
+                "kind": "named",
+                "imported": "required",
+                "local": "required"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [
+            "TrelloAPI"
+          ],
+          "specifiers": [
+            {
+              "kind": "local",
+              "local": "TrelloAPI",
+              "exported": "default"
+            }
+          ]
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/apis/trello.js",
+      "filenameRelative": "/app/apis/trello.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "trello.js",
+      "sourceFileName": "trello.js",
+      "sourceRoot": "/app/apis",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/apis",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "trello"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _lodash = require('lodash');\n\nvar _lodash2 = _interopRequireDefault(_lodash);\n\nvar _querystring = require('querystring');\n\nvar _querystring2 = _interopRequireDefault(_querystring);\n\nvar _utils = require('../utils');\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar TrelloAPI = function () {\n    function TrelloAPI(config) {\n        _classCallCheck(this, TrelloAPI);\n\n        this.TRELLO_KEY = config.trello.key;\n        this.TRELLO_TOKEN = config.trello.token;\n        this.trelloUri = 'https://api.trello.com/1/';\n    }\n\n    _createClass(TrelloAPI, [{\n        key: 'createTrelloUri',\n        value: function createTrelloUri(uri) {\n            var qs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';\n\n            return '' + this.trelloUri + uri + '?key=' + this.TRELLO_KEY + '&token=' + this.TRELLO_TOKEN + '&' + qs;\n        }\n    }, {\n        key: 'getMemberBoards',\n        value: function getMemberBoards(opt) {\n            (0, _utils.required)(opt, ['memberId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('members/' + opt.memberId + '/boards'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'getAllOrganiationBoards',\n        value: function getAllOrganiationBoards(opt) {\n            (0, _utils.required)(opt, ['organizationId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('organizations/' + opt.organizationId + '/boards'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'getBoardCards',\n        value: function getBoardCards(opt) {\n            (0, _utils.required)(opt, ['boardId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('boards/' + opt.boardId + '/cards'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'getBoardLists',\n        value: function getBoardLists(opt) {\n            (0, _utils.required)(opt, ['boardId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('boards/' + opt.boardId + '/lists'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'getCard',\n        value: function getCard(opt) {\n            (0, _utils.required)(opt, ['cardId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('cards/' + opt.cardId),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'getCardActions',\n        value: function getCardActions(opt) {\n            (0, _utils.required)(opt, ['cardId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('cards/' + opt.cardId + '/actions'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'getCardList',\n        value: function getCardList(opt) {\n            (0, _utils.required)(opt, ['cardId']);\n\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('cards/' + opt.cardId + '/list'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'createList',\n        value: function createList(opt) {\n            (0, _utils.required)(opt, ['boardId', 'listName', 'pos']);\n\n            var qs = _querystring2.default.stringify({ name: opt.listName, pos: opt.pos });\n            var opt = {\n                method: 'POST',\n                uri: this.createTrelloUri('boards/' + opt.boardId + '/lists', qs),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'createCardFromExisting',\n        value: function createCardFromExisting(opt) {\n            (0, _utils.required)(opt, ['listId', 'originCardId', 'pos']);\n\n            var qs = _querystring2.default.stringify({\n                idList: opt.listId,\n                idCardSource: opt.originCardId,\n                keepFromSource: 'all',\n                pos: opt.pos\n            });\n            var opt = {\n                method: 'POST',\n                uri: this.createTrelloUri('cards', qs),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'deleteExistingCard',\n        value: function deleteExistingCard(opt) {\n            (0, _utils.required)(opt, ['cardId']);\n\n            var opt = {\n                method: 'DELETE',\n                uri: this.createTrelloUri('cards/' + opt.cardId),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'listWebhooks',\n        value: function listWebhooks() {\n            var opt = {\n                method: 'GET',\n                uri: this.createTrelloUri('tokens/' + this.TRELLO_TOKEN + '/webhooks'),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'deleteWebhook',\n        value: function deleteWebhook(opt) {\n            (0, _utils.required)(opt, ['webhookId']);\n\n            var opt = {\n                method: 'DELETE',\n                uri: this.createTrelloUri('webhooks/' + opt.webhookId),\n                json: true\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }, {\n        key: 'createWebhook',\n        value: function createWebhook(opt) {\n            (0, _utils.required)(opt, ['memberId', 'callbackUrl']);\n            console.log(opt);\n            var qs = _querystring2.default.stringify({\n                description: 'card ' + opt.meberId,\n                callbackUrl: opt.callbackUrl,\n                idModel: opt.memberId\n            });\n            console.log(this.createTrelloUri('webhooks'));\n            var opt = {\n                method: 'POST',\n                uri: this.createTrelloUri('webhooks'),\n                json: {\n                    description: 'card ' + opt.memberId,\n                    callbackURL: opt.callbackUrl,\n                    idModel: opt.memberId\n                },\n                headers: {\n                    'Content-Type': 'application/json'\n                }\n            };\n            return (0, _utils.sensibleRequest)(opt);\n        }\n    }]);\n\n    return TrelloAPI;\n}();\n\nexports.default = TrelloAPI;\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRyZWxsby5qcyJdLCJuYW1lcyI6WyJUcmVsbG9BUEkiLCJjb25maWciLCJUUkVMTE9fS0VZIiwidHJlbGxvIiwia2V5IiwiVFJFTExPX1RPS0VOIiwidG9rZW4iLCJ0cmVsbG9VcmkiLCJ1cmkiLCJxcyIsIm9wdCIsIm1ldGhvZCIsImNyZWF0ZVRyZWxsb1VyaSIsIm1lbWJlcklkIiwianNvbiIsIm9yZ2FuaXphdGlvbklkIiwiYm9hcmRJZCIsImNhcmRJZCIsInN0cmluZ2lmeSIsIm5hbWUiLCJsaXN0TmFtZSIsInBvcyIsImlkTGlzdCIsImxpc3RJZCIsImlkQ2FyZFNvdXJjZSIsIm9yaWdpbkNhcmRJZCIsImtlZXBGcm9tU291cmNlIiwid2ViaG9va0lkIiwiY29uc29sZSIsImxvZyIsImRlc2NyaXB0aW9uIiwibWViZXJJZCIsImNhbGxiYWNrVXJsIiwiaWRNb2RlbCIsImNhbGxiYWNrVVJMIiwiaGVhZGVycyJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFBQTs7OztBQUNBOzs7O0FBQ0E7Ozs7OztJQUVxQkEsUztBQUNqQix1QkFBWUMsTUFBWixFQUFtQjtBQUFBOztBQUNmLGFBQUtDLFVBQUwsR0FBa0JELE9BQU9FLE1BQVAsQ0FBY0MsR0FBaEM7QUFDQSxhQUFLQyxZQUFMLEdBQW9CSixPQUFPRSxNQUFQLENBQWNHLEtBQWxDO0FBQ0EsYUFBS0MsU0FBTCxHQUFpQiwyQkFBakI7QUFDSDs7Ozt3Q0FFZUMsRyxFQUFhO0FBQUEsZ0JBQVJDLEVBQVEsdUVBQUgsRUFBRzs7QUFDekIsd0JBQVUsS0FBS0YsU0FBZixHQUEyQkMsR0FBM0IsYUFBc0MsS0FBS04sVUFBM0MsZUFBK0QsS0FBS0csWUFBcEUsU0FBb0ZJLEVBQXBGO0FBQ0g7Ozt3Q0FFZUMsRyxFQUFLO0FBQ2pCLGlDQUFTQSxHQUFULEVBQWMsQ0FBQyxVQUFELENBQWQ7O0FBRUEsZ0JBQUlBLE1BQU07QUFDTkMsd0JBQVEsS0FERjtBQUVOSCxxQkFBSyxLQUFLSSxlQUFMLGNBQWdDRixJQUFJ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QUlGLE1BQU07QUFDTkMsd0JBQVEsTUFERjtBQUVOSCxxQkFBSyxLQUFLSSxlQUFMLFlBRkM7QUFHTkUsc0JBQU07QUFDRmdCLDJDQUFxQnBCLElBQUlHLFFBRHZCO0FBRUZxQixpQ0FBYXhCLElBQUlzQixXQUZmO0FBR0ZDLDZCQUFTdkIsSUFBSUc7QUFIWCxpQkFIQTtBQVFOc0IseUJBQVM7QUFDTCxvQ0FBZ0I7QUFEWDtBQVJILGFBQVY7QUFZQSxtQkFBTyw0QkFBZ0J6QixHQUFoQixDQUFQO0FBQ0g7Ozs7OztrQkExS2dCVixTIiwiZmlsZSI6InRyZWxsby5qcyIsInNvdXJjZVJvb3QiOiIvYXBwL2FwaXMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgXyBmcm9tICdsb2Rhc2gnO1xuaW1wb3J0IHF1ZXJ5c3RyaW5nIGZyb20gJ3F1ZXJ5c3RyaW5nJztcbmltcG9ydCB7IHNlbnNpYmxlUmVxdWVzdCwgcmVxdWlyZWQgfSBmcm9tICcuLi91dGlscyc7XG5cbmV4cG9ydCBkZWZhdWx0IGNsYXNzIFRyZWxsb0FQSXtcbiAgICBjb25zdHJ1Y3Rvcihjb25maWcpe1xuICAgICAgICB0aGlzLlRSRUxMT19LRVkgPSBjb25maWcudHJlbGxvLmtleTtcbiAgICAgICAgdGhpcy5UUkVMTE9fVE9LRU4gPSBjb25maWcudHJlbGxvLnRva2VuOyAgICAgICAgXG4gICAgICAgIHRoaXMudHJlbGxvVXJpID0gJ2h0dHBzOi8vYXBpLnRyZWxsby5jb20vMS8nOyAgICAgIFxuICAgIH1cblxuICAgIGNyZWF0ZVRyZWxsb1VyaSh1cmksIHFzID0gJycpe1xuICAgICAgICByZXR1cm4gYCR7dGhpcy50cmVsbG9Vcml9JHt1cml9P2tleT0ke3RoaXMuVFJFTExPX0tFWX0mdG9rZW49JHt0aGlzLlRSRUxMT19UT0tFTn0mJHtxc31gXG4gICAgfVxuXG4gICAgZ2V0TWVtYmVyQm9hcmRzKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnbWVtYmVySWQnXSk7XG5cbiAgICAgICAgdmFyIG9wdCA9IHtcbiAgICAgICAgICAgIG1ldGhvZDogJ0dFVCcsXG4gICAgICAgICAgICB1cmk6IHRoaXMuY3JlYXRlVHJlbGxvVXJpKGBtZW1iZXJzLyR7b3B0Lm1lbWJlcklkfS9ib2FyZHNgKSxcbiAgICAgICAgICAgIGpzb246IHRydWVcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxuICBcbiAgICBnZXRBbGxPcmdhbmlhdGlvbkJvYXJkcyhvcHQpIHtcbiAgICAgICAgICByZXF1aXJlZChvcHQsIFsnb3JnYW5pemF0aW9uSWQnXSk7XG5cbiAgICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgICBtZXRob2Q6ICdHRVQnLFxuICAgICAgICAgICAgICB1cmk6IHRoaXMuY3JlYXRlVHJlbGxvVXJpKGBvcmdhbml6YXRpb25zLyR7b3B0Lm9yZ2FuaXphdGlvbklkfS9ib2FyZHNgKSxcbiAgICAgICAgICAgICAganNvbjogdHJ1ZVxuICAgICAgICAgIH1cbiAgICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxuICBcbiAgICBnZXRCb2FyZENhcmRzKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnYm9hcmRJZCddKTtcblxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnR0VUJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYGJvYXJkcy8ke29wdC5ib2FyZElkfS9jYXJkc2ApLFxuICAgICAgICAgICAganNvbjogdHJ1ZVxuICAgICAgICB9XG4gICAgICAgIHJldHVybiBzZW5zaWJsZVJlcXVlc3Qob3B0KTtcbiAgICB9XG5cbiAgICBnZXRCb2FyZExpc3RzKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnYm9hcmRJZCddKTtcblxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnR0VUJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYGJvYXJkcy8ke29wdC5ib2FyZElkfS9saXN0c2ApLFxuICAgICAgICAgICAganNvbjogdHJ1ZVxuICAgICAgICB9XG4gICAgICAgIHJldHVybiBzZW5zaWJsZVJlcXVlc3Qob3B0KTtcbiAgICB9XG5cbiAgICBnZXRDYXJkKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnY2FyZElkJ10pO1xuXG4gICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgIG1ldGhvZDogJ0dFVCcsXG4gICAgICAgICAgdXJpOiB0aGlzLmNyZWF0ZVRyZWxsb1VyaShgY2FyZHMvJHtvcHQuY2FyZElkfWApLFxuICAgICAgICAgIGpzb246IHRydWVcbiAgICAgIH1cbiAgICAgIHJldHVybiBzZW5zaWJsZVJlcXVlc3Qob3B0KTtcbiAgICB9XG5cbiAgICBnZXRDYXJkQWN0aW9ucyhvcHQpIHtcbiAgICAgICAgcmVxdWlyZWQob3B0LCBbJ2NhcmRJZCddKTtcblxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnR0VUJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYGNhcmRzLyR7b3B0LmNhcmRJZH0vYWN0aW9uc2ApLFxuICAgICAgICAgICAganNvbjogdHJ1ZVxuICAgICAgICB9XG4gICAgICAgIHJldHVybiBzZW5zaWJsZVJlcXVlc3Qob3B0KTtcbiAgICB9XG5cbiAgICBnZXRDYXJkTGlzdChvcHQpIHtcbiAgICAgICAgcmVxdWlyZWQob3B0LCBbJ2NhcmRJZCddKTtcblxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnR0VUJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYGNhcmRzLyR7b3B0LmNhcmRJZH0vbGlzdGApLFxuICAgICAgICAgICAganNvbjogdHJ1ZVxuICAgICAgICB9XG4gICAgICAgIHJldHVybiBzZW5zaWJsZVJlcXVlc3Qob3B0KTtcbiAgICB9XG5cbiAgICBjcmVhdGVMaXN0KG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnYm9hcmRJZCcsICdsaXN0TmFtZScsICdwb3MnXSk7XG5cbiAgICAgICAgdmFyIHFzID0gcXVlcnlzdHJpbmcuc3RyaW5naWZ5KHsgbmFtZTogb3B0Lmxpc3ROYW1lLCBwb3M6IG9wdC5wb3MgfSk7XG4gICAgICAgIHZhciBvcHQgPSB7XG4gICAgICAgICAgICBtZXRob2Q6ICdQT1NUJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYGJvYXJkcy8ke29wdC5ib2FyZElkfS9saXN0c2AsIHFzKSxcbiAgICAgICAgICAgIGpzb246IHRydWVcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxuXG4gICAgY3JlYXRlQ2FyZEZyb21FeGlzdGluZyhvcHQpe1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnbGlzdElkJywgJ29yaWdpbkNhcmRJZCcsICdwb3MnXSk7XG5cbiAgICAgICAgdmFyIHFzID0gcXVlcnlzdHJpbmcuc3RyaW5naWZ5KHtcbiAgICAgICAgICAgIGlkTGlzdDogb3B0Lmxpc3RJZCxcbiAgICAgICAgICAgIGlkQ2FyZFNvdXJjZTogb3B0Lm9yaWdpbkNhcmRJZCxcbiAgICAgICAgICAgIGtlZXBGcm9tU291cmNlOiAnYWxsJyxcbiAgICAgICAgICAgIHBvczogb3B0LnBvc1xuICAgICAgICB9KTtcbiAgICAgICAgdmFyIG9wdCA9IHtcbiAgICAgICAgICAgIG1ldGhvZDogJ1BPU1QnLFxuICAgICAgICAgICAgdXJpOiB0aGlzLmNyZWF0ZVRyZWxsb1VyaShgY2FyZHNgLCBxcyksXG4gICAgICAgICAgICBqc29uOiB0cnVlXG4gICAgICAgIH1cbiAgICAgICAgcmV0dXJuIHNlbnNpYmxlUmVxdWVzdChvcHQpO1xuICAgIH1cblxuICAgIGRlbGV0ZUV4aXN0aW5nQ2FyZChvcHQpIHtcbiAgICAgICAgcmVxdWlyZWQob3B0LCBbJ2NhcmRJZCddKTtcblxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnREVMRVRFJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYGNhcmRzLyR7b3B0LmNhcmRJZH1gKSxcbiAgICAgICAgICAgIGpzb246IHRydWVcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxuXG4gICAgbGlzdFdlYmhvb2tzKCkgIHtcbiAgICAgICAgdmFyIG9wdCA9IHtcbiAgICAgICAgICAgIG1ldGhvZDogJ0dFVCcsXG4gICAgICAgICAgICB1cmk6IHRoaXMuY3JlYXRlVHJlbGxvVXJpKGB0b2tlbnMvJHt0aGlzLlRSRUxMT19UT0tFTn0vd2ViaG9va3NgKSxcbiAgICAgICAgICAgIGpzb246IHRydWVcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxuXG4gICAgZGVsZXRlV2ViaG9vayhvcHQpIHtcbiAgICAgICAgcmVxdWlyZWQob3B0LCBbJ3dlYmhvb2tJZCddKTtcblxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnREVMRVRFJyxcbiAgICAgICAgICAgIHVyaTogdGhpcy5jcmVhdGVUcmVsbG9VcmkoYHdlYmhvb2tzLyR7b3B0LndlYmhvb2tJZH1gKSxcbiAgICAgICAgICAgIGpzb246IHRydWVcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxuICBcbiAgICBjcmVhdGVXZWJob29rKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnbWVtYmVySWQnLCAnY2FsbGJhY2tVcmwnXSk7XG4gICAgICBjb25zb2xlLmxvZyhvcHQpXG4gICAgICAgIHZhciBxcyA9IHF1ZXJ5c3RyaW5nLnN0cmluZ2lmeSh7XG4gICAgICAgICAgICBkZXNjcmlwdGlvbjogYGNhcmQgJHtvcHQubWViZXJJZH1gLFxuICAgICAgICAgICAgY2FsbGJhY2tVcmw6IG9wdC5jYWxsYmFja1VybCxcbiAgICAgICAgICAgIGlkTW9kZWw6IG9wdC5tZW1iZXJJZFxuICAgICAgICB9KTtcbiAgICAgIGNvbnNvbGUubG9nKHRoaXMuY3JlYXRlVHJlbGxvVXJpKGB3ZWJob29rc2ApKVxuICAgICAgICB2YXIgb3B0ID0ge1xuICAgICAgICAgICAgbWV0aG9kOiAnUE9TVCcsXG4gICAgICAgICAgICB1cmk6IHRoaXMuY3JlYXRlVHJlbGxvVXJpKGB3ZWJob29rc2ApLFxuICAgICAgICAgICAganNvbjoge1xuICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uOiBgY2FyZCAke29wdC5tZW1iZXJJZH1gLFxuICAgICAgICAgICAgICAgIGNhbGxiYWNrVVJMOiBvcHQuY2FsbGJhY2tVcmwsXG4gICAgICAgICAgICAgICAgaWRNb2RlbDogb3B0Lm1lbWJlcklkXG4gICAgICAgICAgICB9LFxuICAgICAgICAgICAgaGVhZGVyczoge1xuICAgICAgICAgICAgICAgICdDb250ZW50LVR5cGUnOiAnYXBwbGljYXRpb24vanNvbidcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gc2Vuc2libGVSZXF1ZXN0KG9wdCk7XG4gICAgfVxufVxuIl19",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "trello.js"
+      ],
+      "names": [
+        "TrelloAPI",
+        "config",
+        "TRELLO_KEY",
+        "trello",
+        "key",
+        "TRELLO_TOKEN",
+        "token",
+        "trelloUri",
+        "uri",
+        "qs",
+        "opt",
+        "method",
+        "createTrelloUri",
+        "memberId",
+        "json",
+        "organizationId",
+        "boardId",
+        "cardId",
+        "stringify",
+        "name",
+        "listName",
+        "pos",
+        "idList",
+        "listId",
+        "idCardSource",
+        "originCardId",
+        "keepFromSource",
+        "webhookId",
+        "console",
+        "log",
+        "description",
+        "meberId",
+        "callbackUrl",
+        "idModel",
+        "callbackURL",
+        "headers"
+      ],
+      "mappings": "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",
+      "file": "trello.js",
+      "sourceRoot": "/app/apis",
+      "sourcesContent": [
+        "import _ from 'lodash';\nimport querystring from 'querystring';\nimport { sensibleRequest, required } from '../utils';\n\nexport default class TrelloAPI{\n    constructor(config){\n        this.TRELLO_KEY = config.trello.key;\n        this.TRELLO_TOKEN = config.trello.token;        \n        this.trelloUri = 'https://api.trello.com/1/';      \n    }\n\n    createTrelloUri(uri, qs = ''){\n        return `${this.trelloUri}${uri}?key=${this.TRELLO_KEY}&token=${this.TRELLO_TOKEN}&${qs}`\n    }\n\n    getMemberBoards(opt) {\n        required(opt, ['memberId']);\n\n        var opt = {\n            method: 'GET',\n            uri: this.createTrelloUri(`members/${opt.memberId}/boards`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n  \n    getAllOrganiationBoards(opt) {\n          required(opt, ['organizationId']);\n\n          var opt = {\n              method: 'GET',\n              uri: this.createTrelloUri(`organizations/${opt.organizationId}/boards`),\n              json: true\n          }\n          return sensibleRequest(opt);\n    }\n  \n    getBoardCards(opt) {\n        required(opt, ['boardId']);\n\n        var opt = {\n            method: 'GET',\n            uri: this.createTrelloUri(`boards/${opt.boardId}/cards`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    getBoardLists(opt) {\n        required(opt, ['boardId']);\n\n        var opt = {\n            method: 'GET',\n            uri: this.createTrelloUri(`boards/${opt.boardId}/lists`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    getCard(opt) {\n        required(opt, ['cardId']);\n\n      var opt = {\n          method: 'GET',\n          uri: this.createTrelloUri(`cards/${opt.cardId}`),\n          json: true\n      }\n      return sensibleRequest(opt);\n    }\n\n    getCardActions(opt) {\n        required(opt, ['cardId']);\n\n        var opt = {\n            method: 'GET',\n            uri: this.createTrelloUri(`cards/${opt.cardId}/actions`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    getCardList(opt) {\n        required(opt, ['cardId']);\n\n        var opt = {\n            method: 'GET',\n            uri: this.createTrelloUri(`cards/${opt.cardId}/list`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    createList(opt) {\n        required(opt, ['boardId', 'listName', 'pos']);\n\n        var qs = querystring.stringify({ name: opt.listName, pos: opt.pos });\n        var opt = {\n            method: 'POST',\n            uri: this.createTrelloUri(`boards/${opt.boardId}/lists`, qs),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    createCardFromExisting(opt){\n        required(opt, ['listId', 'originCardId', 'pos']);\n\n        var qs = querystring.stringify({\n            idList: opt.listId,\n            idCardSource: opt.originCardId,\n            keepFromSource: 'all',\n            pos: opt.pos\n        });\n        var opt = {\n            method: 'POST',\n            uri: this.createTrelloUri(`cards`, qs),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    deleteExistingCard(opt) {\n        required(opt, ['cardId']);\n\n        var opt = {\n            method: 'DELETE',\n            uri: this.createTrelloUri(`cards/${opt.cardId}`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    listWebhooks()  {\n        var opt = {\n            method: 'GET',\n            uri: this.createTrelloUri(`tokens/${this.TRELLO_TOKEN}/webhooks`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n\n    deleteWebhook(opt) {\n        required(opt, ['webhookId']);\n\n        var opt = {\n            method: 'DELETE',\n            uri: this.createTrelloUri(`webhooks/${opt.webhookId}`),\n            json: true\n        }\n        return sensibleRequest(opt);\n    }\n  \n    createWebhook(opt) {\n        required(opt, ['memberId', 'callbackUrl']);\n      console.log(opt)\n        var qs = querystring.stringify({\n            description: `card ${opt.meberId}`,\n            callbackUrl: opt.callbackUrl,\n            idModel: opt.memberId\n        });\n      console.log(this.createTrelloUri(`webhooks`))\n        var opt = {\n            method: 'POST',\n            uri: this.createTrelloUri(`webhooks`),\n            json: {\n                description: `card ${opt.memberId}`,\n                callbackURL: opt.callbackUrl,\n                idModel: opt.memberId\n            },\n            headers: {\n                'Content-Type': 'application/json'\n            }\n        }\n        return sensibleRequest(opt);\n    }\n}\n"
+      ]
+    },
+    "mtime": 1509012942628
+  },
+  "{\"filename\":\"/app/utils/index.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/utils\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "lodash",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "_"
+              }
+            ]
+          },
+          {
+            "source": "request-promise",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "request"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [
+            "required",
+            "obj",
+            "params",
+            "sensibleRequest",
+            "opt",
+            "throwHttpError",
+            "code",
+            "message"
+          ],
+          "specifiers": [
+            {
+              "kind": "local",
+              "local": "required",
+              "exported": "required"
+            },
+            {
+              "kind": "local",
+              "local": "obj",
+              "exported": "obj"
+            },
+            {
+              "kind": "local",
+              "local": "params",
+              "exported": "params"
+            },
+            {
+              "kind": "local",
+              "local": "sensibleRequest",
+              "exported": "sensibleRequest"
+            },
+            {
+              "kind": "local",
+              "local": "opt",
+              "exported": "opt"
+            },
+            {
+              "kind": "local",
+              "local": "throwHttpError",
+              "exported": "throwHttpError"
+            },
+            {
+              "kind": "local",
+              "local": "code",
+              "exported": "code"
+            },
+            {
+              "kind": "local",
+              "local": "message",
+              "exported": "message"
+            }
+          ]
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/utils/index.js",
+      "filenameRelative": "/app/utils/index.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "index.js",
+      "sourceFileName": "index.js",
+      "sourceRoot": "/app/utils",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/utils",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "index"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.required = required;\nexports.sensibleRequest = sensibleRequest;\nexports.throwHttpError = throwHttpError;\n\nvar _lodash = require('lodash');\n\nvar _lodash2 = _interopRequireDefault(_lodash);\n\nvar _requestPromise = require('request-promise');\n\nvar _requestPromise2 = _interopRequireDefault(_requestPromise);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction required(obj, params) {\n    var absent = _lodash2.default.filter(params, function (property) {\n        return _lodash2.default.isNil(_lodash2.default.get(obj, property));\n    });\n\n    if (!_lodash2.default.isEmpty(absent)) {\n        throw new Error(_lodash2.default.join(absent, ',') + ' must be specified');\n    }\n}\n\nfunction sensibleRequest(opt) {\n    return (0, _requestPromise2.default)(opt).then(function (response) {\n        if (response.statusCode >= 300) {\n            var e = new Error(response.body);\n            e.status = response.statusCode;\n            e.body = response.body;\n            throw e;\n        }\n        return response;\n    });\n}\n\nfunction throwHttpError(code, message) {\n    var e = new Error();\n    e.status = code;\n    e.message = message;\n    throw e;\n}\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbInJlcXVpcmVkIiwic2Vuc2libGVSZXF1ZXN0IiwidGhyb3dIdHRwRXJyb3IiLCJvYmoiLCJwYXJhbXMiLCJhYnNlbnQiLCJmaWx0ZXIiLCJpc05pbCIsImdldCIsInByb3BlcnR5IiwiaXNFbXB0eSIsIkVycm9yIiwiam9pbiIsIm9wdCIsInRoZW4iLCJyZXNwb25zZSIsInN0YXR1c0NvZGUiLCJlIiwiYm9keSIsInN0YXR1cyIsImNvZGUiLCJtZXNzYWdlIl0sIm1hcHBpbmdzIjoiOzs7OztRQUdnQkEsUSxHQUFBQSxRO1FBUUFDLGUsR0FBQUEsZTtRQVlBQyxjLEdBQUFBLGM7O0FBdkJoQjs7OztBQUNBOzs7Ozs7QUFFTyxTQUFTRixRQUFULENBQWtCRyxHQUFsQixFQUF1QkMsTUFBdkIsRUFBK0I7QUFDbEMsUUFBTUMsU0FBUyxpQkFBRUMsTUFBRixDQUFTRixNQUFULEVBQWlCO0FBQUEsZUFBWSxpQkFBRUcsS0FBRixDQUFRLGlCQUFFQyxHQUFGLENBQU1MLEdBQU4sRUFBV00sUUFBWCxDQUFSLENBQVo7QUFBQSxLQUFqQixDQUFmOztBQUVBLFFBQUcsQ0FBQyxpQkFBRUMsT0FBRixDQUFVTCxNQUFWLENBQUosRUFBc0I7QUFDbEIsY0FBTSxJQUFJTSxLQUFKLENBQWEsaUJBQUVDLElBQUYsQ0FBT1AsTUFBUCxFQUFlLEdBQWYsQ0FBYix3QkFBTjtBQUNIO0FBQ0o7O0FBRU0sU0FBU0osZUFBVCxDQUF5QlksR0FBekIsRUFBOEI7QUFDakMsV0FBTyw4QkFBUUEsR0FBUixFQUFhQyxJQUFiLENBQWtCLFVBQVVDLFFBQVYsRUFBb0I7QUFDekMsWUFBSUEsU0FBU0MsVUFBVCxJQUF1QixHQUEzQixFQUFnQztBQUM1QixnQkFBSUMsSUFBSSxJQUFJTixLQUFKLENBQVVJLFNBQVNHLElBQW5CLENBQVI7QUFDQUQsY0FBRUUsTUFBRixHQUFXSixTQUFTQyxVQUFwQjtBQUNBQyxjQUFFQyxJQUFGLEdBQVNILFNBQVNHLElBQWxCO0FBQ0Esa0JBQU1ELENBQU47QUFDSDtBQUNELGVBQU9GLFFBQVA7QUFDSCxLQVJNLENBQVA7QUFTSDs7QUFFTSxTQUFTYixjQUFULENBQXdCa0IsSUFBeEIsRUFBOEJDLE9BQTlCLEVBQXNDO0FBQ3pDLFFBQUlKLElBQUksSUFBSU4sS0FBSixFQUFSO0FBQ0FNLE1BQUVFLE1BQUYsR0FBV0MsSUFBWDtBQUNBSCxNQUFFSSxPQUFGLEdBQVlBLE9BQVo7QUFDQSxVQUFNSixDQUFOO0FBQ0giLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiL2FwcC91dGlscyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBfIGZyb20gJ2xvZGFzaCc7XG5pbXBvcnQgcmVxdWVzdCBmcm9tICdyZXF1ZXN0LXByb21pc2UnO1xuXG5leHBvcnQgZnVuY3Rpb24gcmVxdWlyZWQob2JqLCBwYXJhbXMpIHtcbiAgICBjb25zdCBhYnNlbnQgPSBfLmZpbHRlcihwYXJhbXMsIHByb3BlcnR5ID0+IF8uaXNOaWwoXy5nZXQob2JqLCBwcm9wZXJ0eSkpKTtcblxuICAgIGlmKCFfLmlzRW1wdHkoYWJzZW50KSl7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgJHtfLmpvaW4oYWJzZW50LCAnLCcpfSBtdXN0IGJlIHNwZWNpZmllZGApO1xuICAgIH1cbn1cblxuZXhwb3J0IGZ1bmN0aW9uIHNlbnNpYmxlUmVxdWVzdChvcHQpIHtcbiAgICByZXR1cm4gcmVxdWVzdChvcHQpLnRoZW4oZnVuY3Rpb24gKHJlc3BvbnNlKSB7XG4gICAgICAgIGlmIChyZXNwb25zZS5zdGF0dXNDb2RlID49IDMwMCkge1xuICAgICAgICAgICAgdmFyIGUgPSBuZXcgRXJyb3IocmVzcG9uc2UuYm9keSk7XG4gICAgICAgICAgICBlLnN0YXR1cyA9IHJlc3BvbnNlLnN0YXR1c0NvZGU7XG4gICAgICAgICAgICBlLmJvZHkgPSByZXNwb25zZS5ib2R5O1xuICAgICAgICAgICAgdGhyb3cgZTtcbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gcmVzcG9uc2U7XG4gICAgfSk7XG59XG5cbmV4cG9ydCBmdW5jdGlvbiB0aHJvd0h0dHBFcnJvcihjb2RlLCBtZXNzYWdlKXtcbiAgICB2YXIgZSA9IG5ldyBFcnJvcjtcbiAgICBlLnN0YXR1cyA9IGNvZGU7XG4gICAgZS5tZXNzYWdlID0gbWVzc2FnZTtcbiAgICB0aHJvdyBlO1xufSJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "index.js"
+      ],
+      "names": [
+        "required",
+        "sensibleRequest",
+        "throwHttpError",
+        "obj",
+        "params",
+        "absent",
+        "filter",
+        "isNil",
+        "get",
+        "property",
+        "isEmpty",
+        "Error",
+        "join",
+        "opt",
+        "then",
+        "response",
+        "statusCode",
+        "e",
+        "body",
+        "status",
+        "code",
+        "message"
+      ],
+      "mappings": ";;;;;QAGgBA,Q,GAAAA,Q;QAQAC,e,GAAAA,e;QAYAC,c,GAAAA,c;;AAvBhB;;;;AACA;;;;;;AAEO,SAASF,QAAT,CAAkBG,GAAlB,EAAuBC,MAAvB,EAA+B;AAClC,QAAMC,SAAS,iBAAEC,MAAF,CAASF,MAAT,EAAiB;AAAA,eAAY,iBAAEG,KAAF,CAAQ,iBAAEC,GAAF,CAAML,GAAN,EAAWM,QAAX,CAAR,CAAZ;AAAA,KAAjB,CAAf;;AAEA,QAAG,CAAC,iBAAEC,OAAF,CAAUL,MAAV,CAAJ,EAAsB;AAClB,cAAM,IAAIM,KAAJ,CAAa,iBAAEC,IAAF,CAAOP,MAAP,EAAe,GAAf,CAAb,wBAAN;AACH;AACJ;;AAEM,SAASJ,eAAT,CAAyBY,GAAzB,EAA8B;AACjC,WAAO,8BAAQA,GAAR,EAAaC,IAAb,CAAkB,UAAUC,QAAV,EAAoB;AACzC,YAAIA,SAASC,UAAT,IAAuB,GAA3B,EAAgC;AAC5B,gBAAIC,IAAI,IAAIN,KAAJ,CAAUI,SAASG,IAAnB,CAAR;AACAD,cAAEE,MAAF,GAAWJ,SAASC,UAApB;AACAC,cAAEC,IAAF,GAASH,SAASG,IAAlB;AACA,kBAAMD,CAAN;AACH;AACD,eAAOF,QAAP;AACH,KARM,CAAP;AASH;;AAEM,SAASb,cAAT,CAAwBkB,IAAxB,EAA8BC,OAA9B,EAAsC;AACzC,QAAIJ,IAAI,IAAIN,KAAJ,EAAR;AACAM,MAAEE,MAAF,GAAWC,IAAX;AACAH,MAAEI,OAAF,GAAYA,OAAZ;AACA,UAAMJ,CAAN;AACH",
+      "file": "index.js",
+      "sourceRoot": "/app/utils",
+      "sourcesContent": [
+        "import _ from 'lodash';\nimport request from 'request-promise';\n\nexport function required(obj, params) {\n    const absent = _.filter(params, property => _.isNil(_.get(obj, property)));\n\n    if(!_.isEmpty(absent)){\n        throw new Error(`${_.join(absent, ',')} must be specified`);\n    }\n}\n\nexport function sensibleRequest(opt) {\n    return request(opt).then(function (response) {\n        if (response.statusCode >= 300) {\n            var e = new Error(response.body);\n            e.status = response.statusCode;\n            e.body = response.body;\n            throw e;\n        }\n        return response;\n    });\n}\n\nexport function throwHttpError(code, message){\n    var e = new Error;\n    e.status = code;\n    e.message = message;\n    throw e;\n}"
+      ]
+    },
+    "mtime": 1509008830685
+  },
+  "{\"filename\":\"/app/controllers/TrelloController.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/controllers\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck",
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "../services/TrelloService",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "TrelloService"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [
+            "TrelloController"
+          ],
+          "specifiers": [
+            {
+              "kind": "local",
+              "local": "TrelloController",
+              "exported": "default"
+            }
+          ]
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/controllers/TrelloController.js",
+      "filenameRelative": "/app/controllers/TrelloController.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "TrelloController.js",
+      "sourceFileName": "TrelloController.js",
+      "sourceRoot": "/app/controllers",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/controllers",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "TrelloController"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _TrelloService = require('../services/TrelloService');\n\nvar _TrelloService2 = _interopRequireDefault(_TrelloService);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar TrelloController = function () {\n    function TrelloController(config) {\n        _classCallCheck(this, TrelloController);\n\n        this.service = new _TrelloService2.default(config);\n    }\n\n    _createClass(TrelloController, [{\n        key: 'setupRouter',\n        value: function setupRouter(router) {\n            router.get('/', this.test.bind(this));\n            router.get('/organizations/:organizationId/boards', this.getAllOrganiationBoards.bind(this));\n            router.get('/webhooks/all', this.getAllWebhooks.bind(this));\n            router.post('/', this.processTrelloCardChange.bind(this));\n            router.post('/webhook', this.createCardWebhook.bind(this));\n            router.delete('/all', this.deleteAllWebhooks.bind(this));\n            router.delete('/:cardId', this.deleteCardWebhook.bind(this));\n            return router;\n        }\n    }, {\n        key: 'test',\n        value: function test(req, res, next) {\n            res.send('0k').status(200).end();\n        }\n    }, {\n        key: 'getAllWebhooks',\n        value: function getAllWebhooks(req, res, next) {\n            return this.service.getAllWebhooks().then(function (webhooks) {\n                return res.json(webhooks).status(200).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'getAllOrganiationBoards',\n        value: function getAllOrganiationBoards(req, res, next) {\n            return this.service.getAllOrganiationBoards({\n                organizationId: req.params.organizationId\n            }).then(function (boards) {\n                return res.json(boards).status(200).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'processTrelloCardChange',\n        value: function processTrelloCardChange(req, res, next) {\n            return this.service.processTrelloCardChange(req.body).then(function () {\n                return res.status(200).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'createCardWebhook',\n        value: function createCardWebhook(req, res, next) {\n            return this.service.createCardWebhook({\n                memberId: req.body.memberId,\n                callbackUrl: 'https://' + req.hostname + '/api/trello'\n            }).then(function () {\n                return res.status(204).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'deleteCardWebhook',\n        value: function deleteCardWebhook(req, res, next) {\n            return this.service.deleteCardWebhook({\n                cardId: req.params.cardId\n            }).then(function () {\n                return res.status(204).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }, {\n        key: 'deleteAllWebhooks',\n        value: function deleteAllWebhooks(req, res, next) {\n            return this.service.deleteAllWebhooks().then(function () {\n                return res.status(204).end();\n            }).catch(function (err) {\n                return next(err);\n            });\n        }\n    }]);\n\n    return TrelloController;\n}();\n\nexports.default = TrelloController;\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlRyZWxsb0NvbnRyb2xsZXIuanMiXSwibmFtZXMiOlsiVHJlbGxvQ29udHJvbGxlciIsImNvbmZpZyIsInNlcnZpY2UiLCJyb3V0ZXIiLCJnZXQiLCJ0ZXN0IiwiYmluZCIsImdldEFsbE9yZ2FuaWF0aW9uQm9hcmRzIiwiZ2V0QWxsV2ViaG9va3MiLCJwb3N0IiwicHJvY2Vzc1RyZWxsb0NhcmRDaGFuZ2UiLCJjcmVhdGVDYXJkV2ViaG9vayIsImRlbGV0ZSIsImRlbGV0ZUFsbFdlYmhvb2tzIiwiZGVsZXRlQ2FyZFdlYmhvb2siLCJyZXEiLCJyZXMiLCJuZXh0Iiwic2VuZCIsInN0YXR1cyIsImVuZCIsInRoZW4iLCJqc29uIiwid2ViaG9va3MiLCJjYXRjaCIsImVyciIsIm9yZ2FuaXphdGlvbklkIiwicGFyYW1zIiwiYm9hcmRzIiwiYm9keSIsIm1lbWJlcklkIiwiY2FsbGJhY2tVcmwiLCJob3N0bmFtZSIsImNhcmRJZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7QUFBQTs7Ozs7Ozs7SUFFcUJBLGdCO0FBQ2pCLDhCQUFZQyxNQUFaLEVBQW1CO0FBQUE7O0FBQ2YsYUFBS0MsT0FBTCxHQUFlLDRCQUFrQkQsTUFBbEIsQ0FBZjtBQUNIOzs7O29DQUVXRSxNLEVBQU87QUFDZkEsbUJBQU9DLEdBQVAsQ0FBVyxHQUFYLEVBQWdCLEtBQUtDLElBQUwsQ0FBVUMsSUFBVixDQUFlLElBQWYsQ0FBaEI7QUFDQUgsbUJBQU9DLEdBQVAsQ0FBVyx1Q0FBWCxFQUFvRCxLQUFLRyx1QkFBTCxDQUE2QkQsSUFBN0IsQ0FBa0MsSUFBbEMsQ0FBcEQ7QUFDQUgsbUJBQU9DLEdBQVAsQ0FBVyxlQUFYLEVBQTRCLEtBQUtJLGNBQUwsQ0FBb0JGLElBQXBCLENBQXlCLElBQXpCLENBQTVCO0FBQ0FILG1CQUFPTSxJQUFQLENBQVksR0FBWixFQUFpQixLQUFLQyx1QkFBTCxDQUE2QkosSUFBN0IsQ0FBa0MsSUFBbEMsQ0FBakI7QUFDQUgsbUJBQU9NLElBQVAsQ0FBWSxVQUFa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QUFLUSxHQUFMLENBQVA7QUFBQSxhQUZKLENBQVA7QUFHSDs7Ozs7O2tCQTdEZ0J6QixnQiIsImZpbGUiOiJUcmVsbG9Db250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6Ii9hcHAvY29udHJvbGxlcnMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgVHJlbGxvU2VydmljZSBmcm9tICcuLi9zZXJ2aWNlcy9UcmVsbG9TZXJ2aWNlJztcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgVHJlbGxvQ29udHJvbGxlcntcbiAgICBjb25zdHJ1Y3Rvcihjb25maWcpe1xuICAgICAgICB0aGlzLnNlcnZpY2UgPSBuZXcgVHJlbGxvU2VydmljZShjb25maWcpO1xuICAgIH1cblxuICAgIHNldHVwUm91dGVyKHJvdXRlcil7XG4gICAgICAgIHJvdXRlci5nZXQoJy8nLCB0aGlzLnRlc3QuYmluZCh0aGlzKSk7XG4gICAgICAgIHJvdXRlci5nZXQoJy9vcmdhbml6YXRpb25zLzpvcmdhbml6YXRpb25JZC9ib2FyZHMnLCB0aGlzLmdldEFsbE9yZ2FuaWF0aW9uQm9hcmRzLmJpbmQodGhpcykpO1xuICAgICAgICByb3V0ZXIuZ2V0KCcvd2ViaG9va3MvYWxsJywgdGhpcy5nZXRBbGxXZWJob29rcy5iaW5kKHRoaXMpKTsgICAgIFxuICAgICAgICByb3V0ZXIucG9zdCgnLycsIHRoaXMucHJvY2Vzc1RyZWxsb0NhcmRDaGFuZ2UuYmluZCh0aGlzKSk7XG4gICAgICAgIHJvdXRlci5wb3N0KCcvd2ViaG9vaycsIHRoaXMuY3JlYXRlQ2FyZFdlYmhvb2suYmluZCh0aGlzKSk7XG4gICAgICAgIHJvdXRlci5kZWxldGUoJy9hbGwnLCB0aGlzLmRlbGV0ZUFsbFdlYmhvb2tzLmJpbmQodGhpcykpO1xuICAgICAgICByb3V0ZXIuZGVsZXRlKCcvOmNhcmRJZCcsIHRoaXMuZGVsZXRlQ2FyZFdlYmhvb2suYmluZCh0aGlzKSk7ICAgIFxuICAgICAgICByZXR1cm4gcm91dGVyO1xuICAgIH1cbiAgXG4gICAgdGVzdChyZXEsIHJlcywgbmV4dCkge1xuICAgICAgICByZXMuc2VuZCgnMGsnKS5zdGF0dXMoMjAwKS5lbmQoKTtcbiAgICB9XG4gIFxuICAgIGdldEFsbFdlYmhvb2tzKHJlcSwgcmVzLCBuZXh0KSB7XG4gICAgICAgIHJldHVybiB0aGlzLnNlcnZpY2UuZ2V0QWxsV2ViaG9va3MoKVxuICAgICAgICAgICAgLnRoZW4od2ViaG9va3MgPT4gcmVzLmpzb24od2ViaG9va3MpLnN0YXR1cygyMDApLmVuZCgpKVxuICAgICAgICAgICAgLmNhdGNoKGVyciA9PiBuZXh0KGVycikpXG4gICAgfVxuICBcbiAgICBnZXRBbGxPcmdhbmlhdGlvbkJvYXJkcyhyZXEsIHJlcywgbmV4dCkge1xuICAgICAgICByZXR1cm4gdGhpcy5zZXJ2aWNlLmdldEFsbE9yZ2FuaWF0aW9uQm9hcmRzKHtcbiAgICAgICAgICAgIG9yZ2FuaXphdGlvbklkOiByZXEucGFyYW1zLm9yZ2FuaXphdGlvbklkXG4gICAgICAgIH0pXG4gICAgICAgIC50aGVuKGJvYXJkcyA9PiByZXMuanNvbihib2FyZHMpLnN0YXR1cygyMDApLmVuZCgpKVxuICAgICAgICAuY2F0Y2goZXJyID0+IG5leHQoZXJyKSlcbiAgICB9XG4gIFxuICAgIHByb2Nlc3NUcmVsbG9DYXJkQ2hhbmdlKHJlcSwgcmVzLCBuZXh0KSB7ICAgICAgICAgICAgICAgIFxuICAgICAgICByZXR1cm4gdGhpcy5zZXJ2aWNlLnByb2Nlc3NUcmVsbG9DYXJkQ2hhbmdlKHJlcS5ib2R5KVxuICAgICAgICAgICAgLnRoZW4oKCkgPT4gcmVzLnN0YXR1cygyMDApLmVuZCgpKVxuICAgICAgICAgICAgLmNhdGNoKGVyciA9PiBuZXh0KGVycikpXG4gICAgfVxuICBcbiAgICBjcmVhdGVDYXJkV2ViaG9vayhyZXEsIHJlcywgbmV4dCkge1xuICAgICAgICByZXR1cm4gdGhpcy5zZXJ2aWNlLmNyZWF0ZUNhcmRXZWJob29rKHtcbiAgICAgICAgICAgIG1lbWJlcklkOiByZXEuYm9keS5tZW1iZXJJZCxcbiAgICAgICAgICAgIGNhbGxiYWNrVXJsOiBgaHR0cHM6Ly8ke3JlcS5ob3N0bmFtZX0vYXBpL3RyZWxsb2BcbiAgICAgICAgfSlcbiAgICAgICAgLnRoZW4oKCkgPT4gcmVzLnN0YXR1cygyMDQpLmVuZCgpKVxuICAgICAgICAuY2F0Y2goZXJyID0+IG5leHQoZXJyKSlcbiAgICB9XG4gICAgXG4gICAgZGVsZXRlQ2FyZFdlYmhvb2socmVxLCByZXMsIG5leHQpIHtcbiAgICAgICAgcmV0dXJuIHRoaXMuc2VydmljZS5kZWxldGVDYXJkV2ViaG9vayh7XG4gICAgICAgICAgICBjYXJkSWQ6IHJlcS5wYXJhbXMuY2FyZElkXG4gICAgICAgIH0pXG4gICAgICAgIC50aGVuKCgpID0+IHJlcy5zdGF0dXMoMjA0KS5lbmQoKSlcbiAgICAgICAgLmNhdGNoKGVyciA9PiBuZXh0KGVycikpXG4gICAgfVxuICBcbiAgICBkZWxldGVBbGxXZWJob29rcyhyZXEsIHJlcywgbmV4dCkge1xuICAgICAgICByZXR1cm4gdGhpcy5zZXJ2aWNlLmRlbGV0ZUFsbFdlYmhvb2tzKClcbiAgICAgICAgICAgIC50aGVuKCgpID0+IHJlcy5zdGF0dXMoMjA0KS5lbmQoKSlcbiAgICAgICAgICAgIC5jYXRjaChlcnIgPT4gbmV4dChlcnIpKVxuICAgIH1cbn0iXX0=",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "TrelloController.js"
+      ],
+      "names": [
+        "TrelloController",
+        "config",
+        "service",
+        "router",
+        "get",
+        "test",
+        "bind",
+        "getAllOrganiationBoards",
+        "getAllWebhooks",
+        "post",
+        "processTrelloCardChange",
+        "createCardWebhook",
+        "delete",
+        "deleteAllWebhooks",
+        "deleteCardWebhook",
+        "req",
+        "res",
+        "next",
+        "send",
+        "status",
+        "end",
+        "then",
+        "json",
+        "webhooks",
+        "catch",
+        "err",
+        "organizationId",
+        "params",
+        "boards",
+        "body",
+        "memberId",
+        "callbackUrl",
+        "hostname",
+        "cardId"
+      ],
+      "mappings": "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",
+      "file": "TrelloController.js",
+      "sourceRoot": "/app/controllers",
+      "sourcesContent": [
+        "import TrelloService from '../services/TrelloService';\n\nexport default class TrelloController{\n    constructor(config){\n        this.service = new TrelloService(config);\n    }\n\n    setupRouter(router){\n        router.get('/', this.test.bind(this));\n        router.get('/organizations/:organizationId/boards', this.getAllOrganiationBoards.bind(this));\n        router.get('/webhooks/all', this.getAllWebhooks.bind(this));     \n        router.post('/', this.processTrelloCardChange.bind(this));\n        router.post('/webhook', this.createCardWebhook.bind(this));\n        router.delete('/all', this.deleteAllWebhooks.bind(this));\n        router.delete('/:cardId', this.deleteCardWebhook.bind(this));    \n        return router;\n    }\n  \n    test(req, res, next) {\n        res.send('0k').status(200).end();\n    }\n  \n    getAllWebhooks(req, res, next) {\n        return this.service.getAllWebhooks()\n            .then(webhooks => res.json(webhooks).status(200).end())\n            .catch(err => next(err))\n    }\n  \n    getAllOrganiationBoards(req, res, next) {\n        return this.service.getAllOrganiationBoards({\n            organizationId: req.params.organizationId\n        })\n        .then(boards => res.json(boards).status(200).end())\n        .catch(err => next(err))\n    }\n  \n    processTrelloCardChange(req, res, next) {                \n        return this.service.processTrelloCardChange(req.body)\n            .then(() => res.status(200).end())\n            .catch(err => next(err))\n    }\n  \n    createCardWebhook(req, res, next) {\n        return this.service.createCardWebhook({\n            memberId: req.body.memberId,\n            callbackUrl: `https://${req.hostname}/api/trello`\n        })\n        .then(() => res.status(204).end())\n        .catch(err => next(err))\n    }\n    \n    deleteCardWebhook(req, res, next) {\n        return this.service.deleteCardWebhook({\n            cardId: req.params.cardId\n        })\n        .then(() => res.status(204).end())\n        .catch(err => next(err))\n    }\n  \n    deleteAllWebhooks(req, res, next) {\n        return this.service.deleteAllWebhooks()\n            .then(() => res.status(204).end())\n            .catch(err => next(err))\n    }\n}"
+      ]
+    },
+    "mtime": 1509012388062
+  },
+  "{\"filename\":\"/app/services/TrelloService.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/services\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck",
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "lodash",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "_"
+              }
+            ]
+          },
+          {
+            "source": "bluebird",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "Promise"
+              }
+            ]
+          },
+          {
+            "source": "../apis/trello",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "TrelloApi"
+              }
+            ]
+          },
+          {
+            "source": "../utils",
+            "imported": [
+              "required",
+              "throwHttpError"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "required",
+                "local": "required"
+              },
+              {
+                "kind": "named",
+                "imported": "throwHttpError",
+                "local": "throwHttpError"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [
+            "TrelloService"
+          ],
+          "specifiers": [
+            {
+              "kind": "local",
+              "local": "TrelloService",
+              "exported": "default"
+            }
+          ]
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/services/TrelloService.js",
+      "filenameRelative": "/app/services/TrelloService.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "TrelloService.js",
+      "sourceFileName": "TrelloService.js",
+      "sourceRoot": "/app/services",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/services",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "TrelloService"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _lodash = require('lodash');\n\nvar _lodash2 = _interopRequireDefault(_lodash);\n\nvar _bluebird = require('bluebird');\n\nvar _bluebird2 = _interopRequireDefault(_bluebird);\n\nvar _trello = require('../apis/trello');\n\nvar _trello2 = _interopRequireDefault(_trello);\n\nvar _utils = require('../utils');\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar TrelloService = function () {\n    function TrelloService(config) {\n        _classCallCheck(this, TrelloService);\n\n        this.config = config;\n        this.api = new _trello2.default(config);\n    }\n\n    _createClass(TrelloService, [{\n        key: 'processTrelloCardChange',\n        value: function processTrelloCardChange(opt) {\n            var _this = this;\n\n            var memberId = opt.action.idMemberCreator;\n            var modifiedCardId = opt.action.data.card.id;\n\n            var adminBoard, modifiedCard, adminBoardCards, targetList, matchingCard;\n\n            return _bluebird2.default.props({\n                boards: this.api.getMemberBoards({\n                    memberId: memberId\n                }),\n                modifiedCard: this.aggregateCardData(modifiedCardId)\n            }).then(function (results) {\n                adminBoard = getAdminBoards(results.boards);\n                modifiedCard = results.modifiedCard;\n\n                return _bluebird2.default.props({\n                    cards: _this.api.getBoardCards({\n                        boardId: adminBoard.id\n                    }),\n                    lists: _this.api.getBoardLists({\n                        boardId: adminBoard.id\n                    })\n                });\n            }).then(function (result) {\n                return _bluebird2.default.props({\n                    cards: _bluebird2.default.map(result.cards, function (card) {\n                        return _this.aggregateCardData(card.id);\n                    }),\n                    lists: _bluebird2.default.resolve(result.lists)\n                });\n            }).then(function (result) {\n                adminBoardCards = result.cards;\n                var matchingList = _this.getMatchingListInAdminBoard(result.lists, modifiedCard);\n\n                return _lodash2.default.isNil(matchingList) ? _this.api.createList({\n                    boardId: adminBoard.id,\n                    listName: modifiedCard.cardList.name,\n                    pos: modifiedCard.cardList.pos\n                }) : _bluebird2.default.resolve(matchingList);\n            }).then(function (list) {\n                targetList = list;\n                matchingCard = _this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);\n\n                // delete the card if it exists.\n                return _lodash2.default.isNil(matchingCard) ? _bluebird2.default.resolve() : _this.api.deleteExistingCard({ cardId: matchingCard.card.id });\n            }).then(function () {\n                return _this.isOriginCardDeleted(opt) ? _this.deleteCardWebhook({\n                    cardId: modifiedCard.card.id\n                }) : _this.api.createCardFromExisting({\n                    listId: targetList.id,\n                    originCardId: modifiedCard.card.id,\n                    pos: modifiedCard.card.pos\n                });\n            });\n        }\n    }, {\n        key: 'deleteCardWebhook',\n        value: function deleteCardWebhook(opt) {\n            var _this2 = this;\n\n            (0, _utils.required)(opt, ['cardId']);\n\n            return this.api.listWebhooks().then(function (webhooks) {\n                var index = _lodash2.default.findIndex(webhooks, ['idModel', opt.cardId]);\n                var webhookToDelete = webhooks[index];\n\n                return _this2.api.deleteWebhook({\n                    webhookId: webhookToDelete.id\n                });\n            });\n        }\n    }, {\n        key: 'createCardWebhook',\n        value: function createCardWebhook(opt) {\n            (0, _utils.required)(opt, ['memberId', 'callbackUrl']);\n            console.log(opt);\n            return this.api.createWebhook(opt);\n        }\n    }, {\n        key: 'deleteAllWebhooks',\n        value: function deleteAllWebhooks() {\n            var _this3 = this;\n\n            return this.api.listWebhooks().then(function (webhooks) {\n                return _bluebird2.default.map(webhooks, function (webhook) {\n                    return _this3.api.deleteWebhook({\n                        webhookId: webhook.id\n                    });\n                });\n            });\n        }\n    }, {\n        key: 'getAllWebhooks',\n        value: function getAllWebhooks() {\n            return this.api.listWebhooks();\n        }\n    }, {\n        key: 'getAllOrganiationBoards',\n        value: function getAllOrganiationBoards(opt) {\n            (0, _utils.required)(opt, ['organizationId']);\n\n            return this.api.getAllOrganiationBoards({\n                organizationId: opt.organizationId\n            });\n        }\n    }, {\n        key: 'aggregateCardData',\n        value: function aggregateCardData(cardId) {\n            var opt = { cardId: cardId };\n\n            return _bluebird2.default.props({\n                card: this.api.getCard(opt),\n                cardActions: this.api.getCardActions(opt),\n                cardList: this.api.getCardList(opt)\n            });\n        }\n    }, {\n        key: 'getMatchingListInAdminBoard',\n        value: function getMatchingListInAdminBoard(adminLists, modifiedCard) {\n            var list;\n\n            for (var i = 0; i < adminLists.length; i++) {\n                if (adminLists[i].name === modifiedCard.cardList.name) {\n                    list = adminLists[i];\n                    break;\n                }\n            }\n            return list;\n        }\n    }, {\n        key: 'getMatchingCardInAdminBoard',\n        value: function getMatchingCardInAdminBoard(adminCards, modifiedCard) {\n            var card;\n\n            for (var i = 0; i < adminCards.length; i++) {\n                if (adminCards[i].card.name === modifiedCard.card.name) {\n                    card = adminCards[i];\n                    break;\n                }\n            }\n            return card;\n        }\n    }, {\n        key: 'isOriginCardDeleted',\n        value: function isOriginCardDeleted(opt) {\n            return opt.action.type === 'updateCard' && opt.action.display.translationKey === 'action_archived_card';\n        }\n    }]);\n\n    return TrelloService;\n}();\n\n/* PRIVATE FUNCTIONS */\n\n\nexports.default = TrelloService;\nfunction getAdminBoards(boards) {\n    var adminBoards = _lodash2.default.filter(boards, function (board) {\n        return board.name.toLowerCase() === 'admin board';\n    });\n\n    return adminBoards.length === 0 ? (0, _utils.throwHttpError)(404, 'There is no admin board') : adminBoards[0];\n}\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIlRyZWxsb1NlcnZpY2UuanMiXSwibmFtZXMiOlsiVHJlbGxvU2VydmljZSIsImNvbmZpZyIsImFwaSIsIm9wdCIsIm1lbWJlcklkIiwiYWN0aW9uIiwiaWRNZW1iZXJDcmVhdG9yIiwibW9kaWZpZWRDYXJkSWQiLCJkYXRhIiwiY2FyZCIsImlkIiwiYWRtaW5Cb2FyZCIsIm1vZGlmaWVkQ2FyZCIsImFkbWluQm9hcmRDYXJkcyIsInRhcmdldExpc3QiLCJtYXRjaGluZ0NhcmQiLCJwcm9wcyIsImJvYXJkcyIsImdldE1lbWJlckJvYXJkcyIsImFnZ3JlZ2F0ZUNhcmREYXRhIiwidGhlbiIsImdldEFkbWluQm9hcmRzIiwicmVzdWx0cyIsImNhcmRzIiwiZ2V0Qm9hcmRDYXJkcyIsImJvYXJkSWQiLCJsaXN0cyIsImdldEJvYXJkTGlzdHMiLCJtYXAiLCJyZXN1bHQiLCJyZXNvbHZlIiwibWF0Y2hpbmdMaXN0IiwiZ2V0TWF0Y2hpbmdMaXN0SW5BZG1pbkJvYXJkIiwiaXNOaWwiLCJjcmVhdGVMaXN0IiwibGlzdE5hbWUiLCJjYXJkTGlzdCIsIm5hbWUiLCJwb3MiLCJsaXN0IiwiZ2V0TWF0Y2hpbmdDYXJkSW5BZG1pbkJvYXJkIiwiZGVsZXRlRXhpc3RpbmdDYXJkIiwiY2FyZElkIiwiaXNPcmlnaW5DYXJkRGVsZXRlZCIsImRlbGV0ZUNhcmRXZWJob29rIiwiY3JlYXRlQ2FyZEZyb21FeGlzdGluZyIsImxpc3RJZCIsIm9yaWdpbkNhcmRJZCIsImxpc3RXZWJob29rcyIsImluZGV4IiwiZmluZEluZGV4Iiwid2ViaG9va3MiLCJ3ZWJob29rVG9EZWxldGUiLCJkZWxldGVXZWJob29rIiwid2ViaG9va0lkIiwiY29uc29sZSIsImxvZyIsImNyZWF0ZVdlYmhvb2siLCJ3ZWJob29rIiwiZ2V0QWxsT3JnYW5pYXRpb25Cb2FyZHMiLCJvcmdhbml6YXRpb25JZCIsImdldENhcmQiLCJjYXJkQWN0aW9ucyIsImdldENhcmRBY3Rpb25zIiwiZ2V0Q2FyZExpc3QiLCJhZG1pbkxpc3RzIiwiaSIsImxlbmd0aCIsImFkbWluQ2FyZHMiLCJ0eXBlIiwiZGlzcGxheSIsInRyYW5zbGF0aW9uS2V5IiwiYWRtaW5Cb2FyZHMiLCJmaWx0ZXIiLCJib2FyZCIsInRvTG93ZXJDYXNlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7OztBQUFBOzs7O0FBQ0E7Ozs7QUFDQTs7OztBQUNBOzs7Ozs7SUFFcUJBLGE7QUFDakIsMkJBQVlDLE1BQVosRUFBbUI7QUFBQTs7QUFDZixhQUFLQSxNQUFMLEdBQWNBLE1BQWQ7QUFDQSxhQUFLQyxHQUFMLEdBQVcscUJBQWNELE1BQWQsQ0FBWDtBQUNIOzs7O2dEQUV1QkUsRyxFQUFLO0FBQUE7O0FBQ3pCLGdCQUFNQyxXQUFXRCxJQUFJRSxNQUFKLENBQVdDLGVBQTVCO0FBQ0EsZ0JBQU1DLGlCQUFpQkosSUFBSUUsTUFBSixDQUFXRyxJQUFYLENBQWdCQyxJQUFoQixDQUFxQkMsRUFBNUM7O0FBRUEsZ0JBQUlDLFVBQUosRUFBZ0JDLFlBQWhCLEVBQThCQyxlQUE5QixFQUErQ0MsVUFBL0MsRUFBMkRDLFlBQTNEOztBQUVBLG1CQUFPLG1CQUFRQyxLQUFSLENBQWM7QUFDakJDLHdCQUFRLEtBQUtmLEdBQUwsQ0FBU2dCLGVBQVQsQ0FBeUI7QUFDN0JkLDhCQUFVQTtBQURtQixpQkFBekIsQ0FEUztBQUlqQlEsOEJBQWMsS0FBS08saUJBQUwsQ0FBdUJaLGNBQXZCO0FBSkcsYUFBZCxFQUtKYSxJQUxJLENBS0MsbUJBQVc7QUFDYlQsNkJBQWFVLGVBQWVDLFFBQVFMLE1BQXZCLENBQWI7QUFDQUwsK0JBQWVVLFFBQVFWLFlBQXZCOztBQUVBLHVCQUFPLG1CQUFRSSxLQUFSLENBQWM7QUFDakJPLDJCQUFPLE1BQUtyQixHQUFMLENBQVNzQixhQUFULENBQXVCO0FBQzFCQyxpQ0FBU2QsV0FBV0Q7QUFETSxxQkFBdkIsQ0FEVTtBQUlqQmdCLDJCQUFPLE1BQUt4QixHQUFMLENBQVN5QixhQUFULENBQXVCO0FBQzFCRixpQ0FBU2QsV0FBV0Q7QUFETSxx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QUFKOztBQUVBLGlCQUFJLElBQUl5RCxJQUFFLENBQVYsRUFBYUEsSUFBRUUsV0FBV0QsTUFBMUIsRUFBa0NELEdBQWxDLEVBQXVDO0FBQ25DLG9CQUFHRSxXQUFXRixDQUFYLEVBQWN6RCxJQUFkLENBQW1CNEIsSUFBbkIsS0FBNEJ6QixhQUFhSCxJQUFiLENBQWtCNEIsSUFBakQsRUFBdUQ7QUFDbkQ1QiwyQkFBTzJELFdBQVdGLENBQVgsQ0FBUDtBQUNBO0FBQ0g7QUFDSjtBQUNELG1CQUFPekQsSUFBUDtBQUNIOzs7NENBRW1CTixHLEVBQUs7QUFDckIsbUJBQU9BLElBQUlFLE1BQUosQ0FBV2dFLElBQVgsS0FBb0IsWUFBcEIsSUFBb0NsRSxJQUFJRSxNQUFKLENBQVdpRSxPQUFYLENBQW1CQyxjQUFuQixLQUFzQyxzQkFBakY7QUFDSDs7Ozs7O0FBR0w7OztrQkEvSXFCdkUsYTtBQWdKckIsU0FBU3FCLGNBQVQsQ0FBd0JKLE1BQXhCLEVBQWdDO0FBQzVCLFFBQUl1RCxjQUFjLGlCQUFFQyxNQUFGLENBQVN4RCxNQUFULEVBQWlCLGlCQUFTO0FBQ3hDLGVBQU95RCxNQUFNckMsSUFBTixDQUFXc0MsV0FBWCxPQUE2QixhQUFwQztBQUNILEtBRmlCLENBQWxCOztBQUlBLFdBQVFILFlBQVlMLE1BQVosS0FBdUIsQ0FBeEIsR0FDSCwyQkFBZSxHQUFmLEVBQW9CLHlCQUFwQixDQURHLEdBRURLLFlBQVksQ0FBWixDQUZOO0FBR0giLCJmaWxlIjoiVHJlbGxvU2VydmljZS5qcyIsInNvdXJjZVJvb3QiOiIvYXBwL3NlcnZpY2VzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IF8gZnJvbSAnbG9kYXNoJztcbmltcG9ydCBQcm9taXNlIGZyb20gJ2JsdWViaXJkJztcbmltcG9ydCBUcmVsbG9BcGkgZnJvbSAnLi4vYXBpcy90cmVsbG8nO1xuaW1wb3J0IHsgcmVxdWlyZWQgLHRocm93SHR0cEVycm9yIH0gZnJvbSAnLi4vdXRpbHMnO1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBUcmVsbG9TZXJ2aWNlIHtcbiAgICBjb25zdHJ1Y3Rvcihjb25maWcpe1xuICAgICAgICB0aGlzLmNvbmZpZyA9IGNvbmZpZztcbiAgICAgICAgdGhpcy5hcGkgPSBuZXcgVHJlbGxvQXBpKGNvbmZpZyk7XG4gICAgfVxuXG4gICAgcHJvY2Vzc1RyZWxsb0NhcmRDaGFuZ2Uob3B0KSB7XG4gICAgICAgIGNvbnN0IG1lbWJlcklkID0gb3B0LmFjdGlvbi5pZE1lbWJlckNyZWF0b3I7XG4gICAgICAgIGNvbnN0IG1vZGlmaWVkQ2FyZElkID0gb3B0LmFjdGlvbi5kYXRhLmNhcmQuaWQ7XG5cbiAgICAgICAgdmFyIGFkbWluQm9hcmQsIG1vZGlmaWVkQ2FyZCwgYWRtaW5Cb2FyZENhcmRzLCB0YXJnZXRMaXN0LCBtYXRjaGluZ0NhcmQ7XG5cbiAgICAgICAgcmV0dXJuIFByb21pc2UucHJvcHMoe1xuICAgICAgICAgICAgYm9hcmRzOiB0aGlzLmFwaS5nZXRNZW1iZXJCb2FyZHMoe1xuICAgICAgICAgICAgICAgIG1lbWJlcklkOiBtZW1iZXJJZFxuICAgICAgICAgICAgfSksXG4gICAgICAgICAgICBtb2RpZmllZENhcmQ6IHRoaXMuYWdncmVnYXRlQ2FyZERhdGEobW9kaWZpZWRDYXJkSWQpXG4gICAgICAgIH0pLnRoZW4ocmVzdWx0cyA9PiB7XG4gICAgICAgICAgICAgIGFkbWluQm9hcmQgPSBnZXRBZG1pbkJvYXJkcyhyZXN1bHRzLmJvYXJkcyk7XG4gICAgICAgICAgICAgIG1vZGlmaWVkQ2FyZCA9IHJlc3VsdHMubW9kaWZpZWRDYXJkO1xuXG4gICAgICAgICAgICAgIHJldHVybiBQcm9taXNlLnByb3BzKHtcbiAgICAgICAgICAgICAgICAgIGNhcmRzOiB0aGlzLmFwaS5nZXRCb2FyZENhcmRzKHtcbiAgICAgICAgICAgICAgICAgICAgICBib2FyZElkOiBhZG1pbkJvYXJkLmlkXG4gICAgICAgICAgICAgICAgICB9KSxcbiAgICAgICAgICAgICAgICAgIGxpc3RzOiB0aGlzLmFwaS5nZXRCb2FyZExpc3RzKHtcbiAgICAgICAgICAgICAgICAgICAgICBib2FyZElkOiBhZG1pbkJvYXJkLmlkXG4gICAgICAgICAgICAgICAgICB9KVxuICAgICAgICAgICAgICB9KTtcbiAgICAgICAgfSkudGhlbihyZXN1bHQgPT4gUHJvbWlzZS5wcm9wcyh7XG4gICAgICAgICAgICBjYXJkczogUHJvbWlzZS5tYXAocmVzdWx0LmNhcmRzLCBjYXJkID0+IHRoaXMuYWdncmVnYXRlQ2FyZERhdGEoY2FyZC5pZCkpLFxuICAgICAgICAgICAgbGlzdHM6IFByb21pc2UucmVzb2x2ZShyZXN1bHQubGlzdHMpXG4gICAgICAgIH0pKS50aGVuKHJlc3VsdCA9PiB7XG4gICAgICAgICAgICBhZG1pbkJvYXJkQ2FyZHMgPSByZXN1bHQuY2FyZHM7XG4gICAgICAgICAgICB2YXIgbWF0Y2hpbmdMaXN0ID0gdGhpcy5nZXRNYXRjaGluZ0xpc3RJbkFkbWluQm9hcmQocmVzdWx0Lmxpc3RzLCBtb2RpZmllZENhcmQpO1xuXG4gICAgICAgICAgICByZXR1cm4gXy5pc05pbChtYXRjaGluZ0xpc3QpXG4gICAgICAgICAgICAgICAgPyB0aGlzLmFwaS5jcmVhdGVMaXN0KHtcbiAgICAgICAgICAgICAgICAgICAgYm9hcmRJZDogYWRtaW5Cb2FyZC5pZCxcbiAgICAgICAgICAgICAgICAgICAgbGlzdE5hbWU6IG1vZGlmaWVkQ2FyZC5jYXJkTGlzdC5uYW1lLFxuICAgICAgICAgICAgICAgICAgICBwb3M6IG1vZGlmaWVkQ2FyZC5jYXJkTGlzdC5wb3NcbiAgICAgICAgICAgICAgICB9KVxuICAgICAgICAgICAgICAgIDogUHJvbWlzZS5yZXNvbHZlKG1hdGNoaW5nTGlzdCk7XG4gICAgICAgIH0pLnRoZW4obGlzdCA9PiB7XG4gICAgICAgICAgICB0YXJnZXRMaXN0ID0gbGlzdDtcbiAgICAgICAgICAgIG1hdGNoaW5nQ2FyZCA9IHRoaXMuZ2V0TWF0Y2hpbmdDYXJkSW5BZG1pbkJvYXJkKGFkbWluQm9hcmRDYXJkcywgbW9kaWZpZWRDYXJkKTtcblxuICAgICAgICAgICAgLy8gZGVsZXRlIHRoZSBjYXJkIGlmIGl0IGV4aXN0cy5cbiAgICAgICAgICAgIHJldHVybiBfLmlzTmlsKG1hdGNoaW5nQ2FyZCkgP1xuICAgICAgICAgICAgICAgIFByb21pc2UucmVzb2x2ZSgpIDpcbiAgICAgICAgICAgICAgICB0aGlzLmFwaS5kZWxldGVFeGlzdGluZ0NhcmQoeyBjYXJkSWQ6IG1hdGNoaW5nQ2FyZC5jYXJkLmlkIH0pXG5cbiAgICAgICAgfSkudGhlbigoKSA9PiB7XG4gICAgICAgICAgICByZXR1cm4gdGhpcy5pc09yaWdpbkNhcmREZWxldGVkKG9wdClcbiAgICAgICAgICAgICAgICA/IHRoaXMuZGVsZXRlQ2FyZFdlYmhvb2soe1xuICAgICAgICAgICAgICAgICAgICBjYXJkSWQ6IG1vZGlmaWVkQ2FyZC5jYXJkLmlkXG4gICAgICAgICAgICAgICAgfSlcbiAgICAgICAgICAgICAgICA6IHRoaXMuYXBpLmNyZWF0ZUNhcmRGcm9tRXhpc3Rpbmcoe1xuICAgICAgICAgICAgICAgICAgICBsaXN0SWQ6IHRhcmdldExpc3QuaWQsXG4gICAgICAgICAgICAgICAgICAgIG9yaWdpbkNhcmRJZDogbW9kaWZpZWRDYXJkLmNhcmQuaWQsXG4gICAgICAgICAgICAgICAgICAgIHBvczogbW9kaWZpZWRDYXJkLmNhcmQucG9zXG4gICAgICAgICAgICAgICAgfSlcbiAgICAgICAgfSlcbiAgICB9XG5cbiAgICBkZWxldGVDYXJkV2ViaG9vayhvcHQpIHtcbiAgICAgICAgcmVxdWlyZWQob3B0LCBbJ2NhcmRJZCddKTtcblxuICAgICAgICByZXR1cm4gdGhpcy5hcGkubGlzdFdlYmhvb2tzKCkudGhlbih3ZWJob29rcyA9PiB7XG4gICAgICAgICAgICBsZXQgaW5kZXggPSBfLmZpbmRJbmRleCh3ZWJob29rcywgWydpZE1vZGVsJywgb3B0LmNhcmRJZF0pO1xuICAgICAgICAgICAgbGV0IHdlYmhvb2tUb0RlbGV0ZSA9IHdlYmhvb2tzW2luZGV4XTtcblxuICAgICAgICAgICAgcmV0dXJuIHRoaXMuYXBpLmRlbGV0ZVdlYmhvb2soe1xuICAgICAgICAgICAgICAgIHdlYmhvb2tJZDogd2ViaG9va1RvRGVsZXRlLmlkXG4gICAgICAgICAgICB9KTtcbiAgICAgICAgfSk7XG4gICAgfVxuICBcbiAgICBjcmVhdGVDYXJkV2ViaG9vayhvcHQpIHtcbiAgICAgICAgcmVxdWlyZWQob3B0LCBbJ21lbWJlcklkJywgJ2NhbGxiYWNrVXJsJ10pO1xuICAgICAgICBjb25zb2xlLmxvZyhvcHQpXG4gICAgICAgIHJldHVybiB0aGlzLmFwaS5jcmVhdGVXZWJob29rKG9wdCk7XG4gICAgfVxuXG4gICAgZGVsZXRlQWxsV2ViaG9va3MoKSB7XG4gICAgICAgIHJldHVybiB0aGlzLmFwaS5saXN0V2ViaG9va3MoKS50aGVuKHdlYmhvb2tzID0+XG4gICAgICAgICAgICBQcm9taXNlLm1hcCh3ZWJob29rcywgd2ViaG9vayA9PiB0aGlzLmFwaS5kZWxldGVXZWJob29rKHtcbiAgICAgICAgICAgICAgICB3ZWJob29rSWQ6IHdlYmhvb2suaWRcbiAgICAgICAgICAgIH0pKVxuICAgICAgICApXG4gICAgfVxuXG4gICAgZ2V0QWxsV2ViaG9va3MoKSB7XG4gICAgICAgIHJldHVybiB0aGlzLmFwaS5saXN0V2ViaG9va3MoKTtcbiAgICB9XG4gIFxuICAgIGdldEFsbE9yZ2FuaWF0aW9uQm9hcmRzKG9wdCkge1xuICAgICAgICByZXF1aXJlZChvcHQsIFsnb3JnYW5pemF0aW9uSWQnXSk7XG4gICAgICBcbiAgICAgICAgcmV0dXJuIHRoaXMuYXBpLmdldEFsbE9yZ2FuaWF0aW9uQm9hcmRzKHtcbiAgICAgICAgICAgIG9yZ2FuaXphdGlvbklkOiBvcHQub3JnYW5pemF0aW9uSWRcbiAgICAgICAgfSk7XG4gICAgfVxuXG4gICAgYWdncmVnYXRlQ2FyZERhdGEoY2FyZElkKSB7XG4gICAgICAgIHZhciBvcHQgPSB7IGNhcmRJZDogY2FyZElkIH07XG5cbiAgICAgICAgcmV0dXJuIFByb21pc2UucHJvcHMoe1xuICAgICAgICAgICAgY2FyZDogdGhpcy5hcGkuZ2V0Q2FyZChvcHQpLFxuICAgICAgICAgICAgY2FyZEFjdGlvbnM6IHRoaXMuYXBpLmdldENhcmRBY3Rpb25zKG9wdCksXG4gICAgICAgICAgICBjYXJkTGlzdDogdGhpcy5hcGkuZ2V0Q2FyZExpc3Qob3B0KVxuICAgICAgICB9KVxuICAgIH1cblxuICAgIGdldE1hdGNoaW5nTGlzdEluQWRtaW5Cb2FyZChhZG1pbkxpc3RzLCBtb2RpZmllZENhcmQpIHtcbiAgICAgICAgdmFyIGxpc3Q7XG5cbiAgICAgICAgZm9yKHZhciBpPTA7IGk8YWRtaW5MaXN0cy5sZW5ndGg7IGkrKykge1xuICAgICAgICAgICAgaWYoYWRtaW5MaXN0c1tpXS5uYW1lID09PSBtb2RpZmllZENhcmQuY2FyZExpc3QubmFtZSkge1xuICAgICAgICAgICAgICAgIGxpc3QgPSBhZG1pbkxpc3RzW2ldO1xuICAgICAgICAgICAgICAgIGJyZWFrO1xuICAgICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICAgIHJldHVybiBsaXN0O1xuICAgIH1cblxuICAgIGdldE1hdGNoaW5nQ2FyZEluQWRtaW5Cb2FyZChhZG1pbkNhcmRzLCBtb2RpZmllZENhcmQpIHtcbiAgICAgICAgdmFyIGNhcmQ7XG5cbiAgICAgICAgZm9yKHZhciBpPTA7IGk8YWRtaW5DYXJkcy5sZW5ndGg7IGkrKykge1xuICAgICAgICAgICAgaWYoYWRtaW5DYXJkc1tpXS5jYXJkLm5hbWUgPT09IG1vZGlmaWVkQ2FyZC5jYXJkLm5hbWUpIHtcbiAgICAgICAgICAgICAgICBjYXJkID0gYWRtaW5DYXJkc1tpXTtcbiAgICAgICAgICAgICAgICBicmVhaztcbiAgICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgICByZXR1cm4gY2FyZDtcbiAgICB9XG5cbiAgICBpc09yaWdpbkNhcmREZWxldGVkKG9wdCkge1xuICAgICAgICByZXR1cm4gb3B0LmFjdGlvbi50eXBlID09PSAndXBkYXRlQ2FyZCcgJiYgb3B0LmFjdGlvbi5kaXNwbGF5LnRyYW5zbGF0aW9uS2V5ID09PSAnYWN0aW9uX2FyY2hpdmVkX2NhcmQnO1xuICAgIH1cbn1cblxuLyogUFJJVkFURSBGVU5DVElPTlMgKi9cbmZ1bmN0aW9uIGdldEFkbWluQm9hcmRzKGJvYXJkcykge1xuICAgIGxldCBhZG1pbkJvYXJkcyA9IF8uZmlsdGVyKGJvYXJkcywgYm9hcmQgPT4ge1xuICAgICAgICByZXR1cm4gYm9hcmQubmFtZS50b0xvd2VyQ2FzZSgpID09PSAnYWRtaW4gYm9hcmQnXG4gICAgfSk7XG5cbiAgICByZXR1cm4gKGFkbWluQm9hcmRzLmxlbmd0aCA9PT0gMCkgP1xuICAgICAgICB0aHJvd0h0dHBFcnJvcig0MDQsICdUaGVyZSBpcyBubyBhZG1pbiBib2FyZCcpXG4gICAgICAgIDogYWRtaW5Cb2FyZHNbMF07XG59XG4iXX0=",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "TrelloService.js"
+      ],
+      "names": [
+        "TrelloService",
+        "config",
+        "api",
+        "opt",
+        "memberId",
+        "action",
+        "idMemberCreator",
+        "modifiedCardId",
+        "data",
+        "card",
+        "id",
+        "adminBoard",
+        "modifiedCard",
+        "adminBoardCards",
+        "targetList",
+        "matchingCard",
+        "props",
+        "boards",
+        "getMemberBoards",
+        "aggregateCardData",
+        "then",
+        "getAdminBoards",
+        "results",
+        "cards",
+        "getBoardCards",
+        "boardId",
+        "lists",
+        "getBoardLists",
+        "map",
+        "result",
+        "resolve",
+        "matchingList",
+        "getMatchingListInAdminBoard",
+        "isNil",
+        "createList",
+        "listName",
+        "cardList",
+        "name",
+        "pos",
+        "list",
+        "getMatchingCardInAdminBoard",
+        "deleteExistingCard",
+        "cardId",
+        "isOriginCardDeleted",
+        "deleteCardWebhook",
+        "createCardFromExisting",
+        "listId",
+        "originCardId",
+        "listWebhooks",
+        "index",
+        "findIndex",
+        "webhooks",
+        "webhookToDelete",
+        "deleteWebhook",
+        "webhookId",
+        "console",
+        "log",
+        "createWebhook",
+        "webhook",
+        "getAllOrganiationBoards",
+        "organizationId",
+        "getCard",
+        "cardActions",
+        "getCardActions",
+        "getCardList",
+        "adminLists",
+        "i",
+        "length",
+        "adminCards",
+        "type",
+        "display",
+        "translationKey",
+        "adminBoards",
+        "filter",
+        "board",
+        "toLowerCase"
+      ],
+      "mappings": "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",
+      "file": "TrelloService.js",
+      "sourceRoot": "/app/services",
+      "sourcesContent": [
+        "import _ from 'lodash';\nimport Promise from 'bluebird';\nimport TrelloApi from '../apis/trello';\nimport { required ,throwHttpError } from '../utils';\n\nexport default class TrelloService {\n    constructor(config){\n        this.config = config;\n        this.api = new TrelloApi(config);\n    }\n\n    processTrelloCardChange(opt) {\n        const memberId = opt.action.idMemberCreator;\n        const modifiedCardId = opt.action.data.card.id;\n\n        var adminBoard, modifiedCard, adminBoardCards, targetList, matchingCard;\n\n        return Promise.props({\n            boards: this.api.getMemberBoards({\n                memberId: memberId\n            }),\n            modifiedCard: this.aggregateCardData(modifiedCardId)\n        }).then(results => {\n              adminBoard = getAdminBoards(results.boards);\n              modifiedCard = results.modifiedCard;\n\n              return Promise.props({\n                  cards: this.api.getBoardCards({\n                      boardId: adminBoard.id\n                  }),\n                  lists: this.api.getBoardLists({\n                      boardId: adminBoard.id\n                  })\n              });\n        }).then(result => Promise.props({\n            cards: Promise.map(result.cards, card => this.aggregateCardData(card.id)),\n            lists: Promise.resolve(result.lists)\n        })).then(result => {\n            adminBoardCards = result.cards;\n            var matchingList = this.getMatchingListInAdminBoard(result.lists, modifiedCard);\n\n            return _.isNil(matchingList)\n                ? this.api.createList({\n                    boardId: adminBoard.id,\n                    listName: modifiedCard.cardList.name,\n                    pos: modifiedCard.cardList.pos\n                })\n                : Promise.resolve(matchingList);\n        }).then(list => {\n            targetList = list;\n            matchingCard = this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);\n\n            // delete the card if it exists.\n            return _.isNil(matchingCard) ?\n                Promise.resolve() :\n                this.api.deleteExistingCard({ cardId: matchingCard.card.id })\n\n        }).then(() => {\n            return this.isOriginCardDeleted(opt)\n                ? this.deleteCardWebhook({\n                    cardId: modifiedCard.card.id\n                })\n                : this.api.createCardFromExisting({\n                    listId: targetList.id,\n                    originCardId: modifiedCard.card.id,\n                    pos: modifiedCard.card.pos\n                })\n        })\n    }\n\n    deleteCardWebhook(opt) {\n        required(opt, ['cardId']);\n\n        return this.api.listWebhooks().then(webhooks => {\n            let index = _.findIndex(webhooks, ['idModel', opt.cardId]);\n            let webhookToDelete = webhooks[index];\n\n            return this.api.deleteWebhook({\n                webhookId: webhookToDelete.id\n            });\n        });\n    }\n  \n    createCardWebhook(opt) {\n        required(opt, ['memberId', 'callbackUrl']);\n        console.log(opt)\n        return this.api.createWebhook(opt);\n    }\n\n    deleteAllWebhooks() {\n        return this.api.listWebhooks().then(webhooks =>\n            Promise.map(webhooks, webhook => this.api.deleteWebhook({\n                webhookId: webhook.id\n            }))\n        )\n    }\n\n    getAllWebhooks() {\n        return this.api.listWebhooks();\n    }\n  \n    getAllOrganiationBoards(opt) {\n        required(opt, ['organizationId']);\n      \n        return this.api.getAllOrganiationBoards({\n            organizationId: opt.organizationId\n        });\n    }\n\n    aggregateCardData(cardId) {\n        var opt = { cardId: cardId };\n\n        return Promise.props({\n            card: this.api.getCard(opt),\n            cardActions: this.api.getCardActions(opt),\n            cardList: this.api.getCardList(opt)\n        })\n    }\n\n    getMatchingListInAdminBoard(adminLists, modifiedCard) {\n        var list;\n\n        for(var i=0; i<adminLists.length; i++) {\n            if(adminLists[i].name === modifiedCard.cardList.name) {\n                list = adminLists[i];\n                break;\n            }\n        }\n        return list;\n    }\n\n    getMatchingCardInAdminBoard(adminCards, modifiedCard) {\n        var card;\n\n        for(var i=0; i<adminCards.length; i++) {\n            if(adminCards[i].card.name === modifiedCard.card.name) {\n                card = adminCards[i];\n                break;\n            }\n        }\n        return card;\n    }\n\n    isOriginCardDeleted(opt) {\n        return opt.action.type === 'updateCard' && opt.action.display.translationKey === 'action_archived_card';\n    }\n}\n\n/* PRIVATE FUNCTIONS */\nfunction getAdminBoards(boards) {\n    let adminBoards = _.filter(boards, board => {\n        return board.name.toLowerCase() === 'admin board'\n    });\n\n    return (adminBoards.length === 0) ?\n        throwHttpError(404, 'There is no admin board')\n        : adminBoards[0];\n}\n"
+      ]
+    },
+    "mtime": 1509012547275
   }
 }

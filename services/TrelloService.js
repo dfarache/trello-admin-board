@@ -3,7 +3,7 @@ import Promise from 'bluebird';
 import TrelloApi from '../apis/trello';
 import { required ,throwHttpError } from '../utils';
 
-export default class WebhookService {
+export default class TrelloService {
     constructor(config){
         this.config = config;
         this.api = new TrelloApi(config);
@@ -80,6 +80,12 @@ export default class WebhookService {
             });
         });
     }
+  
+    createCardWebhook(opt) {
+        required(opt, ['memberId', 'callbackUrl']);
+        console.log(opt)
+        return this.api.createWebhook(opt);
+    }
 
     deleteAllWebhooks() {
         return this.api.listWebhooks().then(webhooks =>
@@ -91,6 +97,14 @@ export default class WebhookService {
 
     getAllWebhooks() {
         return this.api.listWebhooks();
+    }
+  
+    getAllOrganiationBoards(opt) {
+        required(opt, ['organizationId']);
+      
+        return this.api.getAllOrganiationBoards({
+            organizationId: opt.organizationId
+        });
     }
 
     aggregateCardData(cardId) {
