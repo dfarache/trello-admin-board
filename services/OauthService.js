@@ -27,6 +27,7 @@ export default class OauthService {
         return Promise.fromCallback(callback =>
             this.oauth.getOAuthAccessToken(opt.token, this.secrets[opt.token], opt.verifier, callback)
         , {multiArgs: true}).spread((accessToken, accessTokenSecret, results) => {
+            delete this.secrets[opt.token];
             return { token: accessToken, secret: accessTokenSecret }
         })
     }
