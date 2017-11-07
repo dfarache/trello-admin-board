@@ -5,6 +5,7 @@ export default class OauthController{
     constructor(config){
         this.config = config;
         this.service = new OauthService(config);
+        this.TEN_YEARS = (10 * 365 * 24 * 60 * 60 * 1000);
     }
 
     setupRouter(router){
@@ -28,8 +29,8 @@ export default class OauthController{
             token: req.query.oauth_token,
             verifier: req.query.oauth_verifier
         }).then(results => {
-            res.cookie('trelloToken', results.token, { maxAge: (10 * 365 * 24 * 60 * 60), httpOnly: true });
-            res.cookie('trelloSecret', results.secret, { maxAge: (10 * 365 * 24 * 60 * 60), httpOnly: true });
+            res.cookie('trelloToken', results.token, { maxAge: this.TEN_YEARS, httpOnly: true });
+            res.cookie('trelloSecret', results.secret, { maxAge: this.TEN_YEARS, httpOnly: true });
 
             res.status(200).sendFile(path.join(__dirname, '../public', 'on-oauth-callback.html'));
         });
