@@ -8,7 +8,7 @@
                  "request": "https://trello.com/1/OAuthGetRequestToken",
                  "access": "https://trello.com/1/OAuthGetAccessToken",
                  "authorize": "https://trello.com/1/OAuthAuthorizeToken",
-                 "callback": "https://outstanding-existence.glitch.me/api/oauth/callback"
+                 "callback": "https://YOUR_URL/api/oauth/callback"
             }
         }
     }
