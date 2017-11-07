@@ -51,16 +51,20 @@ The last step consists of telling Trello where to find the *power-up* and of ins
 * The team administrator needs to go the [Power-Ups Administration](https://trello.com/power-ups/admin/) and select the team where the power-up will be installed.
 * Once in the Team page, click on *Create New Power-Up*.
 * Fill in the required fields, which are Power-Up Name and the URL to the manifest.json. The latter is served by the web server in which the extension is running.
+
 ![trello-admin-board](assets/img/trello_powerup.PNG)
 
 ### Last steps from the team page
 If you have done everything right, now you should be able to see the power-up listed under *power-ups* from the board menu. The first thing you have to do is enable it in every board where you'd like to use it.
+
 ![trello-admin-board](assets/img/enabling_extension.gif)
 
 Once the administrator has enabled the power-up in the boards where its needed, it is time for the users to give the power-up access to their credentials. This is done using the OAuth mechanism provided by the Trello API and it is triggered as shown below:
+
 ![trello-admin-board](assets/img/auth_extension.gif)
 
 The last thing the user needs to do in order to start working with the extension is to select the board that will act as the Admin Board. This is done by clicking on the button that is found on the top right corner of the board (*Make this my Admin Board*).
+
 ![trello-admin-board](assets/img/trello_make_admin.PNG)
 
 
