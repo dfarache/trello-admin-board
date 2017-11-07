@@ -12,7 +12,23 @@ TrelloPowerUp.initialize({
 	         callback: onCardButtonClick
 	 	   }];
     },
+
+    'authorization-status': function(t, options){
+        return t.get('member', 'private', 'authToken').then(function(authToken) {
+            console.log(authToken)
+            return { authorized: authToken != null }
+        });
+    },
+
+    'show-authorization': function(t, options){
+        return t.popup({
+            title: 'Authorize Account',
+            url: './authorize-account.html',
+            height: 140,
+        });
+    }
 });
+
 
 function onCardButtonClick(t, options) {
     var secret = t.secret;
@@ -43,7 +59,7 @@ function getAdminBoard(t, board) {
     return new Promise(function(resolve, reject) {
         $.ajax({
             type: 'GET',
-            url: '/api/trello/organizations/' + board.idOrganization + '/boards',            
+            url: '/api/trello/organizations/' + board.idOrganization + '/boards',
             error: function(err){ reject(err); },
             success: function(data) {
                 var adminBoard = data.filter(function(o) { return o.name.toLowerCase() === "admin board" });
@@ -63,7 +79,7 @@ function setNewCardWebhookAndSync(currentCard, t) {
     return setNewCardWebhook(currentCard).then(function() {
 
         // then, send a request to the server to sync the card.
-        // it needs to be done lie this the first time the card is created
+        // it needs to be done like this the first time the card is created
         return syncCard(currentCard, t);
 
     });
@@ -88,7 +104,7 @@ function syncCard(currentCard, t) {
         return new Promise(function(resolve, reject) {
             $.ajax({
                 type: 'POST',
-                url: '/api/trello',
+                url: '/api/webhook',
                 data: buildTrelloLikeBody(member, currentCard),
                 success: function() { resolve() },
                 error: function(err){ reject(err); }

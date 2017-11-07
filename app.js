@@ -3,12 +3,14 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     config = require('konfig')().app,
+    cookieParser = require('cookie-parser'),
     Logger = require('./logger');
 
 const app = express();
 const log = new Logger(app);
 
 app.use(cors({ origin: '*' }));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('X-HTTP-Method-Override'));
