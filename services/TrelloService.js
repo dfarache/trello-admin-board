@@ -9,106 +9,68 @@ export default class TrelloService {
         this.api = new TrelloApi(config);
     }
 
-    processTrelloCardChange(opt) {
-        const memberId = opt.action.idMemberCreator;
-        const modifiedCardId = opt.action.data.card.id;
-
-        var adminBoard, modifiedCard, adminBoardCards, targetList, matchingCard;
-
-        return Promise.props({
-            boards: this.api.getMemberBoards({
-                memberId: memberId
-            }),
-            modifiedCard: this.aggregateCardData(modifiedCardId)
-        }).then(results => {
-              adminBoard = getAdminBoards(results.boards);
-              modifiedCard = results.modifiedCard;
-
-              return Promise.props({
-                  cards: this.api.getBoardCards({
-                      boardId: adminBoard.id
-                  }),
-                  lists: this.api.getBoardLists({
-                      boardId: adminBoard.id
-                  })
-              });
-        }).then(result => Promise.props({
-            cards: Promise.map(result.cards, card => this.aggregateCardData(card.id)),
-            lists: Promise.resolve(result.lists)
-        })).then(result => {
-            adminBoardCards = result.cards;
-            var matchingList = this.getMatchingListInAdminBoard(result.lists, modifiedCard);
-
-            return _.isNil(matchingList)
-                ? this.api.createList({
-                    boardId: adminBoard.id,
-                    listName: modifiedCard.cardList.name,
-                    pos: modifiedCard.cardList.pos
-                })
-                : Promise.resolve(matchingList);
-        }).then(list => {
-            targetList = list;
-            matchingCard = this.getMatchingCardInAdminBoard(adminBoardCards, modifiedCard);
-
-            // delete the card if it exists.
-            return _.isNil(matchingCard) ?
-                Promise.resolve() :
-                this.api.deleteExistingCard({ cardId: matchingCard.card.id })
-
-        }).then(() => {
-            return this.isOriginCardDeleted(opt)
-                ? this.deleteCardWebhook({
-                    cardId: modifiedCard.card.id
-                })
-                : this.api.createCardFromExisting({
-                    listId: targetList.id,
-                    originCardId: modifiedCard.card.id,
-                    pos: modifiedCard.card.pos
-                })
-        })
-    }
-
     deleteCardWebhook(opt) {
-        required(opt, ['cardId']);
+        required(opt, ['cardId', 'credentials']);
 
-        return this.api.listWebhooks().then(webhooks => {
+        return this.api.listWebhooks({
+            credentials: opt.credentials
+        }).then(webhooks => {
             let index = _.findIndex(webhooks, ['idModel', opt.cardId]);
             let webhookToDelete = webhooks[index];
 
             return this.api.deleteWebhook({
-                webhookId: webhookToDelete.id
+                webhookId: webhookToDelete.id,
+                credentials: opt.credentials
             });
         });
     }
 
     createCardWebhook(opt) {
-        required(opt, ['memberId', 'callbackUrl']);
-  
+        required(opt, ['memberId', 'callbackUrl', 'credentials']);
         return this.api.createWebhook(opt);
     }
 
-    deleteAllWebhooks() {
-        return this.api.listWebhooks().then(webhooks =>
+    deleteAllWebhooks(opt) {
+        required(opt, ['credentials']);
+
+        return this.api.listWebhooks(opt).then(webhooks =>
             Promise.map(webhooks, webhook => this.api.deleteWebhook({
-                webhookId: webhook.id
+                webhookId: webhook.id,
+                credentials: opt.credentials
             }))
         )
     }
 
-    getAllWebhooks() {
-        return this.api.listWebhooks();
-    }
+    getAllWebhooks(opt) {
+        required(opt, ['credentials']);
 
-    getAllOrganiationBoards(opt) {
-        required(opt, ['organizationId']);
-
-        return this.api.getAllOrganiationBoards({
-            organizationId: opt.organizationId
+        return this.api.listWebhooks({
+            credentials: opt.credentials
         });
     }
 
-    aggregateCardData(cardId) {
-        var opt = { cardId: cardId };
+    getBoard(opt) {
+        return new Promise((resolve, reject) => {
+            if(opt.boardId == null) { throwHttpError(404, 'board not found'); }
+
+            resolve();
+        }).then(() => this.api.getBoard({
+            boardId: opt.boardId,
+            credentials: opt.credentials
+        }));
+    }
+
+    getAllOrganiationBoards(opt) {
+        required(opt, ['organizationId', 'credentials']);
+
+        return this.api.getAllOrganiationBoards({
+            organizationId: opt.organizationId,
+            credentials: opt.credentials
+        });
+    }
+
+    aggregateCardData(cardId, credentials) {
+        var opt = { cardId: cardId, credentials: credentials };
 
         return Promise.props({
             card: this.api.getCard(opt),
@@ -144,15 +106,4 @@ export default class TrelloService {
     isOriginCardDeleted(opt) {
         return opt.action.type === 'updateCard' && opt.action.display.translationKey === 'action_archived_card';
     }
-}
-
-/* PRIVATE FUNCTIONS */
-function getAdminBoards(boards) {
-    let adminBoards = _.filter(boards, board => {
-        return board.name.toLowerCase() === 'admin board'
-    });
-
-    return (adminBoards.length === 0) ?
-        throwHttpError(404, 'There is no admin board')
-        : adminBoards[0];
 }

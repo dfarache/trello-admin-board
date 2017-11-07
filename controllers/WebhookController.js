@@ -13,10 +13,11 @@ export default class WebhookController {
 
     processTrelloCardChange(req, res, next) {
         const trelloToken = req.query.trelloToken || req.cookies.trelloToken;
+        const adminBoardId = req.query.adminBoard || req.cookies.adminBoard;
 
-        return (trelloToken == null)
+        return (trelloToken == null || adminBoardId == null)
             ? res.status(403).send('Forbidden')
-            : this.service.processTrelloCardChange(req.body, { trelloToken: trelloToken })
+            : this.service.processTrelloCardChange(req.body, { trelloToken: trelloToken }, adminBoardId)
                 .then(() => res.status(200).end())
                 .catch(err => next(err))
     }

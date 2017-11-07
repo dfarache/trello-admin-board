@@ -36,6 +36,17 @@ export default class TrelloAPI{
           return sensibleRequest(opt);
     }
 
+    getBoard(opt) {
+        required(opt, ['boardId', 'credentials']);
+
+        var opt = {
+            method: 'GET',
+            uri: this.createTrelloUri(`boards/${opt.boardId}`, undefined, opt.credentials),
+            json: true
+        }
+        return sensibleRequest(opt);
+    }
+
     getBoardCards(opt) {
         required(opt, ['boardId', 'credentials']);
 

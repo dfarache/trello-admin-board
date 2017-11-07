@@ -10,32 +10,25 @@ export default class WebhookService{
         this.api = new TrelloApi(config);
     }
 
-    processTrelloCardChange(opt, credentials) {
+    processTrelloCardChange(opt, credentials, adminBoardId) {
         const memberId = opt.action.idMemberCreator;
         const modifiedCardId = opt.action.data.card.id;
 
-        var adminBoard, modifiedCard, adminBoardCards, targetList, matchingCard;
+        var modifiedCard, adminBoardCards, targetList, matchingCard;
 
-        return Promise.props({
-            boards: this.api.getMemberBoards({
-                memberId: memberId,
-                credentials: credentials
-            }),
-            modifiedCard: this.trello.aggregateCardData(modifiedCardId, credentials)
-        }).then(results => {
-              adminBoard = this.trello.getAdminBoards(results.boards);
-              modifiedCard = results.modifiedCard;
+        return this.trello.aggregateCardData(modifiedCardId, credentials).then(card => {
+            modifiedCard = card;
 
-              return Promise.props({
-                  cards: this.api.getBoardCards({
-                      boardId: adminBoard.id,
-                      credentials: credentials
-                  }),
-                  lists: this.api.getBoardLists({
-                      boardId: adminBoard.id,
-                      credentials: credentials
-                  })
-              });
+            return Promise.props({
+                cards: this.api.getBoardCards({
+                    boardId: adminBoardId,
+                    credentials: credentials
+                }),
+                lists: this.api.getBoardLists({
+                    boardId: adminBoardId,
+                    credentials: credentials
+                })
+            });
         }).then(result => Promise.props({
             cards: Promise.map(result.cards, card => this.trello.aggregateCardData(card.id, credentials)),
             lists: Promise.resolve(result.lists)
@@ -45,7 +38,7 @@ export default class WebhookService{
 
             return _.isNil(matchingList)
                 ? this.api.createList({
-                    boardId: adminBoard.id,
+                    boardId: adminBoardId,
                     listName: modifiedCard.cardList.name,
                     pos: modifiedCard.cardList.pos,
                     credentials: credentials

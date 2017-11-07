@@ -24,7 +24,7 @@ export function sensibleRequest(opt) {
 
 export function throwHttpError(code, message){
     var e = new Error;
-    e.status = code;
+    e.statusCode = code;
     e.message = message;
     throw e;
 }
