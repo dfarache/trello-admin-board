@@ -1,8 +1,15 @@
 {
     "default": {
         "trello": {
+            "appName": "Admin Board - Card Sync",
             "key": "#{process.env.TRELLO_KEY}",
-            "token": "#{process.env.TRELLO_TOKEN}"
+            "secret": "#{process.env.TRELLO_SECRET}",
+            "urls": {
+                 "request": "https://trello.com/1/OAuthGetRequestToken",
+                 "access": "https://trello.com/1/OAuthGetAccessToken",
+                 "authorize": "https://trello.com/1/OAuthAuthorizeToken",
+                 "callback": "https://outstanding-existence.glitch.me/api/oauth/callback"
+            }
         }
     }
 }

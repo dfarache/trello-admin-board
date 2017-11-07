@@ -9,7 +9,8 @@
     "callback",
     "card-buttons",
     "card-detail-badges",
-    "show-settings"
+    "authorization-status",
+    "show-authorization"
   ],
   "connectors": {
     "iframe": {

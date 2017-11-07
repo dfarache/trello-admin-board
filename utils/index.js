@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { OAuth } from 'oauth';
 import request from 'request-promise';
 
 export function required(obj, params) {
@@ -26,4 +27,16 @@ export function throwHttpError(code, message){
     e.status = code;
     e.message = message;
     throw e;
+}
+
+export function getOauthInstance(config){
+   return new OAuth(
+       config.urls.request,
+       config.urls.access,
+       config.key,
+       config.secret,
+       '1.0',
+       config.urls.callback,
+       'HMAC-SHA1'
+   )
 }
