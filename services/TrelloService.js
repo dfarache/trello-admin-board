@@ -10,11 +10,27 @@ export default class TrelloService {
     }
 
     deleteCardWebhook(opt) {
-        required(opt, ['cardId', 'credentials']);
+        required(opt, ['cardId', 'credentials', 'adminBoardId']);
 
-        return this.api.listWebhooks({
+        // 1st delete the replica card
+        return Promise.props({
+            modifiedCard: this.aggregateCardData(opt.cardId, opt.credentials),
+            adminBoardCards: this.api.getBoardCards({
+                boardId: opt.adminBoardId,
+                credentials: opt.credentials
+            })
+        }).then(results => {
+            const adminBoardCards = _.map(results.adminBoardCards, c => { return { card: c } });
+            const matchingCard = this.getMatchingCardInAdminBoard(adminBoardCards, results.modifiedCard);
+
+            return this.api.deleteExistingCard({cardId: matchingCard.card.id, credentials: opt.credentials })
+        })
+
+        // 2nd delete the corresponding webhook
+        .then(() => this.api.listWebhooks({
             credentials: opt.credentials
-        }).then(webhooks => {
+        }))
+        .then(webhooks => {
             let index = _.findIndex(webhooks, ['idModel', opt.cardId]);
             let webhookToDelete = webhooks[index];
 
