@@ -19,7 +19,7 @@ export default class TrelloController{
         return router;
     }
 
-    __ensureAuthenticatedRequests(req, res, next) {      
+    __ensureAuthenticatedRequests(req, res, next) {
         if(req.cookies.trelloToken == null) {
             res.status(403).send('Forbidden');
         } else {
@@ -77,7 +77,8 @@ export default class TrelloController{
     deleteCardWebhook(req, res, next) {
         return this.service.deleteCardWebhook({
             cardId: req.params.cardId,
-            credentials: _.pick(req.cookies, ['trelloToken'])
+            credentials: _.pick(req.cookies, ['trelloToken']),
+            adminBoardId: req.cookies.adminBoard
         })
         .then(() => res.status(204).end())
         .catch(err => next(err))
