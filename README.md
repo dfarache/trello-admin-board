@@ -55,7 +55,7 @@ The last step consists of telling Trello where to find the *power-up* and of ins
 
 ### Last steps from the team page
 If you have done everything right, now you should be able to see the power-up listed under *power-ups* from the board menu. The first thing you have to do is enable it in every board where you'd like to use it.
-![trello-admin-board](assets/img/enable_extension.gif)
+![trello-admin-board](assets/img/enabling_extension.gif)
 
 Once the administrator has enabled the power-up in the boards where its needed, it is time for the users to give the power-up access to their credentials. This is done using the OAuth mechanism provided by the Trello API and it is triggered as shown below:
 ![trello-admin-board](assets/img/auth_extension.gif)
