@@ -18,7 +18,11 @@ function sendDeleteRequest(card) {
         $.ajax({
              type: "DELETE",
              url: "/api/trello/" + card.id,
-             success: function() { resolve() },
+             success: function() {
+                 $('.title').html('The card was unsynced');
+                 $('.message').html('<p>The copy in the Admin board has been deleted and we won\'t track anymore changes done to this card</p>');
+                 resolve();
+             },
              error: function(err){ reject(err); }
         });
     });
