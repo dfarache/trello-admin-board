@@ -17,9 +17,9 @@ function sendDeleteRequest(card) {
     return new Promise(function(resolve, reject) {
         $.ajax({
              type: "DELETE",
-             url: "https://outstanding-existence.glitch.me/api/trello/" + card.id,
-             success: function() { resolve() }, 
+             url: "/api/trello/" + card.id,
+             success: function() { resolve() },
              error: function(err){ reject(err); }
         });
-    });          
+    });
 }
